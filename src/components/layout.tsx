@@ -1,15 +1,38 @@
-import { Script } from 'gatsby'
-import React from 'react'
-import { Helmet } from 'react-helmet'
+import React, { useMemo } from 'react'
+import logo from '../images/logo.png'
+import Header from './header'
 
 type PageLayoutProps = {
+  withoutBackgroundImage?: boolean
   children: React.ReactElement
 }
 
 function PageLayout(props: PageLayoutProps) {
+  const containerCustomStyle = useMemo<React.CSSProperties>(() => {
+    if (props.withoutBackgroundImage) {
+      return {}
+    }
+    return {
+      backgroundImage: `url(${logo})`
+    }
+  }, [props.withoutBackgroundImage])
+
   return (
-    <div>
-      {props.children}
+    <div
+      className='w-full h-full object-cover bg-center bg-no-repeat bg-cover min-h-screen'
+      style={containerCustomStyle}
+    >
+      <div className='w-full h-full backdrop-blur-3xl'>
+        <Header />
+        <div
+          className='w-full h-full container flex justify-center items-center'
+          style={{
+            minHeight: 'calc(100vh - var(--header-height))'
+          }}
+        >
+          {props.children}
+        </div>
+      </div>
     </div>
   )
 }
