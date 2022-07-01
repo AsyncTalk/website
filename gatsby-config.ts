@@ -11,6 +11,7 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     'gatsby-plugin-postcss',
+    'gatsby-plugin-react-helmet',
     {
       resolve: 'gatsby-plugin-cloudflare-web-analytics',
       options: {
