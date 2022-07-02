@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import logo from '../../images/logo.png'
-import MetaTwitterCard, { TwitterCardType } from './twitter-card'
+import { TwitterCardType } from './twitter-card'
 
 type SEOHomePageProps = {
   title: string
@@ -10,7 +10,7 @@ type SEOHomePageProps = {
 }
 
 function SEOTags(props: SEOHomePageProps) {
-  const url = `/${props.urlPath}`
+  const url = `https://asynctalk.com${props.urlPath}`
 
   const metaTitle = props.title + ' | async talk podcast'
 
@@ -30,15 +30,14 @@ function SEOTags(props: SEOHomePageProps) {
       <meta name='keyword' content='async talk, podcast, web, react, vue' />
       <title>{props.title}</title>
 
-      <MetaTwitterCard
-        card={TwitterCardType.summary}
-        site='AsyncTalk'
-        creator='AsyncTalk'
-        url={url}
-        title={metaTitle}
-        description={desc}
-        image={logoLink}
-      />
+      <meta name="twitter:card" content={TwitterCardType.summary} />
+      {/* <meta name="twitter:site" content={'@asynctalk'} /> */}
+      {/* <meta name="twitter:creator" content={`@asynctalk`} /> */}
+      <meta name="twitter:url" content={url} />
+      <meta name="twitter:title" content={metaTitle} />
+      <meta name="twitter:description" content={desc} />
+      <meta name="twitter:image" content={logoLink} />
+      <meta name="twitter:image:alt" content={metaTitle} />
     </Helmet>
   )
 }
