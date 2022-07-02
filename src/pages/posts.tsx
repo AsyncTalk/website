@@ -23,8 +23,9 @@ function PostsPage(props: PostsPageProps) {
           <ul className='flex text-primary flex-col'>
             {posts.map((x: any) => (
               <Link
-               to={`/posts/${x.slug}`}
-               className='hover:underline'
+                key={x.slug}
+                to={`/posts/${x.slug}`}
+                className='hover:underline'
               >
                 <h3 className='text-lg'>
                   {x.frontmatter.title}
