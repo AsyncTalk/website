@@ -20,7 +20,7 @@
     "@mdx-js/react": "v1",
     "gatsby": "^4.17.2",
     "gatsby-plugin-cloudflare-web-analytics": "^0.2.1",
-    "gatsby-plugin-favicons": "^2.0.0",
+    "gatsby-plugin-manifest": "^4.17.0",
     "gatsby-plugin-mdx": "^3.17.0",
     "gatsby-plugin-page-creator": "^4.17.0",
     "gatsby-plugin-podcast-feed-mdx": "^0.1.0-beta.0",

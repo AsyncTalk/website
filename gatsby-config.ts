@@ -5,9 +5,6 @@ const config: GatsbyConfig = {
     title: 'Async Talk Podcast',
     siteUrl: `https://asynctalk.com`,
   },
-  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
-  // If you use VSCode you can also use the GraphQL plugin
-  // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   plugins: [
     'gatsby-plugin-sitemap',
@@ -20,20 +17,15 @@ const config: GatsbyConfig = {
       }
     },
     {
-      resolve: 'gatsby-plugin-favicons',
+      resolve: 'gatsby-plugin-manifest',
       options: {
-        logo: './src/images/logo.png',
-        appName: 'Async Talk Podcast',
-        background: '#fff',
-        icons: {
-          android: true,
-          appleIcon: true,
-          appleStartup: true,
-          coast: false,
-          favicons: true,
-          yandex: false,
-          windows: false
-        }
+        name: `AsyncTalk`,
+        short_name: `AsyncTalk`,
+        start_url: `/`,
+        background_color: `#000000`,
+        theme_color: `#2EB8B8`,
+        display: `standalone`,
+        icon: './src/images/logo.png',
       }
     },
     {
@@ -46,45 +38,38 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-page-creator",
       options: {
-        path: `${__dirname}/src/posts`,
-        slugify: ['/ppps']
+        path: `${__dirname}/src/posts`
       },
     },
     {
       resolve: `gatsby-plugin-mdx`,
-      options: {
-        defaultLayouts: {
-          // posts: require.resolve("./src/components/layout.tsx"),
-          // default: require.resolve("./src/components/layout.tsx"),
-        },
-      }
     },
     {
       resolve: `gatsby-plugin-podcast-feed-mdx`,
       options: {
         title: 'Async Talk',
-        subtitle: 'Async Talk',
-        description: 'Async Talk',
-        summary: `Async Talk`,
+        subtitle: '我们的目标是把前端带向下一个高度',
+        description: `AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。
+后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。
+联系我们请发邮件至 async.talk@gmail.com 期待沟通。`,
+        summary: `AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。
+后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。
+联系我们请发邮件至 async.talk@gmail.com 期待沟通。
+`,
         podcastType: `episodic`,
         siteUrl: `https://asynctalk.com`,
         imageUrl: `https://podcast.com/podcast-image/png`,
         feedUrl: `https://asynctalk.com/pocast-rss-feed.xml`,
         language: 'zhCN',
         copyright: `Copyright © 2022 Async Talk`,
-        authorName: `The Author`,
-        ownerName: `The Owner`,
+        authorName: 'AsyncTalk',
+        ownerName: 'Async Talk',
         ownerEmail: 'async.talk@gmail.com',
         managingEditor: 'async.talk@gmail.com',
         webMaster: 'async.talk@gmail.com',
         explicit: `no`,
-        publicationDate: `Jan 25, 2021 10:00:00 GMT`,
-        category1: `Arts`,
-        subCategory1: `Books`,
-        category2: `Education`,
-        subCategory2: `Courses`,
-        category3: `Business`,
-        subCategory3: `Marketing`,
+        publicationDate: `Oct 21, 2021 10:00:00 GMT`,
+        category1: `technology`,
         timeToLive: `60`,
         outputPath: `/podcast-rss-feed.xml`
       },
