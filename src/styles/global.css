@@ -12,6 +12,7 @@
   body::-webkit-scrollbar {
     @apply bg-gray-800 w-1;
   }
+
   .at-scrollbar::-webkit-scrollbar {
     @apply bg-gray-400 w-1.5 rounded;
   }
@@ -24,6 +25,7 @@
   body::-webkit-scrollbar-thumb {
     @apply bg-gray-400 rounded;
   }
+
   .at-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-blue-700 rounded;
   }
@@ -32,15 +34,19 @@
   .at-mdx-content h2 {
     @apply my-4 text-2xl font-bold;
   }
+
   .at-mdx-content blockquote {
     @apply pl-4 text-gray-300 text-sm border-l-4 border-gray-300 my-4;
   }
+
   .at-mdx-content a {
     @apply underline;
   }
+
   .at-mdx-content ul {
     @apply list-disc;
   }
+
   /* markdown end */
 }
 
@@ -51,6 +57,7 @@
       transform: scale(1.1);
       opacity: 0;
     }
+
     to {
       transform: scale(1);
       opacity: 1;
@@ -66,6 +73,7 @@
       transform: translateY(-1rem);
       opacity: 0;
     }
+
     to {
       transform: translateY(0);
       opacity: 1;
@@ -80,8 +88,27 @@
     from {
       transform: translateY(0);
     }
+
     to {
       transform: translateY(-1rem) scale(1.05);
     }
   }
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#___gatsby,
+#gatsby-focus-wrapper {
+  height: 100%;
+}
+
+body {
+  background-color: black;
+  overflow: auto;
 }

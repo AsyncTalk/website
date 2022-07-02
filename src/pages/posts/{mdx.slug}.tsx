@@ -18,12 +18,8 @@ function MDXSlugPage(props: MDXSlugPageProps) {
           desc={data.mdx.frontmatter.title}
           urlPath={'/posts/' + data.mdx.slug}
         />
-        {/* <p>{data.frontmatter.publicationDate}</p> */}
         <div
-          className=' text-primary w-full px-4 lg:px-10 pt-10'
-          style={{
-            minHeight: 'var(--body-min-height)'
-          }}
+          className="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
         >
           <h1 className=' text-3xl font-bold'>{data.mdx.frontmatter.title}</h1>
           <h3 className=' text-lg mt-2'>{data.mdx.frontmatter.subtitle}</h3>

@@ -7,21 +7,20 @@ type HeaderProps = {
 
 function Header(props: HeaderProps) {
   return (
-    <header className='w-full sticky backdrop-blur-3xl'>
-      <div className='container flex justify-around items-center mx-auto'>
+    <header className='z-10 bg-neutral-900/40 w-full sticky top-0 backdrop-blur p-4'>
+      <div className='whitespace-nowrap select-none max-w-screen-lg w-full flex justify-between items-center mx-auto'>
         <Link
           to='/'
           className='flex justify-center items-center'>
           <img
             src={logo}
-            // src='../images/logo.png'
-            alt='async talk logo'
-            width={64}
-            height={64}
+            alt='Async Talk'
+            width={32}
+            height={32}
           />
-          <span className=' text-primary ml-3'>Async Talk Podcast</span>
+          <span className='text-white/70 ml-3'>Async Talk Podcast</span>
         </Link>
-        <div className='text-primary'>
+        <div className='text-white/70'>
           <Link to='/posts'>Posts</Link>
         </div>
       </div>

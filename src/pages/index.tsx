@@ -1,7 +1,9 @@
 import * as React from "react"
 import { Helmet } from "react-helmet"
+import BgImg from '../images/bg-fm.png'
 import PageLayout from "../components/layout"
 import SEOTags from "../components/seo/seo-tags"
+import TitleImage from "../images/title.png"
 
 // markup
 const IndexPage = () => {
@@ -10,22 +12,22 @@ const IndexPage = () => {
       <>
         <SEOTags
           title='Async Talk'
-          desc='AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。 联系我们请发邮件至 async.talk@gmail.com 期待沟通。'
+          desc='AsyncTalk 是一档面向对 web 开发感兴趣的朋友所录制的中文 Podcast 节目。 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。 联系我们请发邮件至 async.talk@gmail.com 期待沟通。'
           urlPath="/"
         />
-        <main
-          className='w-full h-full flex items-center justify-center'
+        <div
+          className="h-[75vh] min-h-[250px] m-auto max-w-screen-lg bg-black bg-[center_top_30%] bg-no-repeat sm:bg-[length:auto_50%] bg-[length:95%_auto]"
+          style={{
+            backgroundImage: `url(${BgImg})`,
+          }}
         >
-          <div className="w-full h-full">
-            <span className='text-8xl text-center w-full block'>
-              👨🏻‍💻
-            </span>
-            <h1 className='text-7xl mt-3 text-primary font-bold text-center'>Async Talk</h1>
-            <h3 className=" text-primary text-center mt-10">我们的目标是把前端带向下一个高度</h3>
-
-            <i className='text-xs block w-full text-center text-primary mt-3'> 施工中... </i>
+          <div className="h-full backdrop-blur-md">
+            <div className="h-full select-none -translate-y-1/4 flex flex-col justify-center max-w-[50%] m-auto">
+              <img draggable={false} className='text-center' src={TitleImage} title='async-talk' />
+              <h3 className="text-white mt-10 italic text-right w-full">把前端带向下一个高度</h3>
+            </div>
           </div>
-        </main>
+        </div>
       </>
     </PageLayout>
   )

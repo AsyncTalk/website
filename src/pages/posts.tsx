@@ -19,21 +19,19 @@ function PostsPage(props: PostsPageProps) {
           desc='AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。 联系我们请发邮件至 async.talk@gmail.com 期待沟通。'
           urlPath="/posts"
         />
-        <main>
-          <ul className='flex text-primary flex-col'>
-            {posts.map((x: any) => (
-              <Link
-                key={x.slug}
-                to={`/posts/${x.slug}`}
-                className='hover:underline'
-              >
-                <h3 className='text-lg'>
-                  {x.frontmatter.title}
-                </h3>
-              </Link>
-            ))}
-          </ul>
-        </main>
+        <ul className='h-[75vh] min-h-[250px] m-auto max-w-screen-lg flex text-primary flex-col'>
+          {posts.map((x: any) => (
+            <Link
+              key={x.slug}
+              to={`/posts/${x.slug}`}
+              className='hover:underline'
+            >
+              <h3 className='text-lg p-1 mb-1'>
+                {x.frontmatter.title}
+              </h3>
+            </Link>
+          ))}
+        </ul>
       </>
     </PageLayout>
   )
