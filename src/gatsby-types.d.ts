@@ -585,6 +585,7 @@ type FileFieldsEnum =
   | 'childMdx.frontmatter.title'
   | 'childMdx.frontmatter.type'
   | 'childMdx.frontmatter.url'
+  | 'childMdx.gatsbyPath'
   | 'childMdx.headings'
   | 'childMdx.headings.depth'
   | 'childMdx.headings.value'
@@ -657,6 +658,7 @@ type FileFieldsEnum =
   | 'childrenMdx.frontmatter.title'
   | 'childrenMdx.frontmatter.type'
   | 'childrenMdx.frontmatter.url'
+  | 'childrenMdx.gatsbyPath'
   | 'childrenMdx.headings'
   | 'childrenMdx.headings.depth'
   | 'childrenMdx.headings.value'
@@ -901,25 +903,6 @@ type FloatQueryOperatorInput = {
   readonly nin: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']>>>;
 };
 
-type GatsbyImageFormat =
-  | 'auto'
-  | 'avif'
-  | 'jpg'
-  | 'NO_CHANGE'
-  | 'png'
-  | 'webp';
-
-type GatsbyImageLayout =
-  | 'constrained'
-  | 'fixed'
-  | 'fullWidth';
-
-type GatsbyImagePlaceholder =
-  | 'blurred'
-  | 'dominantColor'
-  | 'none'
-  | 'tracedSVG';
-
 type HeadingsMdx =
   | 'h1'
   | 'h2'
@@ -976,6 +959,7 @@ type Mdx = Node & {
   readonly excerpt: Scalars['String'];
   readonly fileAbsolutePath: Scalars['String'];
   readonly frontmatter: Maybe<MdxFrontmatter>;
+  readonly gatsbyPath: Maybe<Scalars['String']>;
   readonly headings: Maybe<ReadonlyArray<Maybe<MdxHeadingMdx>>>;
   readonly html: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
@@ -993,6 +977,11 @@ type Mdx = Node & {
 type Mdx_excerptArgs = {
   pruneLength?: InputMaybe<Scalars['Int']>;
   truncate?: InputMaybe<Scalars['Boolean']>;
+};
+
+
+type Mdx_gatsbyPathArgs = {
+  filePath: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1110,6 +1099,7 @@ type MdxFieldsEnum =
   | 'frontmatter.title'
   | 'frontmatter.type'
   | 'frontmatter.url'
+  | 'gatsbyPath'
   | 'headings'
   | 'headings.depth'
   | 'headings.value'
@@ -1176,6 +1166,7 @@ type MdxFilterInput = {
   readonly excerpt: InputMaybe<StringQueryOperatorInput>;
   readonly fileAbsolutePath: InputMaybe<StringQueryOperatorInput>;
   readonly frontmatter: InputMaybe<MdxFrontmatterFilterInput>;
+  readonly gatsbyPath: InputMaybe<StringQueryOperatorInput>;
   readonly headings: InputMaybe<MdxHeadingMdxFilterListInput>;
   readonly html: InputMaybe<StringQueryOperatorInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
@@ -1515,6 +1506,7 @@ type Query_mdxArgs = {
   excerpt: InputMaybe<StringQueryOperatorInput>;
   fileAbsolutePath: InputMaybe<StringQueryOperatorInput>;
   frontmatter: InputMaybe<MdxFrontmatterFilterInput>;
+  gatsbyPath: InputMaybe<StringQueryOperatorInput>;
   headings: InputMaybe<MdxHeadingMdxFilterListInput>;
   html: InputMaybe<StringQueryOperatorInput>;
   id: InputMaybe<StringQueryOperatorInput>;
@@ -2757,7 +2749,7 @@ type StringQueryOperatorInput = {
 type queryAllPodcastsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type queryAllPodcastsQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly slug: string | null }> } };
+type queryAllPodcastsQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly slug: string | null, readonly frontmatter: { readonly title: string } | null }> } };
 
 
 }

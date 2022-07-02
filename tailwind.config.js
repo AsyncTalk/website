@@ -4,6 +4,10 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  safelist: [
+    'at-scrollbar',
+    'at-md-content',
+  ],
   theme: {
     extend: {
       colors: {

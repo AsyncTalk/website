@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import logo from '../images/logo.png'
+import Footer from './footer'
 import Header from './header'
 
 type PageLayoutProps = {
@@ -25,13 +26,14 @@ function PageLayout(props: PageLayoutProps) {
       <div className='w-full h-full backdrop-blur-3xl'>
         <Header />
         <div
-          className='w-full h-full container flex justify-center items-center'
+          className='w-full h-full container flex justify-center items-center mx-auto'
           style={{
             minHeight: 'calc(100vh - var(--header-height))'
           }}
         >
           {props.children}
         </div>
+        <Footer />
       </div>
     </div>
   )

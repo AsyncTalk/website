@@ -1,14 +1,18 @@
 import * as React from "react"
 import { Helmet } from "react-helmet"
 import PageLayout from "../components/layout"
-import SEOHomePage from "../components/seo/home"
+import SEOTags from "../components/seo/seo-tags"
 
 // markup
 const IndexPage = () => {
   return (
     <PageLayout>
       <>
-        <SEOHomePage urlPath="/" />
+        <SEOTags
+          title='Async Talk'
+          desc='AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。 联系我们请发邮件至 async.talk@gmail.com 期待沟通。'
+          urlPath="/"
+        />
         <main
           className='w-full h-full flex items-center justify-center'
         >

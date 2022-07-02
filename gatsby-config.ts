@@ -13,8 +13,6 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sitemap',
     'gatsby-plugin-postcss',
     'gatsby-plugin-react-helmet',
-    `gatsby-plugin-image`,
-    `gatsby-plugin-sharp`,
     {
       resolve: 'gatsby-plugin-cloudflare-web-analytics',
       options: {
@@ -49,16 +47,17 @@ const config: GatsbyConfig = {
       resolve: "gatsby-plugin-page-creator",
       options: {
         path: `${__dirname}/src/posts`,
+        slugify: ['/ppps']
       },
     },
     {
       resolve: `gatsby-plugin-mdx`,
-      // options: {
-      //   defaultLayouts: {
-      //     posts: require.resolve("./src/components/layout.tsx"),
-      //     default: require.resolve("./src/components/layout.tsx"),
-      //   },
-      // }
+      options: {
+        defaultLayouts: {
+          // posts: require.resolve("./src/components/layout.tsx"),
+          // default: require.resolve("./src/components/layout.tsx"),
+        },
+      }
     },
     {
       resolve: `gatsby-plugin-podcast-feed-mdx`,

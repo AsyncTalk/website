@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-
   html {
     --header-height: 4rem;
+    --footer-height: 4rem;
+    --body-min-height: calc(100vh - var(--header-height) - var(--footer-height));
   }
 
   body::-webkit-scrollbar {
@@ -26,6 +27,21 @@
   .at-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-blue-700 rounded;
   }
+
+  /* markdown start */
+  .at-mdx-content h2 {
+    @apply my-4 text-2xl font-bold;
+  }
+  .at-mdx-content blockquote {
+    @apply pl-4 text-gray-300 text-sm border-l-4 border-gray-300 my-4;
+  }
+  .at-mdx-content a {
+    @apply underline;
+  }
+  .at-mdx-content ul {
+    @apply list-disc;
+  }
+  /* markdown end */
 }
 
 

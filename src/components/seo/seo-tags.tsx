@@ -4,16 +4,18 @@ import logo from '../../images/logo.png'
 import MetaTwitterCard, { TwitterCardType } from './twitter-card'
 
 type SEOHomePageProps = {
+  title: string
+  desc: string
   urlPath: string
 }
 
-function SEOHomePage(props: SEOHomePageProps) {
+function SEOTags(props: SEOHomePageProps) {
   const url = `/${props.urlPath}`
 
-  const metaTitle = 'async talk podcast'
+  const metaTitle = props.title + ' | async talk podcast'
 
   const logoLink = logo
-  const desc = 'async talk podcast'
+  const desc = props.desc
   return (
     <Helmet>
       <meta property="og:url" content={url} />
@@ -26,11 +28,12 @@ function SEOHomePage(props: SEOHomePageProps) {
 
       <meta name='description' content={desc} />
       <meta name='keyword' content='async talk, podcast, web, react, vue' />
+      <title>{props.title}</title>
 
       <MetaTwitterCard
         card={TwitterCardType.summary}
-        site='async talk'
-        creator='async talk'
+        site='AsyncTalk'
+        creator='AsyncTalk'
         url={url}
         title={metaTitle}
         description={desc}
@@ -40,4 +43,4 @@ function SEOHomePage(props: SEOHomePageProps) {
   )
 }
 
-export default SEOHomePage
+export default SEOTags
