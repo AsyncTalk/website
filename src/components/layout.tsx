@@ -28,7 +28,7 @@ function PageLayout(props: PageLayoutProps) {
         <div
           className='w-full h-full container flex justify-center items-center mx-auto'
           style={{
-            minHeight: 'calc(100vh - var(--header-height))'
+            minHeight: 'var(--body-min-height)'
           }}
         >
           {props.children}

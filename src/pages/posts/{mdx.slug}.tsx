@@ -10,7 +10,6 @@ type MDXSlugPageProps = {
 
 function MDXSlugPage(props: MDXSlugPageProps) {
   const data = props.data
-  console.log(data)
   return (
     <PageLayout>
       <>
@@ -32,7 +31,7 @@ function MDXSlugPage(props: MDXSlugPageProps) {
             {new Intl.DateTimeFormat().format(new Date(data.mdx.frontmatter.publicationDate))}
           </time>
           <hr className='my-10 border-primary' />
-          <article className=' leading-loose w-full at-mdx-content at-scrollbar text-gray-100'>
+          <article className=' leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all'>
             <MDXRenderer
               title={data.mdx.frontmatter.title}
             >
