@@ -1192,7 +1192,7 @@ type MdxFrontmatter = {
   readonly episodeType: Maybe<Scalars['String']>;
   readonly excerpt: Maybe<Scalars['String']>;
   readonly explicit: Maybe<Scalars['Boolean']>;
-  readonly guid: Maybe<Scalars['String']>;
+  readonly guid: Maybe<Scalars['Int']>;
   readonly publicationDate: Maybe<Scalars['Date']>;
   readonly season: Maybe<Scalars['Int']>;
   readonly size: Maybe<Scalars['Int']>;
@@ -1220,7 +1220,7 @@ type MdxFrontmatterFilterInput = {
   readonly episodeType: InputMaybe<StringQueryOperatorInput>;
   readonly excerpt: InputMaybe<StringQueryOperatorInput>;
   readonly explicit: InputMaybe<BooleanQueryOperatorInput>;
-  readonly guid: InputMaybe<StringQueryOperatorInput>;
+  readonly guid: InputMaybe<IntQueryOperatorInput>;
   readonly publicationDate: InputMaybe<DateQueryOperatorInput>;
   readonly season: InputMaybe<IntQueryOperatorInput>;
   readonly size: InputMaybe<IntQueryOperatorInput>;
