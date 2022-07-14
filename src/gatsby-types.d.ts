@@ -585,6 +585,7 @@ type FileFieldsEnum =
   | 'childMdx.frontmatter.title'
   | 'childMdx.frontmatter.type'
   | 'childMdx.frontmatter.url'
+  | 'childMdx.frontmatter.xyzLink'
   | 'childMdx.gatsbyPath'
   | 'childMdx.headings'
   | 'childMdx.headings.depth'
@@ -658,6 +659,7 @@ type FileFieldsEnum =
   | 'childrenMdx.frontmatter.title'
   | 'childrenMdx.frontmatter.type'
   | 'childrenMdx.frontmatter.url'
+  | 'childrenMdx.frontmatter.xyzLink'
   | 'childrenMdx.gatsbyPath'
   | 'childrenMdx.headings'
   | 'childrenMdx.headings.depth'
@@ -1099,6 +1101,7 @@ type MdxFieldsEnum =
   | 'frontmatter.title'
   | 'frontmatter.type'
   | 'frontmatter.url'
+  | 'frontmatter.xyzLink'
   | 'gatsbyPath'
   | 'headings'
   | 'headings.depth'
@@ -1202,6 +1205,7 @@ type MdxFrontmatter = {
   readonly title: Scalars['String'];
   readonly type: Maybe<Scalars['String']>;
   readonly url: Maybe<Scalars['String']>;
+  readonly xyzLink: Maybe<Scalars['String']>;
 };
 
 
@@ -1230,6 +1234,7 @@ type MdxFrontmatterFilterInput = {
   readonly title: InputMaybe<StringQueryOperatorInput>;
   readonly type: InputMaybe<StringQueryOperatorInput>;
   readonly url: InputMaybe<StringQueryOperatorInput>;
+  readonly xyzLink: InputMaybe<StringQueryOperatorInput>;
 };
 
 type MdxGroupConnection = {
