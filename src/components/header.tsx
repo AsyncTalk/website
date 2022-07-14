@@ -39,9 +39,11 @@ function Header(props: HeaderProps) {
               className='text-white/70 ml-3 hover:text-white/90 duration-100 transition-colors'
             >Async Talk Podcast</span>
           </Link>
-          <div className=' h-4 w-0.5 bg-white/50 mx-4' />
+          <div
+            className=' h-4 w-0.5 bg-white/50 mx-4 hidden lg:block'
+          />
           <ul
-            className='text-white/70 flex items-center justify-center'
+            className='text-white/70 hidden lg:flex items-center justify-center'
           >
             {channels.map(x => (
               <li
@@ -51,6 +53,8 @@ function Header(props: HeaderProps) {
                 <Link
                   to={x.link}
                   className='flex items-center justify-center'
+                  target='_blank'
+                  referrerPolicy='no-referrer'
                 >
                   {x.title}
                   <IconExternalLink
