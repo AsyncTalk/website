@@ -5867,10 +5867,10 @@ gatsby-parcel-config@0.8.0:
     "@parcel/transformer-raw" "2.6.0"
     "@parcel/transformer-react-refresh-wrap" "2.6.0"
 
-gatsby-plugin-cloudflare-web-analytics@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-cloudflare-web-analytics/-/gatsby-plugin-cloudflare-web-analytics-0.2.1.tgz#b11b472afcd3bfa18310a4d0b348b898a5a571bf"
-  integrity sha512-mCqpgfi5l8t5rJoJwXnPPIGMhsjUqiQx5FvoB0zY3L5uzTbr1gsdK2flsffgb7QYYjzNyDNooteDHZHfjYzOjw==
+gatsby-plugin-cloudflare-web-analytics@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-cloudflare-web-analytics/-/gatsby-plugin-cloudflare-web-analytics-0.3.1.tgz#04ff6c5aa68a6a159faa0b7b529d57562a3527e7"
+  integrity sha512-VAYXq3lqohlHkdSrznVJfCxQg/FBRI6QyUDYqPQuAw1QtrszIMeRcznjIeagS/aqYUVmjtdbKY6ca+cfyLKbUw==
 
 gatsby-plugin-manifest@^4.17.0:
   version "4.17.0"
