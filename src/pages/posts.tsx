@@ -8,9 +8,7 @@ type PostsPageProps = {
 }
 
 function PostsPage(props: PostsPageProps) {
-
   const posts = props.data.allMdx.nodes
-
   return (
     <PageLayout>
       <>
@@ -44,6 +42,7 @@ export const query = graphql`
         id
         frontmatter {
           title
+          # publicationDate
         }
         slug
       }
