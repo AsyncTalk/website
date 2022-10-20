@@ -1,5 +1,5 @@
 import { graphql, Link } from 'gatsby'
-import { MDXRenderer } from 'gatsby-plugin-mdx'
+// import { MDXRenderer } from 'gatsby-plugin-mdx'
 import React from 'react'
 import IconExternalLink from '../../components/icons/external-link'
 import PageLayout from '../../components/layout'
@@ -7,6 +7,7 @@ import SEOTags from '../../components/seo/seo-tags'
 
 type MDXSlugPageProps = {
   data: any
+  children: React.ReactElement
 }
 
 function MDXSlugPage(props: MDXSlugPageProps) {
@@ -17,13 +18,15 @@ function MDXSlugPage(props: MDXSlugPageProps) {
         <SEOTags
           title={data.mdx.frontmatter.title}
           desc={data.mdx.frontmatter.title}
-          urlPath={'/posts/' + data.mdx.slug}
+          urlPath=''
+          // urlPath={'/posts/' + data.mdx.slug}
         />
         <div
           className="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
         >
           <Link
-            to={`/posts/${data.mdx.slug}`}
+          to='/'
+            // to={`/posts/${data.mdx.slug}`}
             className='hover:underline'
           >
             <h1 className='text-3xl font-bold'>{data.mdx.frontmatter.title}</h1>
@@ -51,11 +54,12 @@ function MDXSlugPage(props: MDXSlugPageProps) {
           <hr className='my-10 border-primary' />
 
           <article className=' leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all'>
-            <MDXRenderer
+            {/* <MDXRenderer
               title={data.mdx.frontmatter.title}
             >
               {data.mdx.body}
-            </MDXRenderer>
+            </MDXRenderer> */}
+            {props.children}
             <hr className='my-10 border-primary' />
 
           </article>
@@ -76,7 +80,6 @@ export const query = graphql`
         xyzLink
       }
       body
-      slug
     }
   }
 `

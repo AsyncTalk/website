@@ -29,10 +29,14 @@ const config: GatsbyConfig = {
       }
     },
     {
+      resolve: `gatsby-plugin-mdx`,
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
         path: `${__dirname}/src/posts/`,
+        ignore: [`**/\.*`]
       },
     },
     {
@@ -40,9 +44,6 @@ const config: GatsbyConfig = {
       options: {
         path: `${__dirname}/src/posts`
       },
-    },
-    {
-      resolve: `gatsby-plugin-mdx`,
     },
     {
       resolve: `gatsby-plugin-podcast-feed-mdx`,

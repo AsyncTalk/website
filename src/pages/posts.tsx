@@ -44,7 +44,9 @@ export const query = graphql`
           title
           # publicationDate
         }
-        slug
+        # fields {
+        #   slug
+        # }
       }
     }
   }
