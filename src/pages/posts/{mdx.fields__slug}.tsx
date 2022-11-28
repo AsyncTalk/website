@@ -18,15 +18,13 @@ function MDXSlugPage(props: MDXSlugPageProps) {
         <SEOTags
           title={data.mdx.frontmatter.title}
           desc={data.mdx.frontmatter.title}
-          urlPath=''
-          // urlPath={'/posts/' + data.mdx.slug}
+          urlPath={data.mdx.frontmatter.slug}
         />
         <div
           className="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
         >
           <Link
-          to='/'
-            // to={`/posts/${data.mdx.slug}`}
+          to={data.mdx.frontmatter.slug}
             className='hover:underline'
           >
             <h1 className='text-3xl font-bold'>{data.mdx.frontmatter.title}</h1>
@@ -61,7 +59,6 @@ function MDXSlugPage(props: MDXSlugPageProps) {
             </MDXRenderer> */}
             {props.children}
             <hr className='my-10 border-primary' />
-
           </article>
         </div>
       </>
@@ -74,6 +71,7 @@ export const query = graphql`
     mdx(id: {eq: $id}) {
       frontmatter {
         title
+        slug
         publicationDate
         subtitle
         url

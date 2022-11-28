@@ -7,6 +7,7 @@ const config: GatsbyConfig = {
   },
   graphqlTypegen: true,
   plugins: [
+    'gatsby-plugin-pnpm',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-postcss',
     'gatsby-plugin-react-helmet',
