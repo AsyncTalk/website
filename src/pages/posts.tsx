@@ -9,6 +9,7 @@ type PostsPageProps = {
 
 function PostsPage(props: PostsPageProps) {
   const posts = props.data.allMdx.nodes
+  console.log(props)
   return (
     <PageLayout>
       <>
@@ -20,8 +21,8 @@ function PostsPage(props: PostsPageProps) {
         <ul className='h-[75vh] min-h-[250px] m-auto max-w-screen-lg flex text-primary flex-col'>
           {posts.map((x: any) => (
             <Link
-              key={x.slug}
-              to={`/posts/${x.slug}`}
+              key={x.frontmatter.slug}
+              to={`${x.frontmatter.slug}`}
               className='hover:underline'
             >
               <h3 className='text-lg p-1 mb-1'>
@@ -35,19 +36,16 @@ function PostsPage(props: PostsPageProps) {
   )
 }
 
-export const query = graphql`
-  query queryAllPodcasts {
-    allMdx(sort: {fields: frontmatter___publicationDate, order: DESC}) {
-      nodes {
-        id
-        frontmatter {
-          title
-          # publicationDate
-        }
+export const query = graphql`query queryAllPodcasts {
+  allMdx(sort: {frontmatter: {publicationDate: DESC}}) {
+    nodes {
+      id
+      frontmatter {
         slug
+        title
       }
     }
   }
-`
+}`
 
 export default PostsPage

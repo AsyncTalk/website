@@ -7,6 +7,7 @@ const config: GatsbyConfig = {
   },
   graphqlTypegen: true,
   plugins: [
+    'gatsby-plugin-pnpm',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-postcss',
     'gatsby-plugin-react-helmet',
@@ -29,10 +30,14 @@ const config: GatsbyConfig = {
       }
     },
     {
+      resolve: `gatsby-plugin-mdx`,
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
         path: `${__dirname}/src/posts/`,
+        ignore: [`**/\.*`]
       },
     },
     {
@@ -42,36 +47,76 @@ const config: GatsbyConfig = {
       },
     },
     {
-      resolve: `gatsby-plugin-mdx`,
-    },
-    {
-      resolve: `gatsby-plugin-podcast-feed-mdx`,
+      resolve: `gatsby-plugin-feed`,
       options: {
-        title: 'Async Talk',
-        subtitle: '我们的目标是把前端带向下一个高度',
-        description: `AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMdx } }: any) => {
+              return allMdx.nodes.map((node: any) => {
+                return Object.assign({}, node.frontmatter, {
+                  description: node.frontmatter.title,
+                  date: node.frontmatter.date,
+                  url: site.siteMetadata.siteUrl + node.frontmatter.slug,
+                  guid: site.siteMetadata.siteUrl + node.frontmatter.slug,
+                  custom_elements: [{ "content:encoded": node.title }],
+                })
+              })
+            },
+            query: `
+              {
+                allMdx(sort: {frontmatter: {publicationDate: DESC}}) {
+                  nodes {
+                    frontmatter {
+                      title
+                      slug
+                      xyzLink
+                      subtitle
+                      url
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: 'Async Talk',
+            match: "^/posts/",
+            subtitle: '我们的目标是把前端带向下一个高度',
+            description: `AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。
 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。
 联系我们请发邮件至 async.talk@gmail.com 期待沟通。`,
-        summary: `AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。
+            summary: `AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。
 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。
 联系我们请发邮件至 async.talk@gmail.com 期待沟通。
 `,
-        podcastType: `episodic`,
-        siteUrl: `https://asynctalk.com`,
-        imageUrl: `https://podcast.com/podcast-image/png`,
-        feedUrl: `https://asynctalk.com/pocast-rss-feed.xml`,
-        language: 'zhCN',
-        copyright: `Copyright © 2022 Async Talk`,
-        authorName: 'AsyncTalk',
-        ownerName: 'Async Talk',
-        ownerEmail: 'async.talk@gmail.com',
-        managingEditor: 'async.talk@gmail.com',
-        webMaster: 'async.talk@gmail.com',
-        explicit: `no`,
-        publicationDate: `Oct 21, 2021 10:00:00 GMT`,
-        category1: `technology`,
-        timeToLive: `60`,
-        outputPath: `/podcast-rss-feed.xml`
+            podcastType: `episodic`,
+            siteUrl: `https://asynctalk.com`,
+            imageUrl: `https://podcast.com/podcast-image/png`,
+            feedUrl: `https://asynctalk.com/pocast-rss-feed.xml`,
+            language: 'zhCN',
+            copyright: `Copyright © 2022 Async Talk`,
+            authorName: 'AsyncTalk',
+            ownerName: 'Async Talk',
+            ownerEmail: 'async.talk@gmail.com',
+            managingEditor: 'async.talk@gmail.com',
+            webMaster: 'async.talk@gmail.com',
+            explicit: `no`,
+            publicationDate: `Oct 21, 2021 10:00:00 GMT`,
+            category1: `technology`,
+            timeToLive: `60`,
+          },
+        ],
       },
     },
   ],
