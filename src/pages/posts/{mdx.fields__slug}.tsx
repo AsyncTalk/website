@@ -1,9 +1,15 @@
 import { graphql, Link } from 'gatsby'
-// import { MDXRenderer } from 'gatsby-plugin-mdx'
+import { MDXProvider } from '@mdx-js/react'
 import React from 'react'
 import IconExternalLink from '../../components/icons/external-link'
 import PageLayout from '../../components/layout'
 import SEOTags from '../../components/seo/seo-tags'
+import Heading1 from '../../components/markdown/Heading1'
+import Heading2 from '../../components/markdown/Heading2'
+import Heading3 from '../../components/markdown/Heading3'
+import Heading4 from '../../components/markdown/Heading4'
+import Heading5 from '../../components/markdown/Heading5'
+import Heading6 from '../../components/markdown/Heading6'
 
 type MDXSlugPageProps = {
   data: any
@@ -24,7 +30,7 @@ function MDXSlugPage(props: MDXSlugPageProps) {
           className="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
         >
           <Link
-          to={data.mdx.frontmatter.slug}
+            to={data.mdx.frontmatter.slug}
             className='hover:underline'
           >
             <h1 className='text-3xl font-bold'>{data.mdx.frontmatter.title}</h1>
@@ -52,12 +58,21 @@ function MDXSlugPage(props: MDXSlugPageProps) {
           <hr className='my-10 border-primary' />
 
           <article className=' leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all'>
-            {/* <MDXRenderer
-              title={data.mdx.frontmatter.title}
+            <MDXProvider
+              // title={data.mdx.frontmatter.title}
+              components={{
+                h1: Heading1,
+                h2: Heading2,
+                h3: Heading3,
+                h4: Heading4,
+                h5: Heading5,
+                h6: Heading6,
+              }}
             >
-              {data.mdx.body}
-            </MDXRenderer> */}
-            {props.children}
+              {/* {data.mdx.body} */}
+              {props.children}
+            </MDXProvider>
+            {/* {props.children} */}
             <hr className='my-10 border-primary' />
           </article>
         </div>
