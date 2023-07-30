@@ -874,6 +874,7 @@ type MdxFilterListInput = {
 type MdxFrontmatter = {
   readonly author: Maybe<Scalars['String']>;
   readonly categories: Maybe<ReadonlyArray<Maybe<Scalars['String']>>>;
+  readonly draftLink: Maybe<Scalars['String']>;
   readonly duration: Maybe<Scalars['Int']>;
   readonly episodeNumber: Maybe<Scalars['Int']>;
   readonly episodeType: Maybe<Scalars['String']>;
@@ -903,6 +904,7 @@ type MdxFrontmatter_publicationDateArgs = {
 type MdxFrontmatterFieldSelector = {
   readonly author: InputMaybe<FieldSelectorEnum>;
   readonly categories: InputMaybe<FieldSelectorEnum>;
+  readonly draftLink: InputMaybe<FieldSelectorEnum>;
   readonly duration: InputMaybe<FieldSelectorEnum>;
   readonly episodeNumber: InputMaybe<FieldSelectorEnum>;
   readonly episodeType: InputMaybe<FieldSelectorEnum>;
@@ -924,6 +926,7 @@ type MdxFrontmatterFieldSelector = {
 type MdxFrontmatterFilterInput = {
   readonly author: InputMaybe<StringQueryOperatorInput>;
   readonly categories: InputMaybe<StringQueryOperatorInput>;
+  readonly draftLink: InputMaybe<StringQueryOperatorInput>;
   readonly duration: InputMaybe<IntQueryOperatorInput>;
   readonly episodeNumber: InputMaybe<IntQueryOperatorInput>;
   readonly episodeType: InputMaybe<StringQueryOperatorInput>;
@@ -945,6 +948,7 @@ type MdxFrontmatterFilterInput = {
 type MdxFrontmatterSortInput = {
   readonly author: InputMaybe<SortOrderEnum>;
   readonly categories: InputMaybe<SortOrderEnum>;
+  readonly draftLink: InputMaybe<SortOrderEnum>;
   readonly duration: InputMaybe<SortOrderEnum>;
   readonly episodeNumber: InputMaybe<SortOrderEnum>;
   readonly episodeType: InputMaybe<SortOrderEnum>;
@@ -2095,6 +2099,13 @@ type StringQueryOperatorInput = {
   readonly nin: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']>>>;
   readonly regex: InputMaybe<Scalars['String']>;
 };
+
+type FetchPostQueryVariables = Exact<{
+  id: InputMaybe<Scalars['String']>;
+}>;
+
+
+type FetchPostQuery = { readonly mdx: { readonly body: string | null, readonly frontmatter: { readonly title: string | null, readonly slug: string | null, readonly publicationDate: string | null, readonly subtitle: string | null, readonly url: string | null, readonly xyzLink: string | null, readonly draftLink: string | null } | null } | null };
 
 type queryAllPodcastsQueryVariables = Exact<{ [key: string]: never; }>;
 

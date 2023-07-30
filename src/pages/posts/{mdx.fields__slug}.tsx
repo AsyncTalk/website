@@ -10,50 +10,78 @@ import Heading3 from '../../components/markdown/Heading3'
 import Heading4 from '../../components/markdown/Heading4'
 import Heading5 from '../../components/markdown/Heading5'
 import Heading6 from '../../components/markdown/Heading6'
+import KeyValueInfo from '../../components/kv-info'
 
 type MDXSlugPageProps = {
-  data: any
+  data: Queries.FetchPostQuery
   children: React.ReactElement
 }
 
 function MDXSlugPage(props: MDXSlugPageProps) {
   const data = props.data
+  const frontData = data.mdx?.frontmatter
+
+  if (!frontData) {
+    return null
+  }
+
   return (
     <PageLayout>
       <>
         <SEOTags
-          title={data.mdx.frontmatter.title}
-          desc={data.mdx.frontmatter.title}
-          urlPath={data.mdx.frontmatter.slug}
+          title={frontData.title ?? ''}
+          desc={frontData.title ?? ''}
+          urlPath={frontData.slug ?? ''}
         />
         <div
           className="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
         >
           <Link
-            to={data.mdx.frontmatter.slug}
+            to={frontData.slug!}
             className='hover:underline'
           >
-            <h1 className='text-3xl font-bold'>{data.mdx.frontmatter.title}</h1>
+            <h1 className='text-3xl font-bold'>{frontData.title}</h1>
           </Link>
-          <h3 className='text-lg mt-2'>{data.mdx.frontmatter.subtitle}</h3>
+          <h3 className='text-lg mt-2'>{frontData.subtitle}</h3>
           <time className='text-xs mt-2'>
-            {new Intl.DateTimeFormat().format(new Date(data.mdx.frontmatter.publicationDate))}
+            {new Intl.DateTimeFormat().format(new Date(frontData.publicationDate as string))}
           </time>
 
-          <div className='flex items-start justify-start mt-2'>
-            <span className='mr-1 whitespace-nowrap'>收听渠道: </span>
-            <Link
-              to={data.mdx.frontmatter.xyzLink}
-              className='flex items-center justify-center hover:underline'
-              target='_blank'
-              referrerPolicy='no-referrer'
-            >
-              小宇宙 - {data.mdx.frontmatter.title}
-              <IconExternalLink
-                className='scale-75 -translate-y-1'
-              />
-            </Link>
-          </div>
+          <KeyValueInfo
+            title='收听渠道'
+            value={
+              <Link
+                to={frontData.xyzLink!}
+                className='flex items-center justify-center hover:underline'
+                target='_blank'
+                referrerPolicy='no-referrer'
+              >
+                小宇宙 - {frontData.title}
+                <IconExternalLink
+                  className='scale-75 -translate-y-1'
+                />
+              </Link>
+            }
+          />
+
+          {frontData.draftLink && (
+            <KeyValueInfo
+              title='草稿链接'
+              value={
+                <Link
+                  to={frontData.draftLink}
+                  className='flex items-center justify-center hover:underline'
+                  target='_blank'
+                  referrerPolicy='no-referrer'
+                >
+                  Notion - {frontData.title}
+                  <IconExternalLink
+                    className='scale-75 -translate-y-1'
+                  />
+                </Link>
+              }
+            />
+          )}
 
           <hr className='my-10 border-primary' />
 
@@ -82,19 +110,20 @@ function MDXSlugPage(props: MDXSlugPageProps) {
 }
 
 export const query = graphql`
-  query ($id: String) {
-    mdx(id: {eq: $id}) {
-      frontmatter {
-        title
-        slug
-        publicationDate
-        subtitle
-        url
-        xyzLink
-      }
-      body
+query FetchPost($id: String) {
+  mdx(id: {eq: $id}) {
+    frontmatter {
+      title
+      slug
+      publicationDate
+      subtitle
+      url
+      xyzLink
+      draftLink
     }
+    body
   }
+}
 `
 
 export default MDXSlugPage

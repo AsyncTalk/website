@@ -1,11 +1,11 @@
 import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
+  graphqlTypegen: true,
   siteMetadata: {
     title: 'Async Talk Podcast',
     siteUrl: `https://asynctalk.com`,
   },
-  graphqlTypegen: true,
   plugins: [
     'gatsby-plugin-pnpm',
     'gatsby-plugin-sitemap',
