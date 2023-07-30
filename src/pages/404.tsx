@@ -30,7 +30,6 @@ const codeStyles = {
 const NotFoundPage = () => {
   return (
     <PageLayout>
-
       <>
         <Helmet>
           <title>no podcast found~</title>
