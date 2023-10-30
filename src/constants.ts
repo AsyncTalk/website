@@ -7,7 +7,7 @@ export const authors = [{
   link: 'https://twitter.com/Sleaf_'
 }, {
   name: 'Tinko',
-  link: 'https://space.bilibili.com/290664'
+  link: 'https://tinko.moe'
 }, {
   name: '小鹿',
   link: null
