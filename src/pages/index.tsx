@@ -10,8 +10,8 @@ const IndexPage = () => {
     <PageLayout>
       <>
         <SEOTags
-          title='Async Talk'
-          desc='AsyncTalk 是一档面向对 web 开发感兴趣的朋友所录制的中文 Podcast 节目。 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。 联系我们请发邮件至 async.talk@gmail.com 期待沟通。'
+          title='AsyncTalk - 和我们一起，把 web 开发带向下一个高度'
+          desc='AsyncTalk - 和我们一起，把 web 开发带向下一个高度. AsyncTalk 是一档面向对 web 开发感兴趣的朋友所录制的中文 Podcast 节目。 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。 联系我们请发邮件至 async.talk@gmail.com 期待沟通。'
           urlPath="/"
         />
         <div

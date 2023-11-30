@@ -12,7 +12,7 @@ type SEOHomePageProps = {
 function SEOTags(props: SEOHomePageProps) {
   const url = `https://asynctalk.com${props.urlPath}`
 
-  const metaTitle = props.title + ' | async talk podcast'
+  const metaTitle = props.title + ' | AsyncTalk podcast'
 
   const logoLink = logo
   const desc = props.desc
@@ -24,10 +24,10 @@ function SEOTags(props: SEOHomePageProps) {
       <meta property="og:image" content={logoLink} />
       <meta property="og:description" content={desc} />
       <meta property="og:site_name" content='AsyncTalk' />
-      <meta property="article:author" content='async talk, AnnatarHe, Sleaf, Tinko, 小鹿' />
+      <meta property="article:author" content='AsyncTalk, AnnatarHe, Sleaf, Tinko, 小鹿' />
 
       <meta name='description' content={desc} />
-      <meta name='keyword' content='async talk, podcast, web, react, vue' />
+      <meta name='keyword' content='async talk, podcast, web, next.js, RSC, react, vue' />
       <title>{props.title}</title>
 
       <meta name="twitter:card" content={TwitterCardType.summary} />
