@@ -13,6 +13,7 @@ import Heading6 from '../../components/markdown/Heading6'
 import KeyValueInfo from '../../components/kv-info'
 import Tags from '../../components/tags/tags'
 import A from '../../components/markdown/A'
+import WarningAlert from '../../components/alert/warning'
 
 type MDXSlugPageProps = {
   data: Queries.FetchPostQuery
@@ -20,7 +21,7 @@ type MDXSlugPageProps = {
 }
 
 function MDXSlugPage(props: MDXSlugPageProps) {
-  const data = props.data
+  const { data } = props
   const frontData = data.mdx?.frontmatter
 
   if (!frontData) {
@@ -28,6 +29,7 @@ function MDXSlugPage(props: MDXSlugPageProps) {
   }
 
   const tags = frontData.categories?.filter(x => x) as string[] ?? []
+  const isPreRelease = frontData.status === 'pending'
 
   return (
     <PageLayout>
@@ -41,6 +43,12 @@ function MDXSlugPage(props: MDXSlugPageProps) {
         <div
           className="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
         >
+          {isPreRelease && (
+            <WarningAlert
+              title='预发布内容'
+              description='请注意. 此内容正在预发布中，内容可能会更改.'
+            />
+          )}
           <Link
             to={frontData.slug!}
             className='hover:underline'
@@ -139,6 +147,7 @@ query FetchPost($id: String) {
       xyzLink
       draftLink
       categories
+      status
     }
     body
   }

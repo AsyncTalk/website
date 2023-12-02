@@ -2,8 +2,8 @@ import React from 'react'
 import { MarkdownElementProps } from './props'
 import IconExternalLink from '../icons/external-link'
 
-function A(props: MarkdownElementProps & { href: string }) {
-  const { children, href } = props
+function A(props: MarkdownElementProps & { href?: string }) {
+  const { children, href = '' } = props
   const isExternalLink = href.startsWith('http')
   return (
     <div className='inline-flex'>
