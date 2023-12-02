@@ -1,4 +1,5 @@
 import type { GatsbyConfig } from "gatsby"
+import { remarkCodeHike } from "@code-hike/mdx"
 
 const config: GatsbyConfig = {
   graphqlTypegen: true,
@@ -31,6 +32,12 @@ const config: GatsbyConfig = {
     },
     {
       resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        mdxOptions: {
+          remarkPlugins: [[remarkCodeHike, { theme: "github-dark" }]],
+        },
+      },
     },
     {
       resolve: `gatsby-source-filesystem`,

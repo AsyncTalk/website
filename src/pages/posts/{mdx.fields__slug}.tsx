@@ -11,6 +11,8 @@ import Heading4 from '../../components/markdown/Heading4'
 import Heading5 from '../../components/markdown/Heading5'
 import Heading6 from '../../components/markdown/Heading6'
 import KeyValueInfo from '../../components/kv-info'
+import Tags from '../../components/tags/tags'
+import A from '../../components/markdown/A'
 
 type MDXSlugPageProps = {
   data: Queries.FetchPostQuery
@@ -25,6 +27,8 @@ function MDXSlugPage(props: MDXSlugPageProps) {
     return null
   }
 
+  const tags = frontData.categories?.filter(x => x) as string[] ?? []
+
   return (
     <PageLayout>
       <>
@@ -32,6 +36,7 @@ function MDXSlugPage(props: MDXSlugPageProps) {
           title={frontData.title ?? ''}
           desc={frontData.title ?? ''}
           urlPath={frontData.slug ?? ''}
+          keywords={tags}
         />
         <div
           className="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
@@ -42,8 +47,12 @@ function MDXSlugPage(props: MDXSlugPageProps) {
           >
             <h1 className='text-3xl font-bold'>{frontData.title}</h1>
           </Link>
-          <h3 className='text-lg mt-2'>{frontData.subtitle}</h3>
-          <time className='text-xs mt-2'>
+          {/* <h3 className='text-lg mt-2'>{frontData.subtitle}</h3> */}
+          <time
+            className='text-xs mt-2'
+            dateTime={frontData.publicationDate ?? undefined}
+            title={frontData.publicationDate ?? undefined}
+          >
             {new Intl.DateTimeFormat().format(new Date(frontData.publicationDate as string))}
           </time>
 
@@ -83,11 +92,21 @@ function MDXSlugPage(props: MDXSlugPageProps) {
             />
           )}
 
+          {tags.length > 0 && (
+            <KeyValueInfo
+              title='Tags'
+              value={(
+                <Tags
+                  tags={tags}
+                />
+              )}
+            />
+          )}
+
           <hr className='my-10 border-primary' />
 
           <article className=' leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all'>
             <MDXProvider
-              // title={data.mdx.frontmatter.title}
               components={{
                 h1: Heading1,
                 h2: Heading2,
@@ -95,12 +114,11 @@ function MDXSlugPage(props: MDXSlugPageProps) {
                 h4: Heading4,
                 h5: Heading5,
                 h6: Heading6,
+                a: A,
               }}
             >
-              {/* {data.mdx.body} */}
               {props.children}
             </MDXProvider>
-            {/* {props.children} */}
             <hr className='my-10 border-primary' />
           </article>
         </div>
@@ -120,6 +138,7 @@ query FetchPost($id: String) {
       url
       xyzLink
       draftLink
+      categories
     }
     body
   }

@@ -36,7 +36,10 @@ function PostsPage(props: PostsPageProps) {
 }
 
 export const query = graphql`query queryAllPodcasts {
-  allMdx(sort: {frontmatter: {publicationDate: DESC}}) {
+  allMdx(
+    sort: {frontmatter: {publicationDate: DESC}}
+    filter: {frontmatter: {status: {eq: "published"}}}
+  ) {
     nodes {
       id
       frontmatter {

@@ -7,15 +7,25 @@ type SEOHomePageProps = {
   title: string
   desc: string
   urlPath: string
+  keywords?: readonly string[]
 }
 
 function SEOTags(props: SEOHomePageProps) {
-  const url = `https://asynctalk.com${props.urlPath}`
+  const { title, desc, urlPath, keywords = [] } = props
+  const url = `https://asynctalk.com${urlPath}`
 
-  const metaTitle = props.title + ' | AsyncTalk podcast'
+  const metaTitle = title + ' | AsyncTalk podcast'
 
   const logoLink = logo
-  const desc = props.desc
+
+  const metaKeywords = [
+    'AsyncTalk',
+    'podcast',
+    'web',
+    'frontend',
+    ...keywords
+  ]
+
   return (
     <Helmet>
       <meta property="og:url" content={url} />
@@ -27,7 +37,7 @@ function SEOTags(props: SEOHomePageProps) {
       <meta property="article:author" content='AsyncTalk, AnnatarHe, Sleaf, Tinko, 小鹿' />
 
       <meta name='description' content={desc} />
-      <meta name='keyword' content='async talk, podcast, web, next.js, RSC, react, vue' />
+      <meta name='keyword' content={metaKeywords.join(', ')} />
       <title>{props.title}</title>
 
       <meta name="twitter:card" content={TwitterCardType.summary} />
