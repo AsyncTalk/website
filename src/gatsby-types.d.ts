@@ -2105,7 +2105,7 @@ type FetchPostQueryVariables = Exact<{
 }>;
 
 
-type FetchPostQuery = { readonly mdx: { readonly body: string | null, readonly frontmatter: { readonly title: string | null, readonly slug: string | null, readonly publicationDate: string | null, readonly subtitle: string | null, readonly url: string | null, readonly xyzLink: string | null, readonly draftLink: string | null } | null } | null };
+type FetchPostQuery = { readonly mdx: { readonly body: string | null, readonly frontmatter: { readonly title: string | null, readonly slug: string | null, readonly publicationDate: string | null, readonly subtitle: string | null, readonly url: string | null, readonly xyzLink: string | null, readonly draftLink: string | null, readonly categories: ReadonlyArray<string | null> | null } | null } | null };
 
 type queryAllPodcastsQueryVariables = Exact<{ [key: string]: never; }>;
 

@@ -3,7 +3,7 @@ import { MarkdownElementProps } from './props'
 
 function Heading3(props: MarkdownElementProps) {
   return (
-    <h3 className='mt-4 text-xl'>{props.children}</h3>
+    <h3 className='mt-4 mb-1 text-xl'>{props.children}</h3>
   )
 }
 

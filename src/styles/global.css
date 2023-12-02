@@ -38,10 +38,10 @@
   .at-mdx-content blockquote {
     @apply pl-4 text-gray-300 text-sm border-l-4 border-gray-300 my-4;
   }
-
+/* 
   .at-mdx-content a {
     @apply underline;
-  }
+  } */
 
   .at-mdx-content ul {
     @apply list-disc;
@@ -116,4 +116,8 @@ body {
 
 ::selection {
   @apply bg-primary text-gray-50;
+}
+
+.ch-codegroup {
+  @apply shadow;
 }
