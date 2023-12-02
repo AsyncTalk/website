@@ -1,8 +1,8 @@
-# AsyncTalk
+# AsyncTalk - 和我们一起，把 web 开发带向下一个高度
 
-AsyncTalk 是一档用中文讨论 Web 开发技术的播客节目。
+AsyncTalk 是一档以中文(华语)讨论 Web 开发技术的播客节目。
 
-[asynctalk.com](https://asynctalk.com)
+[AsyncTalk.com](https://asynctalk.com)
 
 目前已经发布到各大 Podcast 平台，感兴趣的朋友可以在以下平台中收听
 
@@ -12,4 +12,5 @@ AsyncTalk 是一档用中文讨论 Web 开发技术的播客节目。
 # 意见建议
 
 如果你有任何意见或者建议，无需顾及任何格式或者形式，均可发邮件至 [async.talk@gmail.com](mailto:async.talk@gmail.com) 沟通
+
 github 中开 issue 也没有问题
