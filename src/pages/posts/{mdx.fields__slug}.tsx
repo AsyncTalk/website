@@ -11,6 +11,7 @@ import Heading4 from '../../components/markdown/Heading4'
 import Heading5 from '../../components/markdown/Heading5'
 import Heading6 from '../../components/markdown/Heading6'
 import Hr from '../../components/markdown/Hr'
+import Img from '../../components/markdown/Img'
 import KeyValueInfo from '../../components/kv-info'
 import Tags from '../../components/tags/tags'
 import A from '../../components/markdown/A'
@@ -124,6 +125,7 @@ function MDXSlugPage(props: MDXSlugPageProps) {
                 h5: Heading5,
                 h6: Heading6,
                 hr: Hr,
+                img: Img,
                 a: A,
               }}
             >
