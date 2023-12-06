@@ -9,6 +9,9 @@ const config: GatsbyConfig = {
   },
   plugins: [
     'gatsby-plugin-pnpm',
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
     'gatsby-plugin-sitemap',
     'gatsby-plugin-postcss',
     'gatsby-plugin-react-helmet',
@@ -36,6 +39,14 @@ const config: GatsbyConfig = {
         extensions: [`.mdx`, `.md`],
         mdxOptions: {
           remarkPlugins: [[remarkCodeHike, { theme: "github-dark" }]],
+          gatsbyRemarkPlugins: [
+            {
+              resolve: `gatsby-remark-images`,
+              options: {
+                maxWidth: 1200,
+              },
+            },
+          ],
         },
       },
     },
@@ -45,6 +56,12 @@ const config: GatsbyConfig = {
         name: `posts`,
         path: `${__dirname}/src/posts/`,
         ignore: [`**/\.*`]
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/assets/`,
       },
     },
     {
