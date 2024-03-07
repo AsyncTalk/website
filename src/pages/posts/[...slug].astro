@@ -43,101 +43,100 @@ const frontData = post.data;
 const tags = frontData.categories;
 ---
 
-<!-- <article>
-  <Content />
-</article> -->
 <PageLayout title={frontData.title}>
-  <>
-    <SEOTags
-      title={frontData.title ?? ""}
-      desc={frontData.title ?? ""}
-      urlPath={frontData.slug ?? ""}
-      keywords={tags}
-    />
-    <div
-      class="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
+  <SEOTags
+    slot="seo"
+    title={frontData.title ?? ""}
+    desc={frontData.title ?? ""}
+    urlPath={post.slug ?? ""}
+    keywords={tags}
+  />
+  <div
+    class="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
+  >
+    {
+      isPreRelease && (
+        <WarningAlert
+          title="预发布内容"
+          description="请注意. 此内容正在预发布中，内容可能会更改."
+        />
+      )
+    }
+    <a href={post.slug!} class="hover:underline">
+      <h1 class="text-3xl font-bold">{frontData.title}</h1>
+    </a>
+    <a data-href={post.slug} href={post.slug!} class="hover:underline">
+      {frontData.title}
+    </a>
+    {/* <h3 class='text-lg mt-2'>{frontData.subtitle}</h3> */}
+    <time
+      class="text-xs mt-2"
+      datetime={frontData.publicationDate ?? undefined}
+      title={frontData.publicationDate ?? undefined}
     >
       {
-        isPreRelease && (
-          <WarningAlert
-            title="预发布内容"
-            description="请注意. 此内容正在预发布中，内容可能会更改."
-          />
+        new Intl.DateTimeFormat().format(
+          new Date(frontData.publicationDate as string)
         )
       }
-      <a href={frontData.slug!} class="hover:underline">
-        <h1 class="text-3xl font-bold">{frontData.title}</h1>
+    </time>
+
+    <KvInfo title="收听渠道">
+      <a
+        href={frontData.xyzLink!}
+        class="flex items-center justify-center hover:underline"
+        target="_blank"
+        referrerpolicy="no-referrer"
+      >
+        小宇宙 - {frontData.title}
+        <IconExternalLink className="scale-75 -translate-y-1" />
       </a>
-      {/* <h3 class='text-lg mt-2'>{frontData.subtitle}</h3> */}
-      <time
-        class="text-xs mt-2"
-        datetime={frontData.publicationDate ?? undefined}
-        title={frontData.publicationDate ?? undefined}
-      >
-        {
-          new Intl.DateTimeFormat().format(
-            new Date(frontData.publicationDate as string)
-          )
-        }
-      </time>
+    </KvInfo>
 
-      <KvInfo title="收听渠道">
-        <a
-          href={frontData.xyzLink!}
-          class="flex items-center justify-center hover:underline"
-          target="_blank"
-          referrerpolicy="no-referrer"
-        >
-          小宇宙 - {frontData.title}
-          <IconExternalLink className="scale-75 -translate-y-1" />
-        </a>
-      </KvInfo>
+    {
+      frontData.draftLink && (
+        <KvInfo title="草稿链接">
+          <a
+            href={frontData.draftLink}
+            class="flex items-center justify-center hover:underline"
+            target="_blank"
+            referrerpolicy="no-referrer"
+          >
+            Notion - {frontData.title}
+            <IconExternalLink className="scale-75 -translate-y-1" />
+          </a>
+        </KvInfo>
+      )
+    }
 
-      {
-        frontData.draftLink && (
-          <KvInfo title="草稿链接">
-            <a
-              href={frontData.draftLink}
-              class="flex items-center justify-center hover:underline"
-              target="_blank"
-              referrerpolicy="no-referrer"
-            >
-              Notion - {frontData.title}
-              <IconExternalLink className="scale-75 -translate-y-1" />
-            </a>
-          </KvInfo>
-        )
-      }
+    {
+      tags.length > 0 && (
+        <KvInfo title="Tags">
+          <Tags tags={tags} />
+        </KvInfo>
+      )
+    }
 
-      {
-        tags.length > 0 && (
-          <KvInfo title="Tags">
-            <Tags tags={tags} />
-          </KvInfo>
-        )
-      }
+    <hr class="my-10 border-primary" />
 
+    <article
+      class="leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all"
+    >
+      <Content
+        components={{
+          h1: Heading1,
+          h2: Heading2,
+          h3: Heading3,
+          h4: Heading4,
+          h5: Heading5,
+          h6: Heading6,
+          hr: Hr,
+          a: A,
+          p: P,
+        }}
+      />
+      <!-- </MDXProvider> -->
       <hr class="my-10 border-primary" />
-
-      <article
-        class="leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all"
-      >
-        <Content
-          components={{
-            h1: Heading1,
-            h2: Heading2,
-            h3: Heading3,
-            h4: Heading4,
-            h5: Heading5,
-            h6: Heading6,
-            hr: Hr,
-            a: A,
-            p: P,
-          }}
-        />
-        <!-- </MDXProvider> -->
-        <hr class="my-10 border-primary" />
-      </article>
-    </div>
-  </>
+    </article>
+  </div>
 </PageLayout>

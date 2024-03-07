@@ -33,28 +33,26 @@ const logoLink = logo.src;
 const metaKeywords = ["AsyncTalk", "podcast", "web", "frontend", ...keywords];
 ---
 
-<div>
-  <meta property="og:url" content={url} />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content={metaTitle} />
-  <meta property="og:image" content={logoLink} />
-  <meta property="og:description" content={desc} />
-  <meta property="og:site_name" content="AsyncTalk" />
-  <meta
-    property="article:author"
-    content="AsyncTalk, AnnatarHe, Sleaf, Tinko, 小鹿"
-  />
+<meta property="og:url" content={url} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={metaTitle} />
+<meta property="og:image" content={logoLink} />
+<meta property="og:description" content={desc} />
+<meta property="og:site_name" content="AsyncTalk" />
+<meta
+  property="article:author"
+  content="AsyncTalk, AnnatarHe, Sleaf, Tinko, 小鹿"
+/>
 
-  <meta name="description" content={desc} />
-  <meta name="keyword" content={metaKeywords.join(", ")} />
-  <title>{title}</title>
+<meta name="description" content={desc} />
+<meta name="keyword" content={metaKeywords.join(", ")} />
+<title>{title}</title>
 
-  <meta name="twitter:card" content={TwitterCardType.summary} />
-  {/* <meta name="twitter:site" content={'@asynctalk'} /> */}
-  {/* <meta name="twitter:creator" content={`@asynctalk`} /> */}
-  <meta name="twitter:url" content={url} />
-  <meta name="twitter:title" content={metaTitle} />
-  <meta name="twitter:description" content={desc} />
-  <meta name="twitter:image" content={logoLink} />
-  <meta name="twitter:image:alt" content={metaTitle} />
-</div>
+<meta name="twitter:card" content={TwitterCardType.summary} />
+{/* <meta name="twitter:site" content={'@asynctalk'} /> */}
+{/* <meta name="twitter:creator" content={`@asynctalk`} /> */}
+<meta name="twitter:url" content={url} />
+<meta name="twitter:title" content={metaTitle} />
+<meta name="twitter:description" content={desc} />
+<meta name="twitter:image" content={logoLink} />
+<meta name="twitter:image:alt" content={metaTitle} />
