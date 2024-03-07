@@ -1,0 +1,99 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* @layer base { */
+html {
+  --header-height: 4rem;
+  --footer-height: 8rem;
+  --body-min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+body::-webkit-scrollbar {
+  @apply bg-gray-800 w-1;
+}
+
+body::-webkit-scrollbar-track,
+.at-scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded;
+}
+
+.at-scrollbar::-webkit-scrollbar {
+  @apply bg-gray-700 w-1.5 rounded;
+}
+
+.at-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-900 rounded;
+}
+
+/* markdown start */
+.at-mdx-content h2 {
+  @apply my-4 text-2xl font-bold;
+}
+
+.at-mdx-content blockquote {
+  @apply pl-4 text-gray-300 text-sm border-l-4 border-gray-300 my-4;
+}
+/* 
+  .at-mdx-content a {
+    @apply underline;
+  } */
+
+.at-mdx-content ul {
+  @apply list-disc;
+}
+
+/* markdown end */
+/* } */
+
+@keyframes animation-fade-in {
+  from {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.with-fade-in {
+  animation: animation-fade-in 0.35s;
+}
+
+@keyframes animation-slide-in {
+  from {
+    transform: translateY(-1rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.with-slide-in {
+  animation: animation-slide-in 0.35s;
+}
+
+@keyframes animation-move-up {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-1rem) scale(1.05);
+  }
+}
+
+/* html,
+body {
+  margin: 0;
+  padding: 0;
+} */

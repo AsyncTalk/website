@@ -1,0 +1,26 @@
+---
+import { authors } from "../constants";
+---
+
+<footer class="bg-black p-4 w-full flex justify-center items-center flex-col">
+  <ul
+    class="max-w-screen-lg w-full text-xs text-primary/90 flex items-center justify-evenly"
+  >
+    {
+      authors.map((x) => {
+        const nameNode = <span class="p-4">{x.name}</span>;
+        return (
+          <li>
+            {x.link ? (
+              <a href={x.link} target="_blank" class="hover:underline">
+                {nameNode}
+              </a>
+            ) : (
+              nameNode
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</footer>

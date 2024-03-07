@@ -1,0 +1,156 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../../layouts/Layout.astro";
+import SEOTags from "../../components/seo/seo-tags.astro";
+import WarningAlert from "../../components/alert/warning.astro";
+import KvInfo from "../../components/kv-info.astro";
+import Tags from "../../components/tags/tags.astro";
+import IconExternalLink from "../../components/icons/external-link.astro";
+
+import Heading1 from "../../components/markdown/Heading1.astro";
+import Heading2 from "../../components/markdown/Heading2.astro";
+import Heading3 from "../../components/markdown/Heading3.astro";
+import Heading4 from "../../components/markdown/Heading4.astro";
+import Heading5 from "../../components/markdown/Heading5.astro";
+import Heading6 from "../../components/markdown/Heading6.astro";
+import Hr from "../../components/markdown/Hr.astro";
+import A from "../../components/markdown/A.astro";
+import P from "../../components/markdown/P.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+
+  return posts.map((post) => ({
+    params: {
+      slug: post.slug.replace("posts/", ""),
+    },
+    props: {
+      post,
+    },
+  }));
+}
+
+type Props = {
+  post: any;
+};
+
+const post = Astro.props.post;
+
+const { Content, headings } = await post.render();
+
+const isPreRelease = post.data.status !== "published";
+const frontData = post.data;
+const tags = frontData.categories;
+---
+
+<!-- <article>
+  <Content />
+</article> -->
+<PageLayout title={headings.title}>
+  <>
+    <SEOTags
+      title={headings.title ?? ""}
+      desc={headings.title ?? ""}
+      urlPath={headings.slug ?? ""}
+      keywords={tags}
+    />
+    <div
+      class="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
+    >
+      {
+        isPreRelease && (
+          <WarningAlert
+            title="预发布内容"
+            description="请注意. 此内容正在预发布中，内容可能会更改."
+          />
+        )
+      }
+      <a href={frontData.slug!} class="hover:underline">
+        <h1 class="text-3xl font-bold">{frontData.title}</h1>
+      </a>
+      {/* <h3 class='text-lg mt-2'>{frontData.subtitle}</h3> */}
+      <time
+        class="text-xs mt-2"
+        datetime={frontData.publicationDate ?? undefined}
+        title={frontData.publicationDate ?? undefined}
+      >
+        {
+          new Intl.DateTimeFormat().format(
+            new Date(frontData.publicationDate as string)
+          )
+        }
+      </time>
+
+      <KvInfo title="收听渠道">
+        <a
+          href={frontData.xyzLink!}
+          class="flex items-center justify-center hover:underline"
+          target="_blank"
+          referrerpolicy="no-referrer"
+        >
+          小宇宙 - {frontData.title}
+          <IconExternalLink className="scale-75 -translate-y-1" />
+        </a>
+      </KvInfo>
+
+      {
+        frontData.draftLink && (
+          <KvInfo title="草稿链接">
+            <a
+              href={frontData.draftLink}
+              class="flex items-center justify-center hover:underline"
+              target="_blank"
+              referrerpolicy="no-referrer"
+            >
+              Notion - {frontData.title}
+              <IconExternalLink className="scale-75 -translate-y-1" />
+            </a>
+          </KvInfo>
+        )
+      }
+
+      {
+        tags.length > 0 && (
+          <KvInfo title="Tags">
+            <Tags tags={tags} />
+          </KvInfo>
+        )
+      }
+
+      <hr class="my-10 border-primary" />
+
+      <article
+        class="leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all"
+      >
+        <!-- <MDXProvider
+          components={{
+            h1: Heading1,
+            h2: Heading2,
+            h3: Heading3,
+            h4: Heading4,
+            h5: Heading5,
+            h6: Heading6,
+            hr: Hr,
+            img: Img,
+            a: A,
+          }}
+        > -->
+        <Content
+          components={{
+            h1: Heading1,
+            h2: Heading2,
+            h3: Heading3,
+            h4: Heading4,
+            h5: Heading5,
+            h6: Heading6,
+            hr: Hr,
+            a: A,
+            p: P,
+          }}
+        />
+        <!-- </MDXProvider> -->
+        <hr class="my-10 border-primary" />
+      </article>
+    </div>
+  </>
+</PageLayout>

@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+import logo from "../images/logo.png";
+import IconExternalLink from "./icons/external-link.astro";
+
+const channels = [
+  {
+    link: "https://podcasts.apple.com/cn/podcast/asynctalk-s01/id1590369272",
+    title: "Apple Podcast",
+  },
+  {
+    link: "https://www.xiaoyuzhoufm.com/podcast/61684ce4d8fa23fb00fc4d3a",
+    title: "小宇宙",
+    // }, {
+    //   link: 'https://open.spotify.com/show/6AMzdZxcztIoKlZrGX79lX',
+    //   title: 'Spotify',
+    //   icon: <div />
+  },
+];
+---
+
+<header class="z-10 bg-neutral-900/40 w-full sticky top-0 backdrop-blur p-4">
+  <div
+    class="whitespace-nowrap select-none max-w-screen-lg w-full flex justify-between items-center mx-auto"
+  >
+    <div class="flex justify-center items-center">
+      <a href="/" class="flex justify-center items-center">
+        <Image src={logo} alt="Async Talk" width={32} height={32} />
+        <span
+          class="text-white/70 ml-3 hover:text-white/90 duration-100 transition-colors"
+          >Async Talk Podcast</span
+        >
+      </a>
+      <div class="h-4 w-0.5 bg-white/50 mx-4 hidden lg:block"></div>
+      <ul class="text-white/70 hidden lg:flex items-center justify-center">
+        {
+          channels.map((x) => (
+            <li class="mr-2 last:mr-0 hover:text-white/90 duration-100 transition-colors">
+              <a
+                href={x.link}
+                class="flex items-center justify-center"
+                target="_blank"
+                referrerpolicy="no-referrer"
+              >
+                {x.title}
+                <IconExternalLink className="scale-75 -translate-y-1" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div
+      class="text-white/70 hover:text-white/90 duration-100 transition-colors"
+    >
+      <a href="/posts">Posts</a>
+    </div>
+  </div>
+</header>
