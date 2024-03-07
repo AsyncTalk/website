@@ -36,7 +36,7 @@ type Props = {
 
 const post = Astro.props.post;
 
-const { Content, headings } = await post.render();
+const { Content } = await post.render();
 
 const isPreRelease = post.data.status !== "published";
 const frontData = post.data;
@@ -46,12 +46,12 @@ const tags = frontData.categories;
 <!-- <article>
   <Content />
 </article> -->
-<PageLayout title={headings.title}>
+<PageLayout title={frontData.title}>
   <>
     <SEOTags
-      title={headings.title ?? ""}
-      desc={headings.title ?? ""}
-      urlPath={headings.slug ?? ""}
+      title={frontData.title ?? ""}
+      desc={frontData.title ?? ""}
+      urlPath={frontData.slug ?? ""}
       keywords={tags}
     />
     <div
