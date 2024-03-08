@@ -5,30 +5,21 @@ export enum TwitterCardType {
   summary = "summary",
 }
 
-type MetaTwitterCardProps = {
-  card: TwitterCardType;
-  site: string;
-  creator: string;
-  url: string;
-  title: string;
-  image: string;
-  description: string;
-};
-
 type Props = {
   title: string;
   desc: string;
   urlPath: string;
   keywords?: readonly string[];
+  imageUrl?: string;
 };
 
-const { title, desc, urlPath, keywords = [] } = Astro.props;
+const { title, desc, imageUrl, urlPath, keywords = [] } = Astro.props;
 
 const url = `https://asynctalk.com${urlPath}`;
 
 const metaTitle = title + " | AsyncTalk podcast";
 
-const logoLink = logo.src;
+const logoLink = imageUrl ?? logo.src;
 
 const metaKeywords = ["AsyncTalk", "podcast", "web", "frontend", ...keywords];
 ---
@@ -49,8 +40,8 @@ const metaKeywords = ["AsyncTalk", "podcast", "web", "frontend", ...keywords];
 <title>{title}</title>
 
 <meta name="twitter:card" content={TwitterCardType.summary} />
-{/* <meta name="twitter:site" content={'@asynctalk'} /> */}
-{/* <meta name="twitter:creator" content={`@asynctalk`} /> */}
+<meta name="twitter:site" content={"@asynctalk"} />
+<meta name="twitter:creator" content={`@asynctalk`} />
 <meta name="twitter:url" content={url} />
 <meta name="twitter:title" content={metaTitle} />
 <meta name="twitter:description" content={desc} />

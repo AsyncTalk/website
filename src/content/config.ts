@@ -9,6 +9,8 @@ const posts = defineCollection({
     publicationDate: z.date(),
     categories: z.array(z.string()),
     status: z.enum(['draft', 'pending', 'published']),
+    xyzLink: z.string().url().optional(),
+    draftLink: z.string().url().optional(),
   })
 });
 // 3. Export a single `collections` object to register your collection(s)

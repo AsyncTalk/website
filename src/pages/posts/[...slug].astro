@@ -16,6 +16,7 @@ import Heading6 from "../../components/markdown/Heading6.astro";
 import Hr from "../../components/markdown/Hr.astro";
 import A from "../../components/markdown/A.astro";
 import P from "../../components/markdown/P.astro";
+import type { InferGetStaticPropsType } from "astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -30,9 +31,7 @@ export async function getStaticPaths() {
   }));
 }
 
-type Props = {
-  post: any;
-};
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const post = Astro.props.post;
 
@@ -41,6 +40,7 @@ const { Content } = await post.render();
 const isPreRelease = post.data.status !== "published";
 const frontData = post.data;
 const tags = frontData.categories;
+const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
 ---
 
 <PageLayout title={frontData.title}>
@@ -50,6 +50,7 @@ const tags = frontData.categories;
     desc={frontData.title ?? ""}
     urlPath={post.slug ?? ""}
     keywords={tags}
+    imageUrl={imgUrl}
   />
   <div
     class="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
@@ -71,14 +72,10 @@ const tags = frontData.categories;
     {/* <h3 class='text-lg mt-2'>{frontData.subtitle}</h3> */}
     <time
       class="text-xs mt-2"
-      datetime={frontData.publicationDate ?? undefined}
-      title={frontData.publicationDate ?? undefined}
+      datetime={frontData.publicationDate.toDateString()}
+      title={frontData.publicationDate.toDateString()}
     >
-      {
-        new Intl.DateTimeFormat().format(
-          new Date(frontData.publicationDate as string)
-        )
-      }
+      {new Intl.DateTimeFormat().format(frontData.publicationDate)}
     </time>
 
     <KvInfo title="收听渠道">

@@ -1,16 +1,18 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-
 /* @layer base { */
 html {
   --header-height: 4rem;
   --footer-height: 8rem;
   --body-min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  --at-primary-color: #2eb8b8;
+}
+
+.border-primary {
+  border-color: var(--at-primary-color);
 }
 
 body::-webkit-scrollbar {
-  @apply bg-gray-800 w-1;
+  width: 0.25rem;
+  background-color: rgb(31, 41, 55);
 }
 
 body::-webkit-scrollbar-track,
@@ -19,24 +21,37 @@ body::-webkit-scrollbar-track,
 }
 
 body::-webkit-scrollbar-thumb {
-  @apply bg-gray-400 rounded;
+  border-radius: 0.25rem;
+  background-color: rgb(156, 163, 175);
 }
 
 .at-scrollbar::-webkit-scrollbar {
-  @apply bg-gray-700 w-1.5 rounded;
+  border-radius: 0.25rem;
+  width: 0.375rem;
+  background-color: rgb(55, 61, 81);
 }
 
 .at-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-gray-900 rounded;
+  border-radius: 0.25rem;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 
 /* markdown start */
 .at-mdx-content h2 {
-  @apply my-4 text-2xl font-bold;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin: 1rem 0;
 }
 
 .at-mdx-content blockquote {
-  @apply pl-4 text-gray-300 text-sm border-l-4 border-gray-300 my-4;
+  padding-left: 1rem;
+  color: rgb(209, 213, 219);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-left-width: 4px;
+  border-color: rgb(209, 213, 219);
+  margin: 1rem auto;
 }
 /* 
   .at-mdx-content a {
@@ -44,7 +59,11 @@ body::-webkit-scrollbar-thumb {
   } */
 
 .at-mdx-content ul {
-  @apply list-disc;
+  list-style-type: disc;
+}
+
+.at-mdx-content li::marker {
+  color: var(--at-primary-color);
 }
 
 /* markdown end */

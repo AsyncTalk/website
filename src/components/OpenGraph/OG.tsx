@@ -1,0 +1,82 @@
+const primaryColor = '#2eb8b8'
+
+const ratio = 1.5
+
+const titleFontSize = 3 * ratio
+const descriptionFontSize = 1.6 * ratio
+const logoSize = 146 * ratio
+export default function OG({
+  title = "<Site Name> - Default Title",
+  ep,
+  sp
+}: {
+  title: string,
+  ep?: number
+  sp?: number
+  heroImageURL?: string
+}
+) {
+  const logo = 'https://asynctalk.com/static/logo-b37da5706ce4227406bf521998a0d63a.png'
+  return (
+    <div
+      style={{
+        display: 'flex',
+        width: "100%",
+        height: "100%",
+        backgroundColor: "black",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: 'center',
+          width: "100%",
+          height: "100%",
+          padding: '0 1rem',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          alignItems: "center",
+          position: "relative",
+        }}
+      >
+        <img
+          src={logo}
+          width={logoSize * 2}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <h1
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              fontSize: `${titleFontSize}rem`,
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              fontWeight: "bold",
+              maxWidth: "40rem",
+              fontFamily: "LXGWWenKai",
+              wordBreak: "break-word",
+              // color: primaryColor,
+              color: 'white',
+              margin: '1rem 0'
+            }}
+          >
+            {title}
+          </h1>
+          <p>
+            <span style={{ fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
+              Async Talk (asynctalk.com)
+            </span>
+            <span style={{ margin: '0 0.5rem', fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
+              -
+            </span>
+            <span style={{ fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
+              {ep ? 'Episode' : 'Special'} {ep ?? sp}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
