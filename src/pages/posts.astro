@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../layouts/Layout.astro";
+import SEOTags from "../components/seo/seo-tags.astro";
+
+// import { graphql, Link } from 'gatsby'
+// import React from 'react'
+// import PageLayout from '../components/layout'
+// import SEOTags from '../components/seo/seo-tags'
+
+// type Props = {
+//   data: any
+// }
+
+const posts = await getCollection("posts");
+
+posts.sort((a, b) => {
+  return (
+    new Date(b.data.publicationDate).valueOf() -
+    new Date(a.data.publicationDate).valueOf()
+  );
+});
+---
+
+<PageLayout title="Posts">
+  <SEOTags
+    slot="seo"
+    title="Posts"
+    desc="AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。 联系我们请发邮件至 async.talk@gmail.com 期待沟通。"
+    urlPath="/posts"
+  />
+  <ul class="min-h-[250px] m-auto max-w-screen-lg flex flex-col">
+    {
+      posts.map((x) => (
+        <a href={`${x.slug}`} class="hover:underline link">
+          <h3 class="text-lg p-1 mb-1">{x.data.title}</h3>
+        </a>
+      ))
+    }
+  </ul>
+</PageLayout>
+
+<style>
+  .ul {
+    padding: 1rem;
+  }
+
+  .link {
+    color: var(--at-primary-color);
+  }
+</style>

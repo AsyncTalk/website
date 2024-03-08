@@ -1,0 +1,118 @@
+/* @layer base { */
+html {
+  --header-height: 4rem;
+  --footer-height: 8rem;
+  --body-min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  --at-primary-color: #2eb8b8;
+}
+
+.border-primary {
+  border-color: var(--at-primary-color);
+}
+
+body::-webkit-scrollbar {
+  width: 0.25rem;
+  background-color: rgb(31, 41, 55);
+}
+
+body::-webkit-scrollbar-track,
+.at-scrollbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 0.25rem;
+  background-color: rgb(156, 163, 175);
+}
+
+.at-scrollbar::-webkit-scrollbar {
+  border-radius: 0.25rem;
+  width: 0.375rem;
+  background-color: rgb(55, 61, 81);
+}
+
+.at-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 0.25rem;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
+/* markdown start */
+.at-mdx-content h2 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin: 1rem 0;
+}
+
+.at-mdx-content blockquote {
+  padding-left: 1rem;
+  color: rgb(209, 213, 219);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-left-width: 4px;
+  border-color: rgb(209, 213, 219);
+  margin: 1rem auto;
+}
+/* 
+  .at-mdx-content a {
+    @apply underline;
+  } */
+
+.at-mdx-content ul {
+  list-style-type: disc;
+}
+
+.at-mdx-content li::marker {
+  color: var(--at-primary-color);
+}
+
+/* markdown end */
+/* } */
+
+@keyframes animation-fade-in {
+  from {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.with-fade-in {
+  animation: animation-fade-in 0.35s;
+}
+
+@keyframes animation-slide-in {
+  from {
+    transform: translateY(-1rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.with-slide-in {
+  animation: animation-slide-in 0.35s;
+}
+
+@keyframes animation-move-up {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-1rem) scale(1.05);
+  }
+}
+
+/* html,
+body {
+  margin: 0;
+  padding: 0;
+} */
