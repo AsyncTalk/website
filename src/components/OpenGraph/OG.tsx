@@ -6,7 +6,7 @@ const titleFontSize = 3 * ratio
 const descriptionFontSize = 1.6 * ratio
 const logoSize = 146 * ratio
 export default function OG({
-  title = "<Site Name> - Default Title",
+  title = "AsyncTalk - 和我们一起，将 Web 开发带向下一个高度",
   ep,
   sp
 }: {
