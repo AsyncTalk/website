@@ -11,7 +11,24 @@ import TitleImage from "../images/title.png";
     title="AsyncTalk - 和我们一起，把 web 开发带向下一个高度"
     desc="AsyncTalk - 和我们一起，把 web 开发带向下一个高度. AsyncTalk 是一档面向对 web 开发感兴趣的朋友所录制的中文 Podcast 节目。 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。 联系我们请发邮件至 async.talk@gmail.com 期待沟通。"
     urlPath="/"
-  />
+  >
+    <script
+      slot="jsonld"
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": Astro.site,
+        "@type": "Podcast",
+        name: "Async Talk - Podcast",
+        description: `AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。
+后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。
+联系我们请发邮件至 async.talk@gmail.com 期待沟通。`,
+        associatedMedia: {
+          "@type": "MediaObject",
+          contentUrl: "https://twitter.com/AsyncTalk",
+        },
+      })}
+    />
+  </SEOTags>
   <div
     class="h-[75vh] min-h-[250px] m-auto max-w-screen-lg bg-black bg-[center_top_30%] bg-no-repeat sm:bg-[length:auto_50%] bg-[length:95%_auto]"
     style={{
