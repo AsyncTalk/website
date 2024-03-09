@@ -51,7 +51,26 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
     urlPath={post.slug ?? ""}
     keywords={tags}
     imageUrl={imgUrl}
-  />
+  >
+    <script
+      slot="jsonld"
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": Astro.site,
+        "@type": "PodcastEpisode",
+        name: frontData.title,
+        hasOccupation: {
+          "@type": "Occupation",
+          name: "Astronaut",
+        },
+        description: frontData.title,
+        associatedMedia: {
+          "@type": "MediaObject",
+          contentUrl: "https://twitter.com/AsyncTalk",
+        },
+      })}
+    />
+  </SEOTags>
   <div
     class="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
   >
