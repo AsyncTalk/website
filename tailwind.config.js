@@ -7,7 +7,7 @@ export default {
         '128': '32rem',
       },
       colors: {
-        primary: 'oklch(71.33% 0.112 194.94)'
+        primary: '#2eb8b8'
       }
     },
   },
