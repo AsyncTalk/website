@@ -1,7 +1,23 @@
-<hr class="my-8 hr" />
+---
+interface Props {
+  className?: string;
+}
+
+const { className } = Astro.props;
+---
+
+<hr class={`my-8 hr rounded ${className ?? ""}`} />
 
 <style>
   .hr {
-    border-color: var(--at-primary-color);
+    height: 1px;
+    width: 100%;
+    border-top-width: 0;
+    background-image: linear-gradient(
+      to right,
+      var(--at-primary-color-light) 0%,
+      var(--at-primary-color) 50%,
+      var(--at-primary-color-light) 100%
+    );
   }
 </style>

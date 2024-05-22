@@ -17,6 +17,7 @@ import Hr from "../../components/markdown/Hr.astro";
 import A from "../../components/markdown/A.astro";
 import P from "../../components/markdown/P.astro";
 import type { InferGetStaticPropsType } from "astro";
+import Player from "../../components/Player.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -82,8 +83,13 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
         />
       )
     }
-    <a href={post.slug!} class="hover:underline">
-      <h1 class="text-3xl font-bold">{frontData.title}</h1>
+    <a
+      href={post.slug!}
+      class="hover:scale-105 block transition-transform duration-150 origin-left"
+    >
+      <h1 class="text-3xl mb-4 font-extrabold at-post-title">
+        {frontData.title}
+      </h1>
     </a>
     <a data-href={post.slug} href={post.slug!} class="hover:underline">
       {frontData.title}
@@ -133,7 +139,9 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
       )
     }
 
-    <hr class="my-10 border-primary" />
+    <Hr className="my-10" />
+    <Player link={post.data.xyzLink!} title={frontData.title} />
+    <Hr className="my-10" />
 
     <article
       class="leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all"
@@ -151,8 +159,19 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
           p: P,
         }}
       />
-      <!-- </MDXProvider> -->
-      <hr class="my-10 border-primary" />
+      <Hr className="my-10" />
     </article>
   </div>
 </PageLayout>
+
+<style>
+  .at-post-title {
+    background-image: linear-gradient(
+      90deg,
+      oklch(65.82% 0.04 263.51 / 92.94%),
+      var(--at-primary-color)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+</style>

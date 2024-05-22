@@ -3,7 +3,7 @@ html {
   --header-height: 4rem;
   --footer-height: 8rem;
   --body-min-height: calc(100vh - var(--header-height) - var(--footer-height));
-  --at-primary-color: #2eb8b8;
+  --at-primary-color: oklch(71.33% 0.112 194.94);
 }
 
 .border-primary {

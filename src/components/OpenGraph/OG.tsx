@@ -1,4 +1,4 @@
-const primaryColor = '#2eb8b8'
+const primaryColor = 'oklch(71.33% 0.112 194.94)'
 const ratio = 1.5
 const logo = 'https://ik.imagekit.io/annatarhe/asynctalk-logo.png?updatedAt=1716360363124'
 
