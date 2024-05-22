@@ -1,6 +1,6 @@
 const primaryColor = '#2eb8b8'
-
 const ratio = 1.5
+const logo = 'https://ik.imagekit.io/annatarhe/asynctalk-logo.png?updatedAt=1716360363124'
 
 const titleFontSize = 3 * ratio
 const descriptionFontSize = 1.6 * ratio
@@ -16,7 +16,6 @@ export default function OG({
   heroImageURL?: string
 }
 ) {
-  const logo = 'https://asynctalk.com/static/logo-b37da5706ce4227406bf521998a0d63a.png'
   return (
     <div
       style={{
