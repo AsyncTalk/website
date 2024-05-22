@@ -4,11 +4,25 @@ type Props = {
 };
 
 const { className } = Astro.props;
+
+let finalClassNames = [];
+
+if (className) {
+  finalClassNames.push(...className.split(" ").map((x) => x.trim()));
+}
+
+if (!finalClassNames.some((x) => x.startsWith("h-"))) {
+  finalClassNames.push("h-6");
+}
+
+if (!finalClassNames.some((x) => x.startsWith("w-"))) {
+  finalClassNames.push("w-6");
+}
 ---
 
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  class={`h-6 w-6 ${className ?? ""}`}
+  class={finalClassNames.join(" ")}
   fill="none"
   viewBox="0 0 24 24"
   stroke="currentColor"
