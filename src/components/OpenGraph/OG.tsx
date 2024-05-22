@@ -1,7 +1,6 @@
-import logo from '../../images/logo.png'
 const primaryColor = '#2eb8b8'
-
 const ratio = 1.5
+const logo = 'https://ik.imagekit.io/annatarhe/asynctalk-logo.png?updatedAt=1716360363124'
 
 const titleFontSize = 3 * ratio
 const descriptionFontSize = 1.6 * ratio
@@ -42,7 +41,7 @@ export default function OG({
         }}
       >
         <img
-          src={logo.src}
+          src={logo}
           width={logoSize * 2}
         />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
