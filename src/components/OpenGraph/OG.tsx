@@ -1,3 +1,4 @@
+import logo from '../../images/logo.png'
 const primaryColor = '#2eb8b8'
 
 const ratio = 1.5
@@ -16,7 +17,6 @@ export default function OG({
   heroImageURL?: string
 }
 ) {
-  const logo = 'https://asynctalk.com/static/logo-b37da5706ce4227406bf521998a0d63a.png'
   return (
     <div
       style={{
@@ -42,7 +42,7 @@ export default function OG({
         }}
       >
         <img
-          src={logo}
+          src={logo.src}
           width={logoSize * 2}
         />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
