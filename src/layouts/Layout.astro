@@ -37,7 +37,7 @@ const { title } = Astro.props;
 </html>
 <style is:global>
   :root {
-    --at-primary-color: #2eb8b8;
+    --at-primary-color: oklch(71.33% 0.112 194.94);
     --accent: 136, 58, 234;
     --accent-light: 224, 204, 250;
     --accent-dark: 49, 10, 101;
@@ -66,7 +66,7 @@ const { title } = Astro.props;
   }
 
   ::selection {
-    background-color: #2eb8b8;
+    background-color: var(--at-primary-color);
     color: rgb(249, 250, 251);
   }
 

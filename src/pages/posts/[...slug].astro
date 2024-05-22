@@ -17,6 +17,7 @@ import Hr from "../../components/markdown/Hr.astro";
 import A from "../../components/markdown/A.astro";
 import P from "../../components/markdown/P.astro";
 import type { InferGetStaticPropsType } from "astro";
+import Player from "../../components/Player.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -135,6 +136,10 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
 
     <hr class="my-10 border-primary" />
 
+    <Player link={post.data.xyzLink!} title={frontData.title} />
+
+    <hr class="my-10 border-primary" />
+
     <article
       class="leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all"
     >
@@ -151,7 +156,6 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
           p: P,
         }}
       />
-      <!-- </MDXProvider> -->
       <hr class="my-10 border-primary" />
     </article>
   </div>
