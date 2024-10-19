@@ -14,23 +14,23 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.7.0",
-    "@astrojs/mdx": "^3.0.1",
-    "@astrojs/react": "^3.3.4",
-    "@astrojs/rss": "^4.0.6",
-    "@astrojs/sitemap": "^3.1.5",
-    "@astrojs/tailwind": "^5.1.0",
-    "@types/react": "^18.3.2",
-    "@types/react-dom": "^18.3.0",
-    "astro": "^4.8.7",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^3.1.8",
+    "@astrojs/react": "^3.6.2",
+    "@astrojs/rss": "^4.0.9",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^5.1.2",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "astro": "^4.16.6",
     "gray-matter": "^4.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "satori": "^0.10.13",
-    "sharp": "^0.33.4",
+    "satori": "^0.11.2",
+    "sharp": "^0.33.5",
     "stylus": "^0.63.0",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.5"
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.6.3"
   },
   "packageManager": "pnpm@9.1.0+sha512.67f5879916a9293e5cf059c23853d571beaf4f753c707f40cb22bed5fb1578c6aad3b6c4107ccb3ba0b35be003eb621a16471ac836c87beb53f9d54bb4612724"
 }
