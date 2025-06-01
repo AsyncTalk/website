@@ -1,3 +1,4 @@
+@import "tailwindcss";
 /* @layer base { */
 html {
   --header-height: 4rem;
@@ -6,8 +7,16 @@ html {
   --at-primary-color: oklch(71.33% 0.112 194.94);
 }
 
+.text-primary {
+  color: var(--at-primary-color);
+}
+
 .border-primary {
   border-color: var(--at-primary-color);
+}
+
+.bg-primary {
+  background-color: var(--at-primary-color);
 }
 
 body::-webkit-scrollbar {

@@ -1,16 +1,17 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
-// import remarkToc from "remark-toc";
-// import rehypeMinifyHtml from "rehype-minify-html";
 import sitemap from "@astrojs/sitemap";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 
 import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://AsyncTalk.com",
-  integrations: [tailwind(), mdx({
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  integrations: [mdx({
     syntaxHighlight: "shiki",
     shikiConfig: {
       theme: "dracula"

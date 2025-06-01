@@ -3,15 +3,6 @@ import { getCollection } from "astro:content";
 import PageLayout from "../layouts/Layout.astro";
 import SEOTags from "../components/seo/seo-tags.astro";
 
-// import { graphql, Link } from 'gatsby'
-// import React from 'react'
-// import PageLayout from '../components/layout'
-// import SEOTags from '../components/seo/seo-tags'
-
-// type Props = {
-//   data: any
-// }
-
 const posts = await getCollection("posts");
 
 posts.sort((a, b) => {
@@ -32,7 +23,7 @@ posts.sort((a, b) => {
   <ul class="min-h-[250px] m-auto max-w-screen-lg flex flex-col">
     {
       posts.map((x) => (
-        <a href={`${x.slug}`} class="hover:underline link">
+        <a href={`${x.slug}`} class="hover:underline text-teal-400">
           <h3 class="text-lg p-1 mb-1">{x.data.title}</h3>
         </a>
       ))
@@ -43,9 +34,5 @@ posts.sort((a, b) => {
 <style>
   .ul {
     padding: 1rem;
-  }
-
-  .link {
-    color: var(--at-primary-color);
   }
 </style>
