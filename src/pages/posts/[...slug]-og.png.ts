@@ -39,7 +39,7 @@ export const GET: APIRoute = async function get({ props }) {
     ep,
     sp
   }));
-  return new Response(png, {
+  return new Response(png as unknown as ReadableStream, {
     headers: {
       "Content-Type": "image/png",
     },
