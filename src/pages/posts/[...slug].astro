@@ -18,6 +18,7 @@ import A from "../../components/markdown/A.astro";
 import P from "../../components/markdown/P.astro";
 import type { InferGetStaticPropsType } from "astro";
 import Player from "../../components/Player.astro";
+import AdSense from "../../components/AdSense.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -161,6 +162,7 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
         }}
       />
       <Hr className="my-10" />
+      <AdSense />
     </article>
   </div>
 </PageLayout>
