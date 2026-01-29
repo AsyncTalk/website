@@ -20,12 +20,12 @@ categories:
     - ai
     - programming
 ---
-import { YouTube } from '@astro-community/astro-embed-youtube'
+import VideoEmbed from '../../components/VideoEmbed.astro'
 
-<div class='gap-4 grid grid-cols-1 md:grid-cols-2'>
-  <YouTube id="MRjnOjxlI34" class="flex-1 aspect-video" />
-  <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=115973763898690&bvid=BV12pzXBRExJ&cid=35673083091&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" class="flex-1 aspect-video"></iframe>
-</div>
+<VideoEmbed
+  youtubeId="MRjnOjxlI34"
+  bilibiliUrl="//player.bilibili.com/player.html?isOutside=true&aid=115973763898690&bvid=BV12pzXBRExJ&cid=35673083091&p=1"
+/>
 
 ### 📕 Shownotes
 

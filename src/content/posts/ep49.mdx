@@ -21,12 +21,12 @@ categories:
     - programming
     - video
 ---
-import { YouTube } from '@astro-community/astro-embed-youtube'
+import VideoEmbed from '../../components/VideoEmbed.astro'
 
-<div class='gap-4 grid grid-cols-1 md:grid-cols-2'>
-  <YouTube id="CLW-eD7qZ0o" class="flex-1 aspect-video" />
-  <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=115973747121570&bvid=BV11szXBWEkT&cid=35672952727&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" class="flex-1 aspect-video"></iframe>
-</div>
+<VideoEmbed
+  youtubeId="CLW-eD7qZ0o"
+  bilibiliUrl="//player.bilibili.com/player.html?isOutside=true&aid=115973747121570&bvid=BV11szXBWEkT&cid=35672952727&p=1"
+/>
 
 ### 📕 Shownotes
 
