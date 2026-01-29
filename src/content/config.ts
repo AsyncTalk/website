@@ -11,6 +11,8 @@ const posts = defineCollection({
     status: z.enum(['draft', 'pending', 'published']),
     xyzLink: z.string().url().optional(),
     draftLink: z.string().url().optional(),
+    youtubeId: z.string().optional(),
+    biliUrl: z.string().optional(),
   })
 });
 // 3. Export a single `collections` object to register your collection(s)

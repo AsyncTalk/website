@@ -19,6 +19,7 @@ import P from "../../components/markdown/P.astro";
 import type { InferGetStaticPropsType } from "astro";
 import Player from "../../components/Player.astro";
 import AdSense from "../../components/AdSense.astro";
+import VideoEmbed from "../../components/VideoEmbed.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -144,6 +145,15 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
     <Hr className="my-10" />
     <Player link={post.data.xyzLink!} title={frontData.title} />
     <Hr className="my-10" />
+
+    {
+      frontData.youtubeId && frontData.biliUrl && (
+        <>
+          <VideoEmbed youtubeId={frontData.youtubeId} bilibiliUrl={frontData.biliUrl} />
+          <Hr className="my-10" />
+        </>
+      )
+    }
 
     <article
       class="leading-loose w-full at-mdx-content at-scrollbar text-gray-100 break-all"
