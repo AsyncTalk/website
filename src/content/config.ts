@@ -9,7 +9,7 @@ const posts = defineCollection({
     publicationDate: z.date(),
     categories: z.array(z.string()),
     status: z.enum(['draft', 'pending', 'published']),
-    xyzLink: z.string().url().optional(),
+    xyzLink: z.union([z.string().url(), z.literal("")]).optional(),
     draftLink: z.string().url().optional(),
     youtubeId: z.string().optional(),
     biliUrl: z.string().optional(),
