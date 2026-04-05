@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import PageLayout from "../../layouts/Layout.astro";
 import SEOTags from "../../components/seo/seo-tags.astro";
 import WarningAlert from "../../components/alert/warning.astro";
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
 
   return posts.map((post) => ({
     params: {
-      slug: post.slug.replace("posts/", ""),
+      slug: post.id.replace(/^\/?posts\//, ''),
     },
     props: {
       post,
@@ -38,12 +38,12 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const post = Astro.props.post;
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 const isPreRelease = post.data.status !== "published";
 const frontData = post.data;
 const tags = frontData.categories;
-const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
+const imgUrl = `${Astro.site?.origin}${post.id}-og.png`;
 ---
 
 <PageLayout title={frontData.title}>
@@ -51,7 +51,7 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
     slot="seo"
     title={frontData.title ?? ""}
     desc={frontData.title ?? ""}
-    urlPath={post.slug ?? ""}
+    urlPath={post.id}
     keywords={tags}
     imageUrl={imgUrl}
   >
@@ -87,14 +87,14 @@ const imgUrl = `${Astro.site?.origin}${post.slug}-og.png`;
       )
     }
     <a
-      href={post.slug!}
+      href={post.id}
       class="hover:scale-105 block transition-transform duration-150 origin-left"
     >
       <h1 class="text-3xl mb-4 font-extrabold at-post-title">
         {frontData.title}
       </h1>
     </a>
-    <a data-href={post.slug} href={post.slug!} class="hover:underline">
+    <a data-href={post.id} href={post.id} class="hover:underline">
       {frontData.title}
     </a>
     {/* <h3 class='text-lg mt-2'>{frontData.subtitle}</h3> */}

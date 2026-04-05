@@ -18,8 +18,7 @@ export async function getStaticPaths() {
 
     return {
       params: {
-        post: post.slug,
-        slug: post.slug.replace("/posts/", ""),
+        slug: post.id.replace(/^\/?posts\//, ''),
       },
       props: {
         title: post.data.title,

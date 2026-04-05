@@ -23,7 +23,7 @@ posts.sort((a, b) => {
   <ul class="min-h-[250px] m-auto max-w-screen-lg flex flex-col">
     {
       posts.map((x) => (
-        <a href={`${x.slug}`} class="hover:underline text-teal-400">
+        <a href={x.id} class="hover:underline text-teal-400">
           <h3 class="text-lg p-1 mb-1">{x.data.title}</h3>
         </a>
       ))

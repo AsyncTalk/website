@@ -14,7 +14,7 @@ export async function GET(context: APIContext) {
 
   const items = posts.map<RSSFeedItem>((post) => ({
     title: post.data.title,
-    link: `${context.site}${post.slug.startsWith('/') ? post.slug.slice(1) : post.slug}`,
+    link: `${context.site}${post.id.startsWith('/') ? post.id.slice(1) : post.id}`,
     pubDate: post.data.publicationDate,
   }));
 
