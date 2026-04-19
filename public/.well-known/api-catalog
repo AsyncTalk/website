@@ -1,0 +1,19 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://AsyncTalk.com/.well-known/api-catalog",
+      "item": [
+        {
+          "href": "https://AsyncTalk.com/rss.xml",
+          "type": "application/rss+xml"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://AsyncTalk.com/posts",
+          "type": "text/html"
+        }
+      ]
+    }
+  ]
+}
