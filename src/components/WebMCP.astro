@@ -1,0 +1,375 @@
+---
+import { getCollection } from "astro:content";
+
+type EpisodeToolData = {
+  id: string;
+  slug: string;
+  url: string;
+  title: string;
+  author: string;
+  status: string;
+  publicationDate: string;
+  categories: string[];
+  xyzLink: string | null;
+  youtubeId: string | null;
+  youtubeUrl: string | null;
+  biliUrl: string | null;
+  preview: string;
+};
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://asynctalk.com";
+const posts = await getCollection("posts");
+
+function normalizeId(id: string) {
+  return id.replace(/^\/?posts\//, "").replace(/\.mdx$/, "");
+}
+
+function normalizeExternalUrl(url: string | undefined) {
+  if (!url) {
+    return null;
+  }
+
+  if (url.startsWith("//")) {
+    return `https:${url}`;
+  }
+
+  return url;
+}
+
+function stripMarkdown(value: string) {
+  return value
+    .replace(/^---[\s\S]*?---/, "")
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/!\[[^\]]*]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]+)]\([^)]*\)/g, "$1")
+    .replace(/[#>*_~\-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 500);
+}
+
+function serializeForInlineScript(value: unknown) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
+const episodes = posts
+  .map<EpisodeToolData>((post) => {
+    const id = normalizeId(post.id);
+    const slug = `/posts/${id}`;
+    const youtubeId = post.data.youtubeId ?? null;
+
+    return {
+      id,
+      slug,
+      url: new URL(slug, siteUrl).toString(),
+      title: post.data.title,
+      author: post.data.author,
+      status: post.data.status,
+      publicationDate: post.data.publicationDate.toISOString(),
+      categories: post.data.categories,
+      xyzLink: post.data.xyzLink || null,
+      youtubeId,
+      youtubeUrl: youtubeId ? `https://www.youtube.com/watch?v=${youtubeId}` : null,
+      biliUrl: normalizeExternalUrl(post.data.biliUrl),
+      preview: stripMarkdown(post.body ?? ""),
+    };
+  })
+  .sort((a, b) => {
+    return (
+      new Date(b.publicationDate).valueOf() -
+      new Date(a.publicationDate).valueOf()
+    );
+  });
+
+const subscriptionLinks = {
+  rss: new URL("/rss.xml", siteUrl).toString(),
+  applePodcasts: "https://podcasts.apple.com/cn/podcast/asynctalk-s01/id1590369272",
+  xiaoyuzhou: "https://www.xiaoyuzhoufm.com/podcast/61684ce4d8fa23fb00fc4d3a",
+  spotify: "https://open.spotify.com/show/6AMzdZxcztIoKlZrGX79lX",
+};
+---
+
+<script
+  is:inline
+  set:html={`
+(() => {
+  const modelContext = navigator.modelContext;
+
+  if (!modelContext) {
+    return;
+  }
+
+  const episodes = ${serializeForInlineScript(episodes)};
+  const subscriptionLinks = ${serializeForInlineScript(subscriptionLinks)};
+  const DEFAULT_LIMIT = 10;
+  const MAX_LIMIT = 50;
+
+  const asBoolean = (value) => value === true;
+  const clampLimit = (value) => {
+    const parsed = Number.isInteger(value) ? value : DEFAULT_LIMIT;
+    return Math.min(Math.max(parsed, 1), MAX_LIMIT);
+  };
+  const publicEpisodes = (includePrerelease) => {
+    return episodes.filter((episode) => {
+      return includePrerelease || episode.status === "published";
+    });
+  };
+  const normalizeEpisodeId = (value) => {
+    if (typeof value !== "string") {
+      return "";
+    }
+
+    return value.trim().replace(/^\\/?posts\\//, "").replace(/^\\//, "");
+  };
+  const findEpisode = (input) => {
+    const id = normalizeEpisodeId(input.id || input.slug);
+
+    return episodes.find((episode) => {
+      return episode.id === id || episode.slug === input.slug || episode.slug === \`/posts/\${id}\`;
+    });
+  };
+  const formatEpisode = (episode) => ({
+    id: episode.id,
+    slug: episode.slug,
+    url: episode.url,
+    title: episode.title,
+    author: episode.author,
+    status: episode.status,
+    publicationDate: episode.publicationDate,
+    categories: episode.categories,
+    links: {
+      xiaoyuzhou: episode.xyzLink,
+      youtube: episode.youtubeUrl,
+      bilibili: episode.biliUrl,
+    },
+    preview: episode.preview,
+  });
+  const textResponse = (text, data) => ({
+    content: [{ type: "text", text }],
+    structuredContent: data,
+  });
+
+  const tools = [
+    {
+      name: "asynctalk.latestEpisodes",
+      title: "Latest AsyncTalk Episodes",
+      description: "Get the newest AsyncTalk podcast episodes with page URLs, categories, publication dates, and listening links.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          limit: {
+            type: "integer",
+            minimum: 1,
+            maximum: MAX_LIMIT,
+            description: "Maximum number of episodes to return. Defaults to 10.",
+          },
+          includePrerelease: {
+            type: "boolean",
+            description: "Include draft or pre-release episodes. Defaults to false.",
+          },
+        },
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute(input = {}) {
+        const includePrerelease = asBoolean(input.includePrerelease);
+        const limit = clampLimit(input.limit);
+        const results = publicEpisodes(includePrerelease).slice(0, limit).map(formatEpisode);
+
+        return textResponse(\`Found \${results.length} latest AsyncTalk episodes.\`, {
+          episodes: results,
+        });
+      },
+    },
+    {
+      name: "asynctalk.searchEpisodes",
+      title: "Search AsyncTalk Episodes",
+      description: "Search AsyncTalk episodes by title, category, episode id, or shownote preview text.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          query: {
+            type: "string",
+            minLength: 1,
+            description: "Search text to match against episode titles, categories, ids, and preview text.",
+          },
+          category: {
+            type: "string",
+            minLength: 1,
+            description: "Optional category filter, such as javascript, programming, node, or bun.",
+          },
+          limit: {
+            type: "integer",
+            minimum: 1,
+            maximum: MAX_LIMIT,
+            description: "Maximum number of matching episodes to return. Defaults to 10.",
+          },
+          includePrerelease: {
+            type: "boolean",
+            description: "Include draft or pre-release episodes. Defaults to false.",
+          },
+        },
+        required: ["query"],
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute(input = {}) {
+        const query = String(input.query || "").trim().toLowerCase();
+        const category = String(input.category || "").trim().toLowerCase();
+
+        if (!query) {
+          throw new Error("query is required.");
+        }
+
+        const includePrerelease = asBoolean(input.includePrerelease);
+        const limit = clampLimit(input.limit);
+        const results = publicEpisodes(includePrerelease)
+          .filter((episode) => {
+            return !category || episode.categories.some((item) => item.toLowerCase() === category);
+          })
+          .map((episode) => {
+            const searchable = [
+              episode.id,
+              episode.title,
+              episode.preview,
+              ...episode.categories,
+            ].join(" ").toLowerCase();
+            let score = 0;
+
+            if (episode.id.toLowerCase() === query) {
+              score += 100;
+            }
+            if (episode.title.toLowerCase().includes(query)) {
+              score += 50;
+            }
+            if (episode.categories.some((item) => item.toLowerCase().includes(query))) {
+              score += 25;
+            }
+            if (episode.preview.toLowerCase().includes(query)) {
+              score += 10;
+            }
+            if (searchable.includes(query)) {
+              score += 1;
+            }
+
+            return { episode, score };
+          })
+          .filter((item) => item.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, limit)
+          .map((item) => formatEpisode(item.episode));
+
+        return textResponse(\`Found \${results.length} AsyncTalk episodes matching "\${query}".\`, {
+          episodes: results,
+        });
+      },
+    },
+    {
+      name: "asynctalk.getEpisode",
+      title: "Get AsyncTalk Episode",
+      description: "Get metadata, page URL, listening links, video links, categories, status, and preview text for one AsyncTalk episode.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            minLength: 1,
+            description: "Episode id, such as ep59.",
+          },
+          slug: {
+            type: "string",
+            minLength: 1,
+            description: "Episode slug, such as /posts/ep59.",
+          },
+        },
+        anyOf: [{ required: ["id"] }, { required: ["slug"] }],
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute(input = {}) {
+        const episode = findEpisode(input);
+
+        if (!episode) {
+          throw new Error("Episode not found.");
+        }
+
+        return textResponse(\`Found AsyncTalk episode \${episode.id}: \${episode.title}\`, {
+          episode: formatEpisode(episode),
+        });
+      },
+    },
+    {
+      name: "asynctalk.getSubscriptionLinks",
+      title: "Get AsyncTalk Subscription Links",
+      description: "Get AsyncTalk RSS and platform subscription links.",
+      inputSchema: {
+        type: "object",
+        properties: {},
+        additionalProperties: false,
+      },
+      annotations: { readOnlyHint: true },
+      execute() {
+        return textResponse("Found AsyncTalk subscription links.", {
+          links: subscriptionLinks,
+        });
+      },
+    },
+    {
+      name: "asynctalk.openEpisode",
+      title: "Open AsyncTalk Episode",
+      description: "Navigate the current browser page to an AsyncTalk episode after validating that it exists.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            minLength: 1,
+            description: "Episode id, such as ep59.",
+          },
+          slug: {
+            type: "string",
+            minLength: 1,
+            description: "Episode slug, such as /posts/ep59.",
+          },
+        },
+        anyOf: [{ required: ["id"] }, { required: ["slug"] }],
+        additionalProperties: false,
+      },
+      execute(input = {}) {
+        const episode = findEpisode(input);
+
+        if (!episode) {
+          throw new Error("Episode not found.");
+        }
+
+        window.location.assign(episode.url);
+
+        return textResponse(\`Opening AsyncTalk episode \${episode.id}: \${episode.title}\`, {
+          episode: formatEpisode(episode),
+        });
+      },
+    },
+  ];
+
+  try {
+    if (typeof modelContext.provideContext === "function") {
+      modelContext.provideContext({ tools });
+      return;
+    }
+
+    if (typeof modelContext.registerTool === "function") {
+      const controller = new AbortController();
+
+      for (const tool of tools) {
+        modelContext.registerTool(tool, { signal: controller.signal });
+      }
+
+      window.addEventListener("pagehide", () => controller.abort(), { once: true });
+    }
+  } catch (error) {
+    console.warn("Unable to register AsyncTalk WebMCP tools.", error);
+  }
+})();
+`}
+/>
