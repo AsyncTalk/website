@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /posts/
+Allow: /rss.xml
+Disallow: /og-preview
+Disallow: /posts/*-og.png
+
+Sitemap: https://asynctalk.com/sitemap-index.xml
