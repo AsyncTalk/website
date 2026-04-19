@@ -1,0 +1,44 @@
+---
+type: podcast-episode
+status: published
+slug: /posts/ep60
+guid: 60
+title: EP60 我把 on-call 甩给了 claude code
+subtitle: 我把 on-call 甩给了 claude code
+publicationDate: 2026-04-19 14:00:00
+author: AnnatarHe
+season: 3
+episodeNumber: 60
+episodeType: full
+excerpt: EP60 我把 on-call 甩给了 claude code
+url: https://www.xiaoyuzhoufm.com/episode/69e4dd58f6e591a7ac26c85e
+size: 0
+duration: 0
+explicit: false
+xyzLink: https://www.xiaoyuzhoufm.com/episode/69e4dd58f6e591a7ac26c85e
+youtubeId: nNzIZ_bgRrY
+biliUrl: //player.bilibili.com/player.html?isOutside=true&aid=116431614185827&bvid=BV13HoFBtE2Q&cid=37642440104&p=1
+categories:
+    - claude-code
+    - mcp
+    - sentry
+    - ai
+    - devops
+---
+
+### 📕 Shownotes
+
+凌晨三点，Sentry 又响了。
+
+作为一个不想被 on-call 毁掉睡眠的打工人，我搓了套极简 harness，让 Claude Code 顶替我值班。
+
+这期聊聊我是怎么把整条链路串起来的：
+
+- 日志服务 + Sentry 通过 MCP 暴露给 Claude Code
+- Claude Code 跑定时任务，自动拉报警、定位根因
+- 改完代码跑测试、提 MR，丢回给我 review
+- 我只需要点 approve（或者骂它两句让它重写）
+
+不是什么重型 Agent 框架，就是几个 MCP server + 一点配置，但是真能跑。适合所有不想半夜爬起来看报错的开发者。
+
+BGM by Otologic
