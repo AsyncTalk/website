@@ -1,0 +1,26 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Smart Shell Cloud Logo</title>
+  <desc id="desc">A soft blue cloud, terminal prompt, and stacked platform logo mark.</desc>
+  <defs>
+    <linearGradient id="logoGradient" x1="250" y1="220" x2="780" y2="820" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A9D3FF"/>
+      <stop offset="0.52" stop-color="#8EC4FF"/>
+      <stop offset="1" stop-color="#73B5FA"/>
+    </linearGradient>
+    <clipPath id="cloudStackClip">
+      <path d="M186 605C140 589 108 546 108 496C108 432 160 380 224 380C237 380 250 382 262 386C285 276 382 194 498 194C613 194 710 276 733 386C744 383 756 381 768 381C833 381 886 434 886 499C886 549 855 591 812 607V681C812 704 800 725 780 737L563 866C532 884 494 884 463 866L246 737C227 725 214 704 214 681V607C204 607 195 606 186 605Z"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#cloudStackClip)">
+    <path d="M186 605C140 589 108 546 108 496C108 432 160 380 224 380C237 380 250 382 262 386C285 276 382 194 498 194C613 194 710 276 733 386C744 383 756 381 768 381C833 381 886 434 886 499C886 549 855 591 812 607V681C812 704 800 725 780 737L563 866C532 884 494 884 463 866L246 737C227 725 214 704 214 681V607C204 607 195 606 186 605Z" fill="url(#logoGradient)"/>
+
+    <path d="M118 570L482 779C501 790 524 790 543 779L906 570" stroke="white" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M128 671L482 874C501 885 524 885 543 874L896 671" stroke="white" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M122 594L482 801C501 812 524 812 543 801L902 594" stroke="url(#logoGradient)" stroke-width="38" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+    <path d="M132 695L482 896C501 907 524 907 543 896L892 695" stroke="url(#logoGradient)" stroke-width="38" stroke-linecap="round" stroke-linejoin="round" opacity="0.96"/>
+  </g>
+
+  <path d="M411 340L513 442L411 544" stroke="white" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M560 537H670" stroke="white" stroke-width="48" stroke-linecap="round"/>
+</svg>

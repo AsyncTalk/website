@@ -12,3 +12,9 @@ export const authors = [{
   name: '小鹿',
   link: null
 }]
+
+export const evonia = {
+  name: 'Evonia.ai',
+  url: 'https://evoniaai.github.io/',
+  logo: '/evonia/logo-dark.svg',
+} as const;
