@@ -4,6 +4,16 @@ import type React from "react";
 import satori from "satori";
 import sharp from "sharp";
 
+let fontDataPromise: Promise<Buffer> | null = null;
+function loadFont() {
+  if (!fontDataPromise) {
+    fontDataPromise = fs.readFile(
+      path.resolve('./src/assets/fonts/LXGWWenKai-Regular.ttf')
+    );
+  }
+  return fontDataPromise;
+}
+
 export async function SVG(component: React.ReactNode) {
   return await satori(component, {
     width: 1200,
@@ -11,11 +21,7 @@ export async function SVG(component: React.ReactNode) {
     fonts: [
       {
         name: "LXGWWenKai",
-        data: await fs.readFile(
-          path.resolve(
-            './src/assets/fonts/LXGWWenKai-Regular.ttf'
-          )
-        ),
+        data: await loadFont(),
         weight: 400,
       },
     ],
