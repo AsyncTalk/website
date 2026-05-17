@@ -1,7 +1,35 @@
+export type AuthorSocial = {
+  type: 'youtube' | 'bilibili' | 'xiaohongshu';
+  url: string;
+  label: string;
+};
 
-export const authors = [{
+export type Author = {
+  name: string;
+  link: string | null;
+  socials?: AuthorSocial[];
+};
+
+export const authors: Author[] = [{
   name: 'AnnatarHe',
-  link: 'https://annatarhe.com'
+  link: 'https://annatarhe.com',
+  socials: [
+    {
+      type: 'youtube',
+      url: 'https://www.youtube.com/@annatarhe',
+      label: 'YouTube',
+    },
+    {
+      type: 'bilibili',
+      url: 'https://space.bilibili.com/173440264',
+      label: 'Bilibili',
+    },
+    {
+      type: 'xiaohongshu',
+      url: 'https://www.xiaohongshu.com/user/profile/5b23cdfb11be1002d5f82bd8',
+      label: '小红书',
+    },
+  ],
 }, {
   name: 'Sleaf',
   link: 'https://twitter.com/Sleaf_'
