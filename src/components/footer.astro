@@ -1,43 +1,22 @@
 ---
 import { authors, evonia } from "../constants";
-import IconYouTube from "./icons/youtube.astro";
-import IconBilibili from "./icons/bilibili.astro";
-import IconXiaohongshu from "./icons/xiaohongshu.astro";
 ---
 
 <footer class="bg-black p-4 w-full flex justify-center items-center flex-col gap-3">
   <ul
-    class="max-w-screen-lg w-full text-xs text-teal-500 flex items-center justify-evenly flex-wrap gap-2"
+    class="max-w-screen-lg w-full text-xs text-teal-500 flex items-center justify-evenly"
   >
     {
       authors.map((x) => {
-        const nameNode = <span class="px-2 py-4">{x.name}</span>;
+        const nameNode = <span class="p-4">{x.name}</span>;
         return (
-          <li class="flex items-center">
+          <li>
             {x.link ? (
               <a href={x.link} target="_blank" class="hover:underline">
                 {nameNode}
               </a>
             ) : (
               nameNode
-            )}
-            {x.socials && x.socials.length > 0 && (
-              <span class="flex items-center gap-2 ml-1">
-                {x.socials.map((s) => (
-                  <a
-                    href={s.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${x.name} on ${s.label}`}
-                    title={`${x.name} on ${s.label}`}
-                    class="text-teal-500/70 hover:text-teal-300 transition-colors duration-100"
-                  >
-                    {s.type === "youtube" && <IconYouTube />}
-                    {s.type === "bilibili" && <IconBilibili />}
-                    {s.type === "xiaohongshu" && <IconXiaohongshu />}
-                  </a>
-                ))}
-              </span>
             )}
           </li>
         );

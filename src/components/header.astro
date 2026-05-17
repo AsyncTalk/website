@@ -2,6 +2,10 @@
 import { Image } from "astro:assets";
 import logo from "../images/logo.png";
 import IconExternalLink from "./icons/external-link.astro";
+import IconYouTube from "./icons/youtube.astro";
+import IconBilibili from "./icons/bilibili.astro";
+import IconXiaohongshu from "./icons/xiaohongshu.astro";
+import { socialLinks } from "../constants";
 
 const channels = [
   {
@@ -50,10 +54,34 @@ const channels = [
         }
       </ul>
     </div>
-    <div
-      class="text-white/70 hover:text-white/90 duration-100 transition-colors"
-    >
-      <a href="/posts">Posts</a>
+    <div class="flex items-center gap-3">
+      <ul class="flex items-center gap-3 text-white/70">
+        {
+          socialLinks.map((s) => (
+            <li class="hover:text-white/90 duration-100 transition-colors">
+              <a
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                title={s.label}
+                class="flex items-center justify-center"
+              >
+                {s.type === "youtube" && <IconYouTube className="h-5 w-5" />}
+                {s.type === "bilibili" && <IconBilibili className="h-5 w-5" />}
+                {s.type === "xiaohongshu" && (
+                  <IconXiaohongshu className="h-5 w-5" />
+                )}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div
+        class="text-white/70 hover:text-white/90 duration-100 transition-colors"
+      >
+        <a href="/posts">Posts</a>
+      </div>
     </div>
   </div>
 </header>
