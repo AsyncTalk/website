@@ -1,0 +1,48 @@
+---
+type: podcast-episode
+status: published
+slug: /posts/ep68
+guid: 68
+title: "EP68 前端代码也能「预制」了"
+subtitle: "Swagger + Hey API 自动生成请求代码,告别手写 interface"
+publicationDate: 2026-06-18 14:00:00
+author: AnnatarHe
+season: 3
+episodeNumber: 68
+episodeType: full
+excerpt: "EP68 前端代码也能「预制」了：Swagger + Hey API 自动生成请求代码,告别手写 interface"
+url: https://www.xiaoyuzhoufm.com/episode/6a33665acc736a4409ef201d
+size: 0
+duration: 0
+explicit: false
+xyzLink: https://www.xiaoyuzhoufm.com/episode/6a33665acc736a4409ef201d
+youtubeId: _VmBKj9Da40
+biliUrl: //player.bilibili.com/player.html?isOutside=true&aid=116766487355374&bvid=BV1wdLd6TEYR&cid=39197607273&p=1
+categories:
+    - swagger
+    - openapi
+    - hey-api
+    - typescript
+    - react-query
+    - restful
+    - frontend
+    - ai
+---
+
+### 📕 Shownotes
+
+在前后端协作中,RESTful 接口缺乏强类型约束,常常带来一系列联调成本:前端遇到 `read from undefined`,排查后发现是后端返回的数据结构缺失;约定好的字段类型被悄然变更(例如 int32 改为 int64 纳秒);字段命名、大小写、enum 取值、是否可选等细节需要反复确认,既影响效率,也容易引入缺陷。
+
+GraphQL、tRPC 能够从根本上解决这类问题,但对既有项目而言改造成本接近重写,新项目也存在不小的学习成本,在实际工程中往往难以落地。
+
+本期介绍一种更具可行性的渐进式方案:由后端提供规范的 `swagger.json`,前端借助 **Hey API** 根据该契约自动生成请求代码。生成结果不仅覆盖请求发送,还可包含 response body 校验(可选启用 zod)、react-query 的查询代码与 key,并在编译期完成类型检查,从而尽早暴露问题、清晰划分前后端的责任边界。
+
+该方案的另一项优势在于对 AI 与 CI 的友好度:数据结构固定后,AI 无需再推测接口的返回结构与路径细节,生成代码更准确;契约稳定也使 CI 中的类型检查、lint 与测试更加可靠。
+
+它对后端实现与整体架构几乎没有侵入——开发方式仅从调用手写的 HTTP 接口,转为调用 Hey API 生成的接口。需要强调的前提是:后端提供的 swagger 必须准确,这仍依赖团队之间充分而严谨的沟通。
+
+欢迎在评论区分享你的团队是如何管理前后端接口定义的。
+
+关注【异步聊技术 AsyncTalk】，每期聊点有趣又有料的技术。
+
+BGM by Otologic
