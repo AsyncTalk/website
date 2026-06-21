@@ -20,6 +20,8 @@ import type { InferGetStaticPropsType } from "astro";
 import Player from "../../components/Player.astro";
 import AdSense from "../../components/AdSense.astro";
 import VideoEmbed from "../../components/VideoEmbed.astro";
+import SlidesEmbed from "../../components/SlidesEmbed.astro";
+import { SLIDES_BASE_URL } from "../../constants";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -43,6 +45,9 @@ const { Content } = await render(post);
 const isPreRelease = post.data.status !== "published";
 const frontData = post.data;
 const tags = frontData.categories;
+const slug = post.id.replace(/^\/?posts\//, "");
+const slidesSrc =
+  frontData.slidesUrl ?? `${SLIDES_BASE_URL}/${slug}/`;
 const imgUrl = `${Astro.site?.origin}${post.id}-og.png`;
 ---
 
@@ -150,6 +155,15 @@ const imgUrl = `${Astro.site?.origin}${post.id}-og.png`;
       frontData.youtubeId && frontData.biliUrl && (
         <>
           <VideoEmbed youtubeId={frontData.youtubeId} bilibiliUrl={frontData.biliUrl} />
+          <Hr className="my-10" />
+        </>
+      )
+    }
+
+    {
+      (frontData.hasSlides || frontData.slidesUrl) && (
+        <>
+          <SlidesEmbed src={slidesSrc} title={frontData.title} />
           <Hr className="my-10" />
         </>
       )

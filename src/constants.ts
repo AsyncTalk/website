@@ -36,3 +36,8 @@ export const evonia = {
   url: 'https://evoniaai.github.io/',
   logo: '/evonia/logo-dark.svg',
 } as const;
+
+// Base URL where per-episode Slidev decks are hosted (the video-slides repo,
+// deployed to GitHub Pages). The deck for an episode lives at `${SLIDES_BASE_URL}/<ep>/`.
+// Change this if the decks move to a custom domain.
+export const SLIDES_BASE_URL = 'https://asynctalk.github.io/video-slides';
