@@ -1,0 +1,26 @@
+---
+interface Props {
+  src: string
+  title?: string
+}
+
+const { src, title } = Astro.props
+---
+
+<div class="w-full">
+  <iframe
+    src={src}
+    title={title ?? 'Slides'}
+    allowfullscreen="true"
+    loading="lazy"
+    class="w-full aspect-video border-0 rounded-lg"
+  ></iframe>
+  <a
+    href={src}
+    target="_blank"
+    referrerpolicy="no-referrer"
+    class="text-xs opacity-70 hover:opacity-100 hover:underline mt-2 inline-block"
+  >
+    在新标签页打开幻灯片 ↗
+  </a>
+</div>

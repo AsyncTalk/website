@@ -13,6 +13,8 @@ const posts = defineCollection({
     draftLink: z.string().url().optional(),
     youtubeId: z.string().optional(),
     biliUrl: z.string().optional(),
+    hasSlides: z.boolean().optional(),
+    slidesUrl: z.string().url().optional(),
   })
 });
 
