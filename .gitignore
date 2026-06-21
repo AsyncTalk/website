@@ -104,3 +104,7 @@ dist
 .tern-port
 .DS_Store
 .astro/
+
+# Generated thumbnails
+public/thumbnails/
+scripts/public/
