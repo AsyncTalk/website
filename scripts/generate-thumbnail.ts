@@ -126,6 +126,7 @@ async function main() {
             {
               type: "input_image",
               file_id: hostFaceFileId,
+              detail: "auto",
             },
           ],
         },
@@ -145,8 +146,8 @@ async function main() {
       .filter((output) => output.type === "image_generation_call")
       .map((output) => output.result);
 
-    if (imageData.length > 0) {
-      const imageBase64 = imageData[0];
+    const imageBase64 = imageData[0];
+    if (imageBase64) {
       await writeProcessedImage(
         Buffer.from(imageBase64, "base64"),
         outputPath,
