@@ -1,6 +1,11 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
+
 const primaryColor = 'oklch(71.33% 0.112 194.94)'
 const ratio = 1.5
-const logo = 'https://ik.imagekit.io/annatarhe/asynctalk-logo.png?updatedAt=1716360363124'
+const logo = `data:image/png;base64,${readFileSync(
+  path.resolve("./src/images/logo.png"),
+).toString("base64")}`
 
 const titleFontSize = 3 * ratio
 const descriptionFontSize = 1.6 * ratio

@@ -6,8 +6,8 @@ const openai = new OpenAI();
 
 const facePath = path.resolve("..", "public/asynctalk-annatarhe.jpg");
 
-async function createFile(filePath) {
-  const fileContent = fs.createReadStream(facePath);
+async function createFile(filePath: string) {
+  const fileContent = fs.createReadStream(filePath);
   const result = await openai.files.create({
     file: fileContent,
     purpose: "vision",
