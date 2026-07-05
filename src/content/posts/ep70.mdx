@@ -1,0 +1,52 @@
+---
+type: podcast-episode
+status: published
+slug: /posts/ep70
+guid: 70
+title: "EP70 react-call:弹框还能 await"
+subtitle: "用 createCallable 把自定义组件变成可以 await 的函数,告别手写 Portal 管理弹框"
+publicationDate: 2026-07-04 14:00:00
+author: AnnatarHe
+season: 3
+episodeNumber: 70
+episodeType: full
+excerpt: "EP70 react-call:弹框还能 await：用 createCallable 把自定义组件变成可以 await 的函数,告别手写 Portal 管理弹框"
+url: https://www.xiaoyuzhoufm.com/episode/6a478bb0185ee660ea89d2fd
+size: 0
+duration: 0
+explicit: false
+xyzLink: https://www.xiaoyuzhoufm.com/episode/6a478bb0185ee660ea89d2fd
+youtubeId: t7Nge56aiYA
+biliUrl: //player.bilibili.com/player.html?isOutside=true&aid=116795075796778&bvid=BV1pc7T6qESk&cid=39324485647&p=1
+categories:
+    - react
+    - react-call
+    - typescript
+    - frontend
+    - web
+    - ui
+    - ai
+---
+
+### 📕 Shownotes
+
+有没有遇到过这种场景:一个删除按钮,点下去得先弹个「确认删除吗?」,用户点确定才真的删。
+
+浏览器自带的 window.confirm 是能用,但又丑、又几乎不能定制——位置、颜色、甚至标题都改不了。于是你只好自己写组件、用 React Portal 挂载、再手动管理 DOM 的显隐和生命周期,挺折腾的。
+
+这期聊聊 react-call 这个小而美的库。核心思路一句话:把你自定义的 React 组件变成「可以 await 的函数」。用 createCallable 包一层,就能在调用方直接 await xxx.call(...),像调用异步函数一样拿到用户的操作结果。
+
+视频里会过一遍:
+
+- 从 window.confirm 的痛点切入,为什么手写 Portal 很烦
+- createCallable 的基本用法(call / Title / action 几个字段)
+- 用 bottom sheet 写的实战例子
+- 支持同时弹出多个实例(比如一连串 Toast)
+- 和 react-query mutation 的配合:接口失败时弹框依然保留
+- 自带 skills,对 AI 编程也很友好
+
+你平时都怎么处理这类弹框、或者异步交互逻辑?评论区聊聊~
+
+关注【异步聊技术 AsyncTalk】，每期聊点有趣又有料的技术。
+
+BGM by Otologic
