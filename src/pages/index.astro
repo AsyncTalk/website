@@ -3,6 +3,8 @@ import BgImg from "../images/bg-fm.png";
 import PageLayout from "../layouts/Layout.astro";
 import SEOTags from "../components/seo/seo-tags.astro";
 import TitleImage from "../images/title.png";
+
+const site = Astro.site;
 ---
 
 <PageLayout title="AsyncTalk">
@@ -16,7 +18,7 @@ import TitleImage from "../images/title.png";
       slot="jsonld"
       type="application/ld+json"
       set:html={JSON.stringify({
-        "@context": Astro.site,
+        "@context": site,
         "@type": "Podcast",
         name: "Async Talk - Podcast",
         description: `AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。
