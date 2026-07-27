@@ -3,7 +3,6 @@ import { PNG } from "../../components/OpenGraph/createImage";
 import type { APIRoute, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 // import fs from "fs/promises";
-// import matter from "gray-matter";
 
 export async function getStaticPaths() {
   const blog = await getCollection("posts");
