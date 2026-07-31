@@ -3,17 +3,26 @@ import { YouTube } from '@astro-community/astro-embed-youtube'
 
 interface Props {
   youtubeId: string
-  bilibiliUrl: string
+  bilibiliUrl?: string
 }
 
 const { youtubeId, bilibiliUrl } = Astro.props
 ---
 
-<div class="gap-4 grid grid-cols-1 md:grid-cols-2">
+<div
+  class:list={[
+    "gap-4 grid grid-cols-1",
+    { "md:grid-cols-2": bilibiliUrl },
+  ]}
+>
   <YouTube id={youtubeId} class="flex-1 aspect-video" />
-  <iframe
-    src={bilibiliUrl}
-    allowfullscreen="true"
-    class="flex-1 aspect-video border-0"
-  ></iframe>
+  {
+    bilibiliUrl && (
+      <iframe
+        src={bilibiliUrl}
+        allowfullscreen="true"
+        class="flex-1 aspect-video border-0"
+      />
+    )
+  }
 </div>
