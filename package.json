@@ -9,10 +9,11 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && pnpm seo:check",
     "generate:thumbnail": "tsx scripts/generate-thumbnail.ts",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "seo:check": "node scripts/check-seo.mjs"
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.10",

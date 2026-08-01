@@ -3,54 +3,100 @@ import BgImg from "../images/bg-fm.png";
 import PageLayout from "../layouts/Layout.astro";
 import SEOTags from "../components/seo/seo-tags.astro";
 import TitleImage from "../images/title.png";
+import { podcastLinks, socialLinks } from "../constants";
+import { SITE_URL, compactUrls, jsonLd } from "../lib/seo";
 
-const site = Astro.site;
+const title = "AsyncTalk｜和我们一起，将 Web 开发带向下一个高度";
+const description =
+  "AsyncTalk 是一档关注 Web 开发、前端工程化与 AI 的中文播客，分享前沿技术、工程实践与开发者观点。和我们一起，将 Web 开发带向下一个高度。";
+const homeUrl = new URL("/", Astro.site ?? SITE_URL).toString();
+const organizationId = `${homeUrl}#organization`;
+const podcastId = `${homeUrl}#podcast`;
+const logoUrl = new URL("/android-chrome-512x512.png", homeUrl).toString();
+const sameAs = compactUrls([
+  ...Object.values(podcastLinks),
+  ...socialLinks.map((link) => link.url),
+]);
 ---
 
-<PageLayout title="AsyncTalk">
+<PageLayout>
   <SEOTags
     slot="seo"
-    title="AsyncTalk - 和我们一起，把 web 开发带向下一个高度"
-    desc="AsyncTalk - 和我们一起，把 web 开发带向下一个高度. AsyncTalk 是一档面向对 web 开发感兴趣的朋友所录制的中文 Podcast 节目。 后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。 联系我们请发邮件至 async.talk@gmail.com 期待沟通。"
-    urlPath="/"
+    title={title}
+    description={description}
+    canonicalPath="/"
   >
     <script
       slot="jsonld"
       type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": site,
-        "@type": "Podcast",
-        name: "Async Talk - Podcast",
-        description: `AsyncTalk 是一档中文，面向对 web 开发感兴趣的朋友所录制的 Podcast 节目。
-后续我们会讨论更多更为前沿，工程化的话题，感兴趣可以持续关注。
-联系我们请发邮件至 async.talk@gmail.com 期待沟通。`,
-        associatedMedia: {
-          "@type": "MediaObject",
-          contentUrl: "https://twitter.com/AsyncTalk",
-        },
+      is:inline
+      set:html={jsonLd({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": `${homeUrl}#website`,
+            url: homeUrl,
+            name: "AsyncTalk",
+            alternateName: ["Async Talk Podcast", "asynctalk.com"],
+            inLanguage: "zh-CN",
+            publisher: { "@id": organizationId },
+          },
+          {
+            "@type": "Organization",
+            "@id": organizationId,
+            url: homeUrl,
+            name: "AsyncTalk",
+            logo: {
+              "@type": "ImageObject",
+              url: logoUrl,
+              width: 512,
+              height: 512,
+            },
+            sameAs,
+          },
+          {
+            "@type": "PodcastSeries",
+            "@id": podcastId,
+            url: homeUrl,
+            name: "AsyncTalk",
+            description,
+            inLanguage: "zh-CN",
+            image: new URL("/og.png", homeUrl).toString(),
+            webFeed: new URL("/rss.xml", homeUrl).toString(),
+            publisher: { "@id": organizationId },
+            sameAs,
+          },
+        ],
       })}
     />
   </SEOTags>
-  <div
-    class="h-[75vh] min-h-[250px] m-auto max-w-screen-lg bg-black bg-[center_top_30%] bg-no-repeat sm:bg-[length:auto_50%] bg-[length:95%_auto]"
+  <section
+    class="min-h-[70vh] m-auto max-w-screen-lg bg-black bg-[center_top_30%] bg-no-repeat sm:bg-[length:auto_50%] bg-[length:95%_auto]"
     style={{
-      backgroundImage: `url(${BgImg})`,
+      backgroundImage: `url(${BgImg.src})`,
     }}
   >
-    <div class="h-full backdrop-blur-md">
+    <div class="min-h-[70vh] backdrop-blur-md">
       <div
-        class="h-full select-none -translate-y-1/4 flex flex-col justify-center max-w-[50%] m-auto"
+        class="min-h-[70vh] select-none flex flex-col justify-center max-w-xl m-auto px-6"
       >
         <img
           draggable={false}
-          class="text-center"
+          class="text-center w-full h-auto"
           src={TitleImage.src}
-          title="async-talk"
+          alt="AsyncTalk"
+          width={1035}
+          height={236}
+          fetchpriority="high"
         />
-        <h3 class="text-white mt-10 italic text-right w-full">
-          把前端带向下一个高度
-        </h3>
+        <h1 class="text-white mt-10 text-2xl italic text-right w-full">
+          和我们一起，将 Web 开发带向下一个高度
+        </h1>
+        <p class="mt-5 text-sm leading-7 text-white/70 text-right">
+          关注 Web 开发、前端工程化与 AI，分享前沿技术、工程实践与开发者观点。
+        </p>
       </div>
     </div>
-  </div>
+  </section>
 </PageLayout>

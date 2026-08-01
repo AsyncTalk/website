@@ -5,7 +5,10 @@ import { getCollection } from "astro:content";
 // import fs from "fs/promises";
 
 export async function getStaticPaths() {
-  const blog = await getCollection("posts");
+  const blog = await getCollection(
+    "posts",
+    ({ data }) => !import.meta.env.PROD || data.status === "published",
+  );
   // const blogData = await getBlogFrontmatterCollection();
   return blog.map((post) => {
     const title = post.data.title
@@ -40,6 +43,7 @@ export const GET: APIRoute = async function get({ props }) {
   return new Response(png as unknown as ReadableStream, {
     headers: {
       "Content-Type": "image/png",
+      "Cache-Control": "public, max-age=86400, s-maxage=604800",
     },
   });
 };

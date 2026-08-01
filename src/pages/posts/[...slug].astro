@@ -22,9 +22,22 @@ import AdSense from "../../components/AdSense.astro";
 import VideoEmbed from "../../components/VideoEmbed.astro";
 import SlidesEmbed from "../../components/SlidesEmbed.astro";
 import { SLIDES_BASE_URL } from "../../constants";
+import {
+  SITE_URL,
+  bilibiliUrl as getBilibiliUrl,
+  canonicalUrl,
+  compactUrls,
+  episodePath,
+  jsonLd,
+  parseAuthors,
+  youtubeUrl,
+} from "../../lib/seo";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("posts");
+  const posts = await getCollection(
+    "posts",
+    ({ data }) => !import.meta.env.PROD || data.status === "published",
+  );
 
   return posts.map((post) => ({
     params: {
@@ -48,35 +61,66 @@ const tags = frontData.categories;
 const slug = post.id.replace(/^\/?posts\//, "");
 const slidesSrc =
   frontData.slidesUrl ?? `${SLIDES_BASE_URL}/${slug}/`;
-const imgUrl = `${Astro.site?.origin}${post.id}-og.png`;
+const pagePath = episodePath(post.id);
+const pageUrl = canonicalUrl(pagePath, Astro.site);
+const imgUrl = new URL(
+  `${pagePath.replace(/\/$/, "")}-og.png`,
+  Astro.site ?? SITE_URL,
+).toString();
+const podcastId = `${new URL("/", Astro.site ?? SITE_URL)}#podcast`;
+const organizationId = `${new URL("/", Astro.site ?? SITE_URL)}#organization`;
+const authorEntities = parseAuthors(frontData.author);
+const sameAs = compactUrls([
+  frontData.xyzLink || undefined,
+  youtubeUrl(frontData.youtubeId),
+  getBilibiliUrl(frontData.biliUrl),
+]);
+const title = `${frontData.title}｜AsyncTalk`;
 ---
 
-<PageLayout title={frontData.title}>
+<PageLayout>
   <SEOTags
     slot="seo"
-    title={frontData.title ?? ""}
-    desc={frontData.title ?? ""}
-    urlPath={post.id}
-    keywords={tags}
+    title={title}
+    description={frontData.excerpt}
+    canonicalPath={pagePath}
+    type="article"
+    publishedTime={frontData.publicationDate}
+    tags={tags}
     imageUrl={imgUrl}
+    imageAlt={`${frontData.title} 节目封面`}
+    noindex={isPreRelease}
   >
     <script
       slot="jsonld"
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify({
-        "@context": Astro.site,
+      set:html={jsonLd({
+        "@context": "https://schema.org",
         "@type": "PodcastEpisode",
+        "@id": `${pageUrl}#episode`,
+        url: pageUrl,
         name: frontData.title,
-        hasOccupation: {
-          "@type": "Occupation",
-          name: "Astronaut",
+        description: frontData.excerpt,
+        datePublished: frontData.publicationDate.toISOString(),
+        inLanguage: "zh-CN",
+        episodeNumber: frontData.episodeNumber,
+        image: imgUrl,
+        isAccessibleForFree: true,
+        keywords: tags,
+        author: authorEntities,
+        publisher: { "@id": organizationId },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": pageUrl,
         },
-        description: frontData.title,
-        associatedMedia: {
-          "@type": "MediaObject",
-          contentUrl: "https://twitter.com/AsyncTalk",
+        partOfSeries: { "@id": podcastId },
+        partOfSeason: {
+          "@type": "PodcastSeason",
+          seasonNumber: frontData.season,
+          partOfSeries: { "@id": podcastId },
         },
+        ...(sameAs.length > 0 ? { sameAs } : {}),
       })}
     />
   </SEOTags>
@@ -91,24 +135,16 @@ const imgUrl = `${Astro.site?.origin}${post.id}-og.png`;
         />
       )
     }
-    <a
-      href={post.id}
-      class="hover:scale-105 block transition-transform duration-150 origin-left"
-    >
-      <h1 class="text-3xl mb-4 font-extrabold at-post-title">
-        {frontData.title}
-      </h1>
-    </a>
-    <a data-href={post.id} href={post.id} class="hover:underline">
+    <h1 class="text-3xl mb-3 font-extrabold at-post-title">
       {frontData.title}
-    </a>
-    {/* <h3 class='text-lg mt-2'>{frontData.subtitle}</h3> */}
+    </h1>
+    <p class="text-base leading-7 text-gray-300 mb-3">{frontData.excerpt}</p>
     <time
-      class="text-xs mt-2"
-      datetime={frontData.publicationDate.toDateString()}
-      title={frontData.publicationDate.toDateString()}
+      class="text-xs text-gray-400"
+      datetime={frontData.publicationDate.toISOString()}
+      title={frontData.publicationDate.toISOString()}
     >
-      {new Intl.DateTimeFormat().format(frontData.publicationDate)}
+      {new Intl.DateTimeFormat("zh-CN").format(frontData.publicationDate)}
     </time>
 
     {

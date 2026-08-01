@@ -7,11 +7,10 @@ const logo = `data:image/png;base64,${readFileSync(
   path.resolve("./src/images/logo.png"),
 ).toString("base64")}`
 
-const titleFontSize = 3 * ratio
 const descriptionFontSize = 1.6 * ratio
 const logoSize = 146 * ratio
 export default function OG({
-  title = "AsyncTalk - 和我们一起，将 Web 开发带向下一个高度",
+  title = "AsyncTalk｜和我们一起，将 Web 开发带向下一个高度",
   ep,
   sp
 }: {
@@ -21,6 +20,8 @@ export default function OG({
   heroImageURL?: string
 }
 ) {
+  const titleFontSize = (title.length > 30 ? 2 : title.length > 20 ? 2.4 : 3) * ratio
+
   return (
     <div
       style={{
@@ -47,7 +48,9 @@ export default function OG({
       >
         <img
           src={logo}
-          width={logoSize * 2}
+          width={logoSize * 1.7}
+          height={logoSize * 1.7}
+          style={{ flexShrink: 0, objectFit: "contain" }}
         />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <h1
@@ -68,16 +71,20 @@ export default function OG({
           >
             {title}
           </h1>
-          <p>
+          <p style={{ display: 'flex', alignItems: 'center' }}>
             <span style={{ fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
               Async Talk (asynctalk.com)
             </span>
-            <span style={{ margin: '0 0.5rem', fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
-              -
-            </span>
-            <span style={{ fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
-              {ep ? 'Episode' : 'Special'} {ep ?? sp}
-            </span>
+            {(ep !== undefined || sp !== undefined) && (
+              <>
+                <span style={{ margin: '0 0.5rem', fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
+                  -
+                </span>
+                <span style={{ fontSize: `${descriptionFontSize}rem`, color: primaryColor }}>
+                  {ep !== undefined ? 'Episode' : 'Special'} {ep ?? sp}
+                </span>
+              </>
+            )}
           </p>
         </div>
       </div>

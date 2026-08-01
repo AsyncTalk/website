@@ -1,4 +1,4 @@
-# AsyncTalk - 和我们一起，把 web 开发带向下一个高度
+# AsyncTalk - 和我们一起，将 Web 开发带向下一个高度
 
 AsyncTalk 是一档以中文(华语)讨论 Web 开发技术的播客节目。
 

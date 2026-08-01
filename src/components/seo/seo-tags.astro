@@ -1,55 +1,73 @@
 ---
-import logo from "../../images/logo.png";
-
-export enum TwitterCardType {
-  summary = "summary",
-  summaryLargeImage = "summary_large_image",
-}
+import {
+  OG_LOCALE,
+  SITE_NAME,
+  canonicalUrl,
+  compactUrls,
+} from "../../lib/seo";
 
 type Props = {
   title: string;
-  desc: string;
-  urlPath: string;
-  keywords?: readonly string[];
+  description: string;
+  canonicalPath: string;
+  type?: "website" | "article";
   imageUrl?: string;
+  imageAlt?: string;
+  publishedTime?: Date;
+  tags?: readonly string[];
+  noindex?: boolean;
 };
 
-const { title, desc, imageUrl, urlPath, keywords = [] } = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath,
+  type = "website",
+  imageUrl,
+  imageAlt = title,
+  publishedTime,
+  tags = [],
+  noindex = false,
+} = Astro.props;
 
-const url = `https://asynctalk.com${urlPath}`;
-
-const metaTitle = title + " | AsyncTalk podcast";
-
-const logoLink = imageUrl ?? logo.src;
-
-const metaKeywords = ["AsyncTalk", "podcast", "web", "frontend", ...keywords];
+const pageUrl = canonicalUrl(canonicalPath, Astro.site);
+const socialImageUrl = new URL(imageUrl ?? "/og.png", Astro.site).toString();
+const metaTags = compactUrls(tags.map((tag) => tag.trim()));
 ---
 
-<meta property="og:url" content={url} />
-<meta property="og:type" content="article" />
-<meta property="og:title" content={metaTitle} />
-<meta property="og:image" content={logoLink} />
-<meta property="og:description" content={desc} />
-<meta property="og:site_name" content="AsyncTalk" />
-<meta
-  property="article:author"
-  content="AsyncTalk, AnnatarHe, Sleaf, Tinko, 小鹿"
-/>
-
-<meta name="description" content={desc} />
-<meta name="keyword" content={metaKeywords.join(", ")} />
 <title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={pageUrl} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
 
-<meta name="twitter:card" content={TwitterCardType.summaryLargeImage} />
-<meta name="twitter:site" content={"@asynctalk"} />
-<meta name="twitter:creator" content={`@asynctalk`} />
-<meta name="twitter:url" content={url} />
-<meta name="twitter:title" content={metaTitle} />
-<meta name="twitter:description" content={desc} />
-<meta name="twitter:image" content={logoLink} />
-<meta name="twitter:image:alt" content={metaTitle} />
+<meta property="og:url" content={pageUrl} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:locale" content={OG_LOCALE} />
+<meta property="og:image" content={socialImageUrl} />
+<meta property="og:image:secure_url" content={socialImageUrl} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
 
-<!-- <meta property="article:published_time" content="2024-03-05T00:00:00.000Z"> -->
-<!-- <meta property="article:author" content="https://github.com/GoodBoyDigital"> -->
-<meta property="article:tag" content={metaKeywords.join(", ")} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@asynctalk" />
+<meta name="twitter:creator" content="@asynctalk" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+{
+  type === "article" && publishedTime && (
+    <meta
+      property="article:published_time"
+      content={publishedTime.toISOString()}
+    />
+  )
+}
+{type === "article" && metaTags.map((tag) => <meta property="article:tag" content={tag} />)}
 <slot name="jsonld" />
