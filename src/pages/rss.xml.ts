@@ -38,9 +38,9 @@ export async function GET(context: APIContext) {
   });
 
   return rss({
-    title: "AsyncTalk｜中文 Web 开发与 AI 播客",
+    title: "AsyncTalk｜和我们一起，将 Web 开发带向下一个高度",
     description:
-      "关注 Web 开发、前端工程化与 AI，分享前沿技术、工程实践与开发者观点。",
+      "关注 Web 开发、前端工程化与 AI，分享前沿技术、工程实践与开发者观点。和我们一起，将 Web 开发带向下一个高度。",
     site,
     customData: "<language>zh-CN</language>",
     items,

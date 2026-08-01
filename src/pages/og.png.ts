@@ -4,7 +4,7 @@ import { PNG } from "../components/OpenGraph/createImage";
 
 export const GET: APIRoute = async function get() {
   const png = await PNG(
-    OG({ title: "AsyncTalk｜中文 Web 开发与 AI 播客" }),
+    OG({ title: "AsyncTalk｜和我们一起，将 Web 开发带向下一个高度" }),
   );
 
   return new Response(png as unknown as ReadableStream, {

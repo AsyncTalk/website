@@ -10,7 +10,7 @@ const logo = `data:image/png;base64,${readFileSync(
 const descriptionFontSize = 1.6 * ratio
 const logoSize = 146 * ratio
 export default function OG({
-  title = "AsyncTalk｜中文 Web 开发与 AI 播客",
+  title = "AsyncTalk｜和我们一起，将 Web 开发带向下一个高度",
   ep,
   sp
 }: {
