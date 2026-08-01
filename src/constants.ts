@@ -31,6 +31,14 @@ export const socialLinks = [
   },
 ] as const;
 
+export const podcastLinks = {
+  applePodcasts:
+    "https://podcasts.apple.com/cn/podcast/asynctalk-s01/id1590369272",
+  xiaoyuzhou:
+    "https://www.xiaoyuzhoufm.com/podcast/61684ce4d8fa23fb00fc4d3a",
+  spotify: "https://open.spotify.com/show/6AMzdZxcztIoKlZrGX79lX",
+} as const;
+
 export const evonia = {
   name: 'Evonia.ai',
   url: 'https://evoniaai.github.io/',

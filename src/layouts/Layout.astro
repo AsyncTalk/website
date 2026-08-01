@@ -1,21 +1,15 @@
 ---
 import "../global.css";
-interface Props {
-  title: string;
-}
 
 import Layout2 from "../components/layout.astro";
 import WebMCP from "../components/WebMCP.astro";
-
-const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -26,7 +20,7 @@ const { title } = Astro.props;
       rel="alternate"
       type="application/rss+xml"
       title="AsyncTalk Podcast - RSS Feed"
-      href={`${Astro.site}rss.xml`}
+      href={new URL("/rss.xml", Astro.site)}
     />
     <slot name="seo" />
     <script
@@ -35,7 +29,6 @@ const { title } = Astro.props;
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4489403687940405"
       crossorigin="anonymous"
     />
-    <title>{title}</title>
   </head>
   <body>
     <Layout2>

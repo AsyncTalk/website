@@ -8,7 +8,8 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://AsyncTalk.com",
+  site: "https://asynctalk.com/",
+  trailingSlash: "always",
   compressHTML: true,
   vite: {
     plugins: [tailwindcss()],
