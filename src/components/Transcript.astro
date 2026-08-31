@@ -1,0 +1,51 @@
+---
+import { formatTimestamp, type TranscriptParagraph } from "../lib/srt";
+
+interface Props {
+  paragraphs: TranscriptParagraph[];
+  srcUrl: string;
+}
+
+const { paragraphs, srcUrl } = Astro.props;
+---
+
+<details class="w-full">
+  <summary class="cursor-pointer select-none list-none flex items-center gap-2">
+    <span class="at-transcript-marker text-sm opacity-60 transition-transform">▶</span>
+    <h2 class="text-xl font-bold inline">📝 本期文字稿</h2>
+    <span class="text-xs opacity-60">（{paragraphs.length} 段）</span>
+  </summary>
+
+  <a
+    href={srcUrl}
+    download
+    class="text-xs opacity-70 hover:opacity-100 hover:underline mt-2 inline-block"
+  >
+    下载 .srt 字幕文件 ↓
+  </a>
+
+  <div
+    class="at-scrollbar mt-3 max-h-[32rem] overflow-y-auto pr-2 text-gray-200 leading-loose"
+  >
+    {
+      paragraphs.map((paragraph) => (
+        <p class="mb-3">
+          <span class="mr-2 font-mono text-xs opacity-50 align-middle">
+            [{formatTimestamp(paragraph.start)}]
+          </span>
+          {paragraph.text}
+        </p>
+      ))
+    }
+  </div>
+</details>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details[open] .at-transcript-marker {
+    transform: rotate(90deg);
+  }
+</style>

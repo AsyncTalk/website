@@ -4,7 +4,7 @@ import { z } from 'astro/zod';
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/posts' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     type: z.literal('podcast-episode'),
     slug: z.string().startsWith('/posts/'),
     guid: z.number().int().nonnegative(),
@@ -26,6 +26,8 @@ const posts = defineCollection({
     draftLink: z.url().optional(),
     youtubeId: z.string().optional(),
     biliUrl: z.string().optional(),
+    cover: image().optional(),
+    srt: z.string().startsWith('/').endsWith('.srt').optional(),
     hasSlides: z.boolean().optional(),
     slidesUrl: z.url().optional(),
   })
