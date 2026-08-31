@@ -3,9 +3,7 @@ import { getCollection, render } from "astro:content";
 import PageLayout from "../../layouts/Layout.astro";
 import SEOTags from "../../components/seo/seo-tags.astro";
 import WarningAlert from "../../components/alert/warning.astro";
-import KvInfo from "../../components/kv-info.astro";
 import Tags from "../../components/tags/tags.astro";
-import IconExternalLink from "../../components/icons/external-link.astro";
 
 import Heading1 from "../../components/markdown/Heading1.astro";
 import Heading2 from "../../components/markdown/Heading2.astro";
@@ -22,13 +20,10 @@ import AdSense from "../../components/AdSense.astro";
 import VideoEmbed from "../../components/VideoEmbed.astro";
 import SlidesEmbed from "../../components/SlidesEmbed.astro";
 import EpisodeCover from "../../components/EpisodeCover.astro";
+import EpisodeChannels from "../../components/EpisodeChannels.astro";
 import Transcript from "../../components/Transcript.astro";
 import { SLIDES_BASE_URL } from "../../constants";
-import {
-  episodeSubtitlePath,
-  getEpisodeCover,
-  readEpisodeSubtitles,
-} from "../../lib/episode-media";
+import { readEpisodeSubtitles } from "../../lib/episode-media";
 import { groupCues, parseSrt } from "../../lib/srt";
 import {
   SITE_URL,
@@ -78,18 +73,27 @@ const imgUrl = new URL(
 const podcastId = `${new URL("/", Astro.site ?? SITE_URL)}#podcast`;
 const organizationId = `${new URL("/", Astro.site ?? SITE_URL)}#organization`;
 const authorEntities = parseAuthors(frontData.author);
-const sameAs = compactUrls([
-  frontData.xyzLink || undefined,
-  youtubeUrl(frontData.youtubeId),
-  getBilibiliUrl(frontData.biliUrl),
-]);
+const xyzHref = frontData.xyzLink || undefined;
+const youtubeHref = youtubeUrl(frontData.youtubeId);
+const biliHref = getBilibiliUrl(frontData.biliUrl);
+const sameAs = compactUrls([xyzHref, youtubeHref, biliHref]);
+const channels = [
+  { label: "小宇宙", href: xyzHref },
+  { label: "YouTube", href: youtubeHref },
+  { label: "Bilibili", href: biliHref },
+  { label: "Notion 草稿", href: frontData.draftLink },
+].filter((channel): channel is { label: string; href: string } =>
+  Boolean(channel.href),
+);
 const title = `${frontData.title}｜AsyncTalk`;
 
-const cover = getEpisodeCover(slug);
+const cover = frontData.cover;
 const coverUrl = cover
   ? new URL(cover.src, Astro.site ?? SITE_URL).toString()
   : undefined;
-const subtitles = readEpisodeSubtitles(slug);
+const subtitles = frontData.srt
+  ? readEpisodeSubtitles(frontData.srt)
+  : undefined;
 const transcript = subtitles ? groupCues(parseSrt(subtitles)) : [];
 const transcriptText = transcript.map((paragraph) => paragraph.text).join("\n");
 ---
@@ -142,7 +146,7 @@ const transcriptText = transcript.map((paragraph) => paragraph.text).join("\n");
     />
   </SEOTags>
   <div
-    class="min-h-[250px] m-auto max-w-screen-lg text-primary w-full px-4 md:pt-10"
+    class="min-h-[250px] m-auto max-w-screen-lg text-gray-100 w-full px-4 md:pt-10"
   >
     {
       isPreRelease && (
@@ -152,62 +156,28 @@ const transcriptText = transcript.map((paragraph) => paragraph.text).join("\n");
         />
       )
     }
-    <div class="flex flex-col md:flex-row md:items-start gap-5 mb-3">
+    <header class="flex flex-col md:flex-row md:items-start gap-5">
       {cover && <EpisodeCover cover={cover} title={frontData.title} />}
-      <div class="min-w-0">
-        <h1 class="text-3xl mb-3 font-extrabold at-post-title">
-          {frontData.title}
-        </h1>
-        <p class="text-base leading-7 text-gray-300">{frontData.excerpt}</p>
+      <div class="min-w-0 flex flex-col gap-4">
+        <div>
+          <time
+            class="text-xs text-white/45"
+            datetime={frontData.publicationDate.toISOString()}
+            title={frontData.publicationDate.toISOString()}
+          >
+            {new Intl.DateTimeFormat("zh-CN").format(frontData.publicationDate)}
+          </time>
+          <h1 class="mt-2 text-3xl font-extrabold at-post-title">
+            {frontData.title}
+          </h1>
+          <p class="mt-3 text-base leading-7 text-white/70">
+            {frontData.excerpt}
+          </p>
+        </div>
+        {channels.length > 0 && <EpisodeChannels channels={channels} />}
+        {tags.length > 0 && <Tags tags={tags} />}
       </div>
-    </div>
-    <time
-      class="text-xs text-gray-400"
-      datetime={frontData.publicationDate.toISOString()}
-      title={frontData.publicationDate.toISOString()}
-    >
-      {new Intl.DateTimeFormat("zh-CN").format(frontData.publicationDate)}
-    </time>
-
-    {
-      frontData.xyzLink && (
-        <KvInfo title="收听渠道">
-          <a
-            href={frontData.xyzLink}
-            class="flex items-center justify-center hover:underline"
-            target="_blank"
-            referrerpolicy="no-referrer"
-          >
-            小宇宙 - {frontData.title}
-            <IconExternalLink className="scale-75 -translate-y-1" />
-          </a>
-        </KvInfo>
-      )
-    }
-
-    {
-      frontData.draftLink && (
-        <KvInfo title="草稿链接">
-          <a
-            href={frontData.draftLink}
-            class="flex items-center justify-center hover:underline"
-            target="_blank"
-            referrerpolicy="no-referrer"
-          >
-            Notion - {frontData.title}
-            <IconExternalLink className="scale-75 -translate-y-1" />
-          </a>
-        </KvInfo>
-      )
-    }
-
-    {
-      tags.length > 0 && (
-        <KvInfo title="Tags">
-          <Tags tags={tags} />
-        </KvInfo>
-      )
-    }
+    </header>
 
     <Hr className="my-10" />
     {
@@ -241,12 +211,9 @@ const transcriptText = transcript.map((paragraph) => paragraph.text).join("\n");
     }
 
     {
-      transcript.length > 0 && (
+      frontData.srt && transcript.length > 0 && (
         <>
-          <Transcript
-            paragraphs={transcript}
-            srcUrl={episodeSubtitlePath(slug)}
-          />
+          <Transcript paragraphs={transcript} srcUrl={frontData.srt} />
           <Hr className="my-10" />
         </>
       )

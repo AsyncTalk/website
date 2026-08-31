@@ -1,7 +1,6 @@
 import rss, { type RSSFeedItem } from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
-import { getEpisodeCover } from "../lib/episode-media";
 import { SITE_URL, canonicalUrl, episodePath } from "../lib/seo";
 
 function escapeXml(value: string) {
@@ -26,7 +25,7 @@ export async function GET(context: APIContext) {
   const site = context.site ?? new URL(SITE_URL);
   const items = posts.map<RSSFeedItem>((post) => {
     const pageUrl = canonicalUrl(episodePath(post.id), site);
-    const cover = getEpisodeCover(post.id.replace(/^\/?posts\//, ""));
+    const cover = post.data.cover;
     const coverUrl = cover ? new URL(cover.src, site).toString() : undefined;
 
     return {
