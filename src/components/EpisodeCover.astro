@@ -1,0 +1,19 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  cover: ImageMetadata;
+  title: string;
+}
+
+const { cover, title } = Astro.props;
+---
+
+<Image
+  src={cover}
+  alt={`${title} 节目封面`}
+  widths={[160, 240, 320, 480]}
+  sizes="(min-width: 768px) 240px, 160px"
+  loading="eager"
+  class="w-40 md:w-60 shrink-0 aspect-square object-cover rounded-xl shadow-lg shadow-black/40"
+/>

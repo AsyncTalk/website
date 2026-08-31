@@ -21,7 +21,15 @@ import Player from "../../components/Player.astro";
 import AdSense from "../../components/AdSense.astro";
 import VideoEmbed from "../../components/VideoEmbed.astro";
 import SlidesEmbed from "../../components/SlidesEmbed.astro";
+import EpisodeCover from "../../components/EpisodeCover.astro";
+import Transcript from "../../components/Transcript.astro";
 import { SLIDES_BASE_URL } from "../../constants";
+import {
+  episodeSubtitlePath,
+  getEpisodeCover,
+  readEpisodeSubtitles,
+} from "../../lib/episode-media";
+import { groupCues, parseSrt } from "../../lib/srt";
 import {
   SITE_URL,
   bilibiliUrl as getBilibiliUrl,
@@ -76,6 +84,14 @@ const sameAs = compactUrls([
   getBilibiliUrl(frontData.biliUrl),
 ]);
 const title = `${frontData.title}｜AsyncTalk`;
+
+const cover = getEpisodeCover(slug);
+const coverUrl = cover
+  ? new URL(cover.src, Astro.site ?? SITE_URL).toString()
+  : undefined;
+const subtitles = readEpisodeSubtitles(slug);
+const transcript = subtitles ? groupCues(parseSrt(subtitles)) : [];
+const transcriptText = transcript.map((paragraph) => paragraph.text).join("\n");
 ---
 
 <PageLayout>
@@ -105,8 +121,9 @@ const title = `${frontData.title}｜AsyncTalk`;
         datePublished: frontData.publicationDate.toISOString(),
         inLanguage: "zh-CN",
         episodeNumber: frontData.episodeNumber,
-        image: imgUrl,
+        image: coverUrl ? [coverUrl, imgUrl] : imgUrl,
         isAccessibleForFree: true,
+        ...(transcriptText ? { transcript: transcriptText } : {}),
         keywords: tags,
         author: authorEntities,
         publisher: { "@id": organizationId },
@@ -135,10 +152,15 @@ const title = `${frontData.title}｜AsyncTalk`;
         />
       )
     }
-    <h1 class="text-3xl mb-3 font-extrabold at-post-title">
-      {frontData.title}
-    </h1>
-    <p class="text-base leading-7 text-gray-300 mb-3">{frontData.excerpt}</p>
+    <div class="flex flex-col md:flex-row md:items-start gap-5 mb-3">
+      {cover && <EpisodeCover cover={cover} title={frontData.title} />}
+      <div class="min-w-0">
+        <h1 class="text-3xl mb-3 font-extrabold at-post-title">
+          {frontData.title}
+        </h1>
+        <p class="text-base leading-7 text-gray-300">{frontData.excerpt}</p>
+      </div>
+    </div>
     <time
       class="text-xs text-gray-400"
       datetime={frontData.publicationDate.toISOString()}
@@ -213,6 +235,18 @@ const title = `${frontData.title}｜AsyncTalk`;
       (frontData.hasSlides || frontData.slidesUrl) && (
         <>
           <SlidesEmbed src={slidesSrc} title={frontData.title} />
+          <Hr className="my-10" />
+        </>
+      )
+    }
+
+    {
+      transcript.length > 0 && (
+        <>
+          <Transcript
+            paragraphs={transcript}
+            srcUrl={episodeSubtitlePath(slug)}
+          />
           <Hr className="my-10" />
         </>
       )

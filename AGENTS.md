@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-AsyncTalk is an Astro content site for a Chinese web development podcast. Source code lives in `src/`: pages in `src/pages`, layouts in `src/layouts`, shared UI in `src/components`, global styles in `src/global.css`, and content configuration in `src/content.config.ts`. Podcast episodes are MDX files in `src/content/posts` using names such as `ep59.mdx`. Episode media belongs under `src/assets/<episode>/` when imported by Astro; public static files live in `public/`.
+AsyncTalk is an Astro content site for a Chinese web development podcast. Source code lives in `src/`: pages in `src/pages`, layouts in `src/layouts`, shared UI in `src/components`, global styles in `src/global.css`, and content configuration in `src/content.config.ts`. Podcast episodes are MDX files in `src/content/posts` using names such as `ep59.mdx`. Episode media belongs under `src/assets/<episode>/` when imported by Astro; public static files live in `public/`. Two pieces of episode media are resolved by path convention rather than frontmatter, so they appear as soon as the file lands and are skipped while it is missing: square cover art at `src/assets/<episode>/cover.{jpg,jpeg,png,webp}` and subtitles at `public/subtitles/<episode>.srt`.
 
 ## Build, Test, and Development Commands
 

@@ -40,6 +40,7 @@ This is a content-driven static site using Astro's content collections system:
 
 - **No Testing Framework**: This project currently has no automated tests. When implementing features, manual testing is required.
 - **Content Management**: New episodes should be added as MDX files in `src/content/posts/` following the existing naming pattern (epX.mdx).
+- **Episode Media**: Cover art and subtitles are picked up by convention, not frontmatter. Drop square cover art at `src/assets/<episode>/cover.{jpg,jpeg,png,webp}` and it renders beside the title and feeds JSON-LD `image` plus the RSS `<itunes:image>`. Drop an `.srt` at `public/subtitles/<episode>.srt` and it is parsed at build time into an on-page 文字稿 section, a download link, and JSON-LD `transcript`. Both are optional; nothing breaks when they are absent.
 - **Build Process**: Always run `pnpm astro check` before building to catch TypeScript errors in Astro components.
 - **Episode Metadata**: Ensure all required frontmatter fields are properly filled when creating new episodes to maintain RSS feed compatibility.
 - **Chinese Language**: All content and UI copy should be in Chinese. Pay attention to proper font rendering and character encoding.
