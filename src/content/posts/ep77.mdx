@@ -1,0 +1,87 @@
+---
+type: podcast-episode
+status: published
+slug: /posts/ep77
+guid: 77
+title: "EP77 MCP 0728：让 MCP 再次伟大"
+subtitle: "MCP 0728：让 MCP 再次伟大"
+publicationDate: 2026-10-16
+author: AnnatarHe
+season: 3
+episodeNumber: 77
+episodeType: full
+excerpt: "Skills 火了之后 MCP 就凉了吗？MCP 0728 去掉了 session，变成像 HTTP 一样的无状态接口。聊 MCP 1 的有状态之痛、Skills + CLI 的局限，并用 ShellTime 和 Rawback 的 MCP server 现场演示读写权限分离。"
+url: https://youtu.be/5v4Mk5OqAgI
+size: 0
+duration: 0
+explicit: false
+xyzLink: https://www.xiaoyuzhoufm.com/episode/6ad1dc209554aaac00c2d27b
+youtubeId: 5v4Mk5OqAgI
+biliUrl: //player.bilibili.com/player.html?isOutside=true&aid=117449487882114&bvid=BV1t9JX61ENy&cid=42787736487&p=1
+cover: ../../assets/ep77/cover.png
+srt: /subtitles/ep77.srt
+categories:
+    - MCP
+    - AI
+    - AIAgent
+    - ClaudeCode
+    - Claude
+    - Skills
+    - 大模型
+    - 人工智能
+    - 程序员
+    - 技术分享
+    - 后端开发
+    - AsyncTalk
+---
+
+### 📕 Shownotes
+
+很多人觉得 Skills 火了之后 MCP 就凉了。但 MCP 0728 这次更新，我愿意叫它「MCP 2」。
+
+**MCP 1 的老毛病：有状态**
+
+远程连接要一直维持 session，扩缩容和负载均衡都很难做。一发新版本，用户聊着聊着就断了，只能重开 session。
+
+**Skills + CLI 真的完美吗？**
+
+- CLI 靠单词拼接，表达力不如自然语言
+- 必须有机器来跑（本地或云端 VM），成本高
+- CLI 是黑盒，npm 那种供应链攻击蔓延到 Skills 只是早晚的事
+- 一个命令是读还是写，全靠开发者自觉遵守语义
+
+**MCP 0728 改了什么**
+
+它去掉了 session，变成像 HTTP 一样的无状态接口，每次请求带上 header 就行：
+
+- 扩容和 load balance 又能按熟悉的方式做了
+- 每个 tool 都分只读和写，权限好管，也方便审计
+- 跑在远程 server 上，不碰你的电脑，更安全
+
+**实战演示**
+
+我用 ShellTime 和 Rawback 的 MCP server 演示：只读 tool 一键「Always allow」，写和删除单独授权；再让 Claude 直接分析我最近的 AI 使用数据。
+
+有自己产品的朋友，真心建议自己实现一个 MCP server 试试。你觉得 MCP 0728 能 make MCP great again 吗？你站 MCP 还是 Skills？欢迎在评论区聊聊。
+
+### ⏰ Timeline
+
+00:00 开场：MCP 2 来了
+
+00:23 MCP：AI 连接外部世界的入口
+
+01:11 一个比喻：脑子、手、技能和冰箱
+
+02:06 MCP 的老问题：有状态
+
+03:23 另一条路：Skills + CLI
+
+04:16 Skills 真的完美吗？
+
+07:47 回到主题：MCP 0728
+
+09:12 实战：ShellTime MCP server
+
+11:20 MCP vs Skills
+
+11:38 你怎么看？
