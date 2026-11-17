@@ -1,0 +1,17 @@
+---
+import EpisodeIndexPage from "../../../components/EpisodeIndexPage.astro";
+import { getEpisodes, postsPageCount } from "../../../lib/episodes";
+
+// Page 1 lives at /posts/; this route serves /posts/page/2/ onwards.
+export async function getStaticPaths() {
+  const pageCount = postsPageCount((await getEpisodes()).length);
+
+  return Array.from({ length: pageCount - 1 }, (_, i) => ({
+    params: { page: String(i + 2) },
+  }));
+}
+
+const page = Number(Astro.params.page);
+---
+
+<EpisodeIndexPage page={page} />

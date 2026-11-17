@@ -8,9 +8,9 @@ const { title, description } = Astro.props;
 ---
 
 <div
-  class="w-full p-2 flex text-amber-400 items-center mb-2 border-l-4 border-amber-400"
+  class="mb-6 flex w-full items-center border-l-4 border-amber-600 p-2 text-amber-700 dark:border-amber-400 dark:text-amber-400"
 >
-  <span class="text-3xl mr-4"> ⚠️</span>
+  <span class="mr-4 text-3xl"> ⚠️</span>
   <div>
     <h4>{title}</h4>
     {description && <p class="text-xs">{description}</p>}

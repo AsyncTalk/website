@@ -1,10 +1,33 @@
 ---
+import { Image } from "astro:assets";
 import BgImg from "../images/bg-fm.png";
 import PageLayout from "../layouts/Layout.astro";
 import SEOTags from "../components/seo/seo-tags.astro";
 import TitleImage from "../images/title.png";
-import { podcastLinks, socialLinks } from "../constants";
-import { SITE_URL, compactUrls, jsonLd } from "../lib/seo";
+import TitleImageLight from "../images/title-light.png";
+import Player from "../components/Player.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import EpisodeChannels from "../components/EpisodeChannels.astro";
+import Tags from "../components/tags/tags.astro";
+import {
+  authors,
+  listenChannels,
+  podcastLinks,
+  socialLinks,
+} from "../constants";
+import {
+  formatEpisodeDate,
+  getEpisodes,
+  splitEpisodeTitle,
+} from "../lib/episodes";
+import {
+  SITE_URL,
+  bilibiliUrl,
+  compactUrls,
+  episodePath,
+  jsonLd,
+  youtubeUrl,
+} from "../lib/seo";
 
 const title = "AsyncTalk｜和我们一起，将 Web 开发带向下一个高度";
 const description =
@@ -17,6 +40,26 @@ const sameAs = compactUrls([
   ...Object.values(podcastLinks),
   ...socialLinks.map((link) => link.url),
 ]);
+
+const episodes = await getEpisodes();
+const [latest, ...older] = episodes;
+const recent = older.slice(0, 3);
+const latestTitle = latest ? splitEpisodeTitle(latest) : undefined;
+const latestPath = latest ? episodePath(latest.id) : "/posts/";
+const latestChannels = latest
+  ? [
+      { label: "小宇宙", href: latest.data.xyzLink || undefined },
+      { label: "YouTube", href: youtubeUrl(latest.data.youtubeId) },
+      { label: "Bilibili", href: bilibiliUrl(latest.data.biliUrl) },
+    ].filter((channel): channel is { label: string; href: string } =>
+      Boolean(channel.href),
+    )
+  : [];
+
+function linkLabel(link: string) {
+  const url = new URL(link);
+  return `${url.hostname.replace(/^www\./, "")}${url.pathname.replace(/\/$/, "")}`;
+}
 ---
 
 <PageLayout>
@@ -71,32 +114,218 @@ const sameAs = compactUrls([
       })}
     />
   </SEOTags>
+
   <section
-    class="min-h-[70vh] m-auto max-w-screen-lg bg-black bg-[center_top_30%] bg-no-repeat sm:bg-[length:auto_50%] bg-[length:95%_auto]"
-    style={{
-      backgroundImage: `url(${BgImg.src})`,
-    }}
+    class="mx-auto flex max-w-6xl flex-col gap-12 px-4 pb-12 pt-12 sm:px-6 sm:pt-[72px] lg:flex-row lg:items-center lg:gap-16"
   >
-    <div class="min-h-[70vh] backdrop-blur-md">
-      <div
-        class="min-h-[70vh] select-none flex flex-col justify-center max-w-xl m-auto px-6"
-      >
+    <div class="flex min-w-0 flex-1 flex-col gap-7">
+      <p class="font-mono text-xs tracking-widest text-primary">
+        中文播客 · 2021 年开播
+      </p>
+      <picture>
+        <source srcset={TitleImage.src} media="(prefers-color-scheme: dark)" />
         <img
           draggable={false}
-          class="text-center w-full h-auto"
-          src={TitleImage.src}
+          class="h-auto w-full max-w-[500px] select-none"
+          src={TitleImageLight.src}
           alt="AsyncTalk"
           width={1035}
           height={236}
           fetchpriority="high"
         />
-        <h1 class="text-white mt-10 text-2xl italic text-right w-full">
-          和我们一起，将 Web 开发带向下一个高度
-        </h1>
-        <p class="mt-5 text-sm leading-7 text-white/70 text-right">
-          关注 Web 开发、前端工程化与 AI，分享前沿技术、工程实践与开发者观点。
-        </p>
+      </picture>
+      <h1
+        class="font-display text-[26px] leading-snug text-ink sm:text-[34px]"
+      >
+        和我们一起，将 Web 开发带向下一个高度
+      </h1>
+      <p class="max-w-[520px] leading-loose text-soft">
+        关注 Web 开发、前端工程化与 AI，分享前沿技术、工程实践与开发者观点。
+      </p>
+      <div class="mt-1 flex flex-wrap items-center gap-x-7 gap-y-4">
+        {
+          latest && latestTitle && (
+            <Player
+              link={latestPath}
+              label="收听最新一期"
+              title={`${latestTitle.code} ${latest.data.subtitle || latestTitle.name}`}
+              external={false}
+            />
+          )
+        }
+        <a
+          href="/posts/"
+          class="flex min-h-11 items-center text-[15px] text-primary hover:underline"
+        >
+          浏览全部 {episodes.length} 期节目 →
+        </a>
       </div>
     </div>
+    <div
+      class="flex min-w-0 flex-1 justify-center rounded-2xl bg-black p-6 sm:p-8 dark:bg-transparent dark:p-0"
+    >
+      <img
+        draggable={false}
+        class="h-auto w-full max-w-[520px] select-none"
+        src={BgImg.src}
+        alt=""
+        aria-hidden="true"
+        width={1065}
+        height={790}
+      />
+    </div>
+  </section>
+
+  {
+    latest && latestTitle && (
+      <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+        <SectionHeading index="01" title="最新节目">
+          <a
+            href="/posts/"
+            class="flex min-h-11 items-center text-sm text-primary hover:underline"
+          >
+            全部节目 →
+          </a>
+        </SectionHeading>
+
+        <article class="flex flex-col gap-8 md:flex-row md:items-start md:gap-12">
+          {latest.data.cover && (
+            <a href={latestPath} class="block w-full max-w-[280px] shrink-0">
+              <Image
+                src={latest.data.cover}
+                alt={`${latest.data.title} 节目封面`}
+                widths={[280, 420, 560]}
+                sizes="280px"
+                class="h-auto w-full rounded-xl shadow-cover"
+              />
+            </a>
+          )}
+          <div class="flex min-w-0 flex-1 flex-col gap-5">
+            <p class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[13px] text-mute">
+              <span class="text-primary">{latestTitle.code}</span>
+              <time datetime={latest.data.publicationDate.toISOString()}>
+                {formatEpisodeDate(latest.data.publicationDate)}
+              </time>
+              <span>{latest.data.author}</span>
+            </p>
+            <h3 class="font-display text-[26px] font-bold leading-snug sm:text-4xl sm:leading-snug">
+              <a href={latestPath} class="text-ink hover:underline">
+                {latestTitle.name}
+              </a>
+            </h3>
+            <p class="max-w-2xl leading-loose text-soft">
+              {latest.data.excerpt}
+            </p>
+            <Tags tags={latest.data.categories.slice(0, 4)} />
+            {latestChannels.length > 0 && (
+              <EpisodeChannels channels={latestChannels} />
+            )}
+          </div>
+        </article>
+
+        <ul class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {recent.map((post) => {
+            const { code, name } = splitEpisodeTitle(post);
+            return (
+              <li>
+                <a
+                  href={episodePath(post.id)}
+                  class="flex h-full gap-5 rounded-xl border border-line p-4 transition-colors duration-150 hover:border-primary"
+                >
+                  {post.data.cover && (
+                    <Image
+                      src={post.data.cover}
+                      alt=""
+                      width={192}
+                      height={256}
+                      class="h-32 w-24 shrink-0 rounded-lg object-cover"
+                    />
+                  )}
+                  <span class="flex min-w-0 flex-col gap-2">
+                    <span class="font-mono text-xs text-mute">
+                      <span class="text-primary">{code}</span> ·{" "}
+                      {formatEpisodeDate(post.data.publicationDate)}
+                    </span>
+                    <span class="font-display text-[19px] font-bold leading-normal text-ink">
+                      {name}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    )
+  }
+
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <SectionHeading index="02" title="收听渠道" />
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        listenChannels.map((channel) => (
+          <li>
+            <a
+              href={channel.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-between gap-3 rounded-xl border border-line px-5 py-4 text-ink transition-colors duration-150 hover:border-primary"
+            >
+              <span class="flex flex-col leading-normal">
+                <span class="text-[17px]">{channel.title}</span>
+                <span class="text-xs text-mute">{channel.kind}</span>
+              </span>
+              <span aria-hidden="true" class="text-primary">
+                ↗
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-24 pt-14 sm:px-6">
+    <SectionHeading index="03" title="主播" />
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        authors.map((host) => {
+          const inner = (
+            <>
+              <span
+                aria-hidden="true"
+                class="flex size-12 shrink-0 items-center justify-center rounded-full border border-primary font-display text-lg text-primary"
+              >
+                {host.initial}
+              </span>
+              <span class="flex min-w-0 flex-col leading-normal">
+                <span class="text-[17px]">{host.name}</span>
+                <span class="truncate text-xs text-mute">
+                  {host.link ? `${linkLabel(host.link)} ↗` : "主播"}
+                </span>
+              </span>
+            </>
+          );
+          const box =
+            "flex items-center gap-4 rounded-xl border border-line px-5 py-4 text-ink";
+          return (
+            <li>
+              {host.link ? (
+                <a
+                  href={host.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={`${box} transition-colors duration-150 hover:border-primary`}
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div class={box}>{inner}</div>
+              )}
+            </li>
+          );
+        })
+      }
+    </ul>
   </section>
 </PageLayout>

@@ -9,31 +9,36 @@ interface Props {
 const { paragraphs, srcUrl } = Astro.props;
 ---
 
-<details class="w-full">
-  <summary class="cursor-pointer select-none list-none flex items-center gap-2">
-    <span class="at-transcript-marker text-sm opacity-60 transition-transform">▶</span>
-    <h2 class="text-xl font-bold inline">📝 本期文字稿</h2>
-    <span class="text-xs opacity-60">（{paragraphs.length} 段）</span>
+<details class="w-full rounded-xl border border-line px-4 py-4 sm:px-6 sm:py-5">
+  <summary
+    class="flex min-h-11 cursor-pointer select-none list-none items-baseline gap-3"
+  >
+    <span
+      class="at-transcript-marker text-xs text-primary transition-transform"
+      aria-hidden="true">▶</span
+    >
+    <h2 class="font-display text-2xl font-bold text-ink">本期文字稿</h2>
+    <span class="text-xs text-mute">（{paragraphs.length} 段）</span>
   </summary>
 
   <a
     href={srcUrl}
     download
-    class="text-xs opacity-70 hover:opacity-100 hover:underline mt-2 inline-block"
+    class="mt-2 inline-flex min-h-11 items-center text-[13px] text-primary hover:underline"
   >
     下载 .srt 字幕文件 ↓
   </a>
 
   <div
-    class="at-scrollbar mt-3 max-h-[32rem] overflow-y-auto pr-2 text-gray-200 leading-loose"
+    class="at-scrollbar mt-2 flex max-h-[32rem] flex-col gap-3.5 overflow-y-auto pr-3 leading-loose text-body"
   >
     {
       paragraphs.map((paragraph) => (
-        <p class="mb-3">
-          <span class="mr-2 font-mono text-xs opacity-50 align-middle">
-            [{formatTimestamp(paragraph.start)}]
+        <p class="flex gap-4">
+          <span class="shrink-0 font-mono text-xs leading-8 text-primary">
+            {formatTimestamp(paragraph.start)}
           </span>
-          {paragraph.text}
+          <span>{paragraph.text}</span>
         </p>
       ))
     }

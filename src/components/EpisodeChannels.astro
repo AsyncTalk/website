@@ -1,6 +1,4 @@
 ---
-import IconExternalLink from "./icons/external-link.astro";
-
 interface Props {
   channels: { label: string; href: string }[];
 }
@@ -14,21 +12,13 @@ const { channels } = Astro.props;
       <li>
         <a
           href={channel.href}
-          class="at-channel flex items-center gap-1 rounded-full border border-white/15 px-3 py-1 text-sm text-white/70 transition-colors duration-150"
+          class="flex min-h-10 items-center rounded-full border border-line-strong px-4 text-sm text-soft transition-colors duration-150 hover:border-primary hover:text-primary"
           target="_blank"
           referrerpolicy="no-referrer"
         >
-          {channel.label}
-          <IconExternalLink className="h-3.5 w-3.5" />
+          {channel.label} ↗
         </a>
       </li>
     ))
   }
 </ul>
-
-<style>
-  .at-channel:hover {
-    border-color: var(--at-primary-color);
-    color: var(--at-primary-color);
-  }
-</style>

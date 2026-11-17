@@ -1,0 +1,105 @@
+---
+import PageLayout from "../layouts/Layout.astro";
+import SEOTags from "./seo/seo-tags.astro";
+import Pagination from "./Pagination.astro";
+import { POSTS_PAGE_SIZE } from "../constants";
+import {
+  formatEpisodeDate,
+  getEpisodes,
+  postsPageCount,
+  postsPagePath,
+  splitEpisodeTitle,
+} from "../lib/episodes";
+import { episodePath } from "../lib/seo";
+
+interface Props {
+  page: number;
+}
+
+const { page } = Astro.props;
+const episodes = await getEpisodes();
+const pageCount = postsPageCount(episodes.length);
+const rows = episodes.slice((page - 1) * POSTS_PAGE_SIZE, page * POSTS_PAGE_SIZE);
+
+const baseDescription =
+  "浏览 AsyncTalk 全部中文播客节目，涵盖 Web 开发、前端工程化、JavaScript、AI、开发者工具与技术职业成长。";
+const title =
+  page > 1 ? `全部节目 第 ${page} 页｜AsyncTalk` : "全部节目｜AsyncTalk";
+const description =
+  page > 1
+    ? `${baseDescription}（第 ${page} 页，共 ${pageCount} 页）`
+    : baseDescription;
+---
+
+<PageLayout>
+  <SEOTags
+    slot="seo"
+    title={title}
+    description={description}
+    canonicalPath={postsPagePath(page)}
+  />
+  <section class="mx-auto max-w-6xl px-4 pb-24 pt-10 sm:px-6 sm:pt-16">
+    <div class="flex flex-wrap items-end justify-between gap-x-12 gap-y-4">
+      <div class="min-w-0 flex-1 basis-[480px]">
+        <h1
+          class="font-display text-3xl font-bold leading-snug text-ink sm:text-[40px]"
+        >
+          AsyncTalk 全部节目
+        </h1>
+        <p class="mt-4 max-w-2xl leading-loose text-soft">{baseDescription}</p>
+      </div>
+      <p class="font-mono text-[13px] text-mute">
+        共 {episodes.length} 期 · 第 <span class="text-primary">{page}</span> / {
+          pageCount
+        } 页
+      </p>
+    </div>
+    <hr class="at-rule mb-2 mt-8" />
+
+    <ul>
+      {
+        rows.map((post) => {
+          const { code, name } = splitEpisodeTitle(post);
+          const tag = post.data.categories[0];
+          return (
+            <li class="border-b border-line">
+              <article>
+                <a
+                  href={episodePath(post.id)}
+                  class="group flex flex-col gap-2 py-6 sm:flex-row sm:items-baseline sm:gap-8"
+                >
+                  <span class="shrink-0 font-mono text-sm text-primary sm:w-16">
+                    {code}
+                  </span>
+                  <span class="flex min-w-0 flex-1 flex-col gap-2">
+                    <h2 class="font-display text-xl font-bold leading-normal text-ink transition-colors duration-150 group-hover:text-primary group-hover:underline sm:text-[21px]">
+                      {name}
+                    </h2>
+                    <span class="max-w-3xl text-sm leading-7 text-soft">
+                      {post.data.excerpt}
+                    </span>
+                  </span>
+                  <span class="flex shrink-0 items-center gap-3 sm:flex-col sm:items-end sm:gap-2">
+                    <time
+                      class="font-mono text-[13px] text-mute"
+                      datetime={post.data.publicationDate.toISOString()}
+                    >
+                      {formatEpisodeDate(post.data.publicationDate)}
+                    </time>
+                    {tag && (
+                      <span class="rounded-md border border-line bg-chip px-2 py-0.5 text-xs text-mute">
+                        {tag}
+                      </span>
+                    )}
+                  </span>
+                </a>
+              </article>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    {pageCount > 1 && <Pagination current={page} total={pageCount} />}
+  </section>
+</PageLayout>
