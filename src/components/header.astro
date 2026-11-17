@@ -4,7 +4,11 @@ import logo from "../images/logo.png";
 import IconYouTube from "./icons/youtube.astro";
 import IconBilibili from "./icons/bilibili.astro";
 import IconXiaohongshu from "./icons/xiaohongshu.astro";
+import Search from "./Search";
 import { podcastChannels, socialLinks } from "../constants";
+import { getSearchConfig } from "../lib/search";
+
+const search = getSearchConfig();
 
 const path = Astro.url.pathname;
 const onEpisodeIndex = path === "/posts/" || path.startsWith("/posts/page/");
@@ -50,6 +54,7 @@ const onEpisodeIndex = path === "/posts/" || path.startsWith("/posts/page/");
       </nav>
     </div>
     <div class="flex items-center gap-1">
+      {search && <Search client:idle {...search} />}
       <ul class="flex items-center text-soft">
         {
           socialLinks.map((s) => (

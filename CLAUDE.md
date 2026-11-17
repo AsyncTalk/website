@@ -38,6 +38,8 @@ This is a content-driven static site using Astro's content collections system:
 
 6. **Episode list pagination**: `/posts/` is page 1 and `/posts/page/<n>/` the rest, both rendered by `src/components/EpisodeIndexPage.astro`. Page size is `POSTS_PAGE_SIZE` in `src/constants.ts`; `scripts/check-seo.mjs` carries the same number to compute the expected page count, so change both together.
 
+7. **Search (Algolia)**: `src/lib/search.ts` turns each published episode into one Algolia record, served at build time as `/search-index.json`. `pnpm search:index` (`scripts/algolia-index.mjs`) uploads `dist/search-index.json`, replacing the whole index and its settings; `--dry-run` only validates. `.github/workflows/algolia-index.yml` runs the dry run on pull requests and the upload on pushes to `main` (repo variable `ALGOLIA_APP_ID`, secret `ALGOLIA_ADMIN_API_KEY`). The header search dialog (`src/components/Search.tsx`) only renders when `PUBLIC_ALGOLIA_APP_ID` and `PUBLIC_ALGOLIA_SEARCH_KEY` are set at build time. The default index name `asynctalk_posts` lives in both `src/lib/search.ts` and the script, so change both together.
+
 ## Important Development Notes
 
 - **No Testing Framework**: This project currently has no automated tests. When implementing features, manual testing is required.
