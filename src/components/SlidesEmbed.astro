@@ -13,13 +13,13 @@ const { src, title } = Astro.props
     title={title ?? 'Slides'}
     allowfullscreen="true"
     loading="lazy"
-    class="w-full aspect-video border-0 rounded-lg"
+    class="w-full aspect-video border-0 rounded-lg border border-line"
   ></iframe>
   <a
     href={src}
     target="_blank"
     referrerpolicy="no-referrer"
-    class="text-xs opacity-70 hover:opacity-100 hover:underline mt-2 inline-block"
+    class="mt-2 inline-flex min-h-11 items-center text-[13px] text-primary hover:underline"
   >
     在新标签页打开幻灯片 ↗
   </a>

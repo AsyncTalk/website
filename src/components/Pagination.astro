@@ -1,0 +1,72 @@
+---
+import { postsPagePath } from "../lib/episodes";
+
+interface Props {
+  current: number;
+  total: number;
+}
+
+const { current, total } = Astro.props;
+const pages = Array.from({ length: total }, (_, i) => i + 1);
+const edge =
+  "flex h-11 min-w-11 items-center justify-center rounded-full border border-line-strong px-4 text-sm";
+const edgeLink = `${edge} text-soft transition-colors duration-150 hover:border-primary hover:text-primary`;
+const edgeOff = `${edge} text-soft opacity-45`;
+---
+
+<nav
+  aria-label="分页"
+  class="mt-12 flex flex-wrap items-center justify-center gap-2"
+>
+  {
+    current > 1 ? (
+      <a href={postsPagePath(current - 1)} rel="prev" class={edgeLink}>
+        ← 上一页
+      </a>
+    ) : (
+      <span aria-disabled="true" class={edgeOff}>
+        ← 上一页
+      </span>
+    )
+  }
+
+  <span
+    class="flex h-11 min-w-[72px] items-center justify-center font-mono text-sm text-soft sm:hidden"
+  >
+    {current} / {total}
+  </span>
+
+  <ul class="hidden items-center gap-2 sm:flex">
+    {
+      pages.map((n) => (
+        <li>
+          <a
+            href={postsPagePath(n)}
+            aria-label={`第 ${n} 页`}
+            aria-current={n === current ? "page" : undefined}
+            class:list={[
+              "flex size-11 items-center justify-center rounded-full border font-mono text-sm transition-colors duration-150 hover:border-primary hover:text-primary",
+              n === current
+                ? "border-primary bg-primary-soft text-ink"
+                : "border-line-strong text-soft",
+            ]}
+          >
+            {n}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  {
+    current < total ? (
+      <a href={postsPagePath(current + 1)} rel="next" class={edgeLink}>
+        下一页 →
+      </a>
+    ) : (
+      <span aria-disabled="true" class={edgeOff}>
+        下一页 →
+      </span>
+    )
+  }
+</nav>

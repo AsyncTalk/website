@@ -62,10 +62,16 @@ expect(
   "Episode excerpts must be unique",
 );
 
+// Home + /posts/ + the paginated /posts/page/<n>/ listings + one page per episode.
+// Keep POSTS_PAGE_SIZE in sync with src/constants.ts.
+const POSTS_PAGE_SIZE = 12;
+const listingPages = Math.max(1, Math.ceil(publishedEpisodes.length / POSTS_PAGE_SIZE));
+const expectedPages = publishedEpisodes.length + 1 + listingPages;
+
 const htmlFiles = (await listFiles(distDir)).filter((file) => file.endsWith(".html"));
 expect(
-  htmlFiles.length === publishedEpisodes.length + 2,
-  `Expected ${publishedEpisodes.length + 2} public HTML pages, found ${htmlFiles.length}`,
+  htmlFiles.length === expectedPages,
+  `Expected ${expectedPages} public HTML pages, found ${htmlFiles.length}`,
 );
 
 for (const file of htmlFiles) {
@@ -118,7 +124,10 @@ for (const file of htmlFiles) {
     /<script\s+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
   );
   const isHome = label === "index.html";
-  const isEpisode = label.startsWith(`posts${path.sep}`) && label !== path.join("posts", "index.html");
+  const isEpisode =
+    label.startsWith(`posts${path.sep}`) &&
+    label !== path.join("posts", "index.html") &&
+    !label.startsWith(path.join("posts", "page") + path.sep);
 
   if (isHome || isEpisode) {
     expect(jsonLdBlocks.length === 1, `${label}: expected one JSON-LD block`);
@@ -146,8 +155,8 @@ for (const file of htmlFiles) {
 const sitemap = await readFile(path.join(distDir, "sitemap-0.xml"), "utf8");
 const sitemapUrls = matches(sitemap, /<loc>([^<]+)<\/loc>/g).map((match) => match[1]);
 expect(
-  sitemapUrls.length === publishedEpisodes.length + 2,
-  `Expected ${publishedEpisodes.length + 2} sitemap URLs, found ${sitemapUrls.length}`,
+  sitemapUrls.length === expectedPages,
+  `Expected ${expectedPages} sitemap URLs, found ${sitemapUrls.length}`,
 );
 expect(
   sitemapUrls.every((url) => url.startsWith("https://asynctalk.com/") && url.endsWith("/")),

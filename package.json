@@ -23,6 +23,7 @@
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.2.9",
+    "lxgw-wenkai-webfont": "^1.7.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "satori": "^0.32.0",

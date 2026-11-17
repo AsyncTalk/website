@@ -34,7 +34,9 @@ This is a content-driven static site using Astro's content collections system:
 
 4. **Dynamic Routing**: Episodes are served through dynamic routes at `/posts/[...slug]` with automatic RSS feed generation at `/rss.xml`.
 
-5. **Styling**: Tailwind CSS v4 with custom configuration and Chinese font support (LXGWWenKai).
+5. **Styling**: Tailwind CSS v4. Theme tokens live in `src/global.css` as CSS variables exposed through `@theme inline` (`bg-page`, `text-ink`, `text-soft`, `text-mute`, `border-line`, `text-primary`, `font-display`…). Light is the default and dark applies only via the system setting (`prefers-color-scheme`, same as Tailwind's `dark:` variant) — there is no theme toggle and none should be added. Use the semantic utilities instead of hard-coded `text-white`/`bg-black`. Headings use LXGW WenKai, self-hosted from the `lxgw-wenkai-webfont` package.
+
+6. **Episode list pagination**: `/posts/` is page 1 and `/posts/page/<n>/` the rest, both rendered by `src/components/EpisodeIndexPage.astro`. Page size is `POSTS_PAGE_SIZE` in `src/constants.ts`; `scripts/check-seo.mjs` carries the same number to compute the expected page count, so change both together.
 
 ## Important Development Notes
 
