@@ -1,0 +1,70 @@
+name: Algolia Index
+
+# Pull requests: build the site and validate the search records (no upload).
+# Pushes to main: build and replace the Algolia index with the published episodes.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/content/posts/**"
+      - "src/content.config.ts"
+      - "src/lib/search.ts"
+      - "src/lib/episodes.ts"
+      - "src/pages/search-index.json.ts"
+      - "scripts/algolia-index.mjs"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/algolia-index.yml"
+  pull_request:
+    paths:
+      - "src/content/posts/**"
+      - "src/content.config.ts"
+      - "src/lib/search.ts"
+      - "src/lib/episodes.ts"
+      - "src/pages/search-index.json.ts"
+      - "scripts/algolia-index.mjs"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/algolia-index.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: algolia-index-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build site
+        run: pnpm build
+
+      - name: Validate search records
+        run: pnpm search:index --dry-run
+
+      # Skipped until the ALGOLIA_APP_ID repository variable is configured.
+      - name: Upload to Algolia
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.ALGOLIA_APP_ID != ''
+        env:
+          ALGOLIA_APP_ID: ${{ vars.ALGOLIA_APP_ID }}
+          ALGOLIA_INDEX_NAME: ${{ vars.ALGOLIA_INDEX_NAME }}
+          ALGOLIA_ADMIN_API_KEY: ${{ secrets.ALGOLIA_ADMIN_API_KEY }}
+        run: pnpm search:index

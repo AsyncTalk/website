@@ -13,7 +13,8 @@
     "generate:thumbnail": "tsx scripts/generate-thumbnail.ts",
     "preview": "astro preview",
     "astro": "astro",
-    "seo:check": "node scripts/check-seo.mjs"
+    "seo:check": "node scripts/check-seo.mjs",
+    "search:index": "node scripts/algolia-index.mjs"
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.10",
@@ -22,6 +23,7 @@
     "@astrojs/react": "^6.0.4",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
+    "algoliasearch": "^5.64.0",
     "astro": "^7.2.9",
     "lxgw-wenkai-webfont": "^1.7.0",
     "react": "^19.2.8",
