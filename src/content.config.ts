@@ -30,6 +30,7 @@ const posts = defineCollection({
     srt: z.string().startsWith('/').endsWith('.srt').optional(),
     hasSlides: z.boolean().optional(),
     slidesUrl: z.url().optional(),
+    credit: z.string().optional(),
     timeline: z.array(z.object({
       time: z.string().regex(/^(\d+:)?\d{2}:\d{2}$/),
       title: z.string().min(1),

@@ -265,6 +265,13 @@ const transcriptText = transcript.map((paragraph) => paragraph.text).join("\n");
             p: P,
           }}
         />
+        {
+          frontData.credit && (
+            <p class="mt-8 text-[13px] leading-relaxed text-mute">
+              {frontData.credit}
+            </p>
+          )
+        }
       </article>
       {timeline.length > 0 && <EpisodeTimeline items={timeline} />}
     </div>
