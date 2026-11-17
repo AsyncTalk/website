@@ -1,6 +1,10 @@
 ---
+import ChannelLogo from "./ChannelLogo.astro";
+import type { ChannelType } from "../constants";
+
 interface Props {
-  channels: { label: string; href: string }[];
+  // `type` adds the platform's logo before the label.
+  channels: { label: string; href: string; type?: ChannelType }[];
 }
 
 const { channels } = Astro.props;
@@ -12,10 +16,13 @@ const { channels } = Astro.props;
       <li>
         <a
           href={channel.href}
-          class="flex min-h-10 items-center rounded-full border border-line-strong px-4 text-sm text-soft transition-colors duration-150 hover:border-primary hover:text-primary"
+          class="flex min-h-10 items-center gap-2 rounded-full border border-line-strong px-4 text-sm text-soft transition-colors duration-150 hover:border-primary hover:text-primary"
           target="_blank"
           referrerpolicy="no-referrer"
         >
+          {channel.type && (
+            <ChannelLogo type={channel.type} class="-ml-1.5 size-5 rounded-[5px]" />
+          )}
           {channel.label} ↗
         </a>
       </li>

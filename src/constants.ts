@@ -55,9 +55,9 @@ export const podcastLinks = {
 
 // The three podcast directories shown in the header.
 export const podcastChannels = [
-  { title: 'Apple Podcast', link: podcastLinks.applePodcasts },
-  { title: '小宇宙', link: podcastLinks.xiaoyuzhou },
-  { title: 'Spotify', link: podcastLinks.spotify },
+  { type: 'applePodcasts', title: 'Apple Podcast', link: podcastLinks.applePodcasts },
+  { type: 'xiaoyuzhou', title: '小宇宙', link: podcastLinks.xiaoyuzhou },
+  { type: 'spotify', title: 'Spotify', link: podcastLinks.spotify },
 ] as const;
 
 // Every place the show can be followed, for the homepage 收听渠道 section.

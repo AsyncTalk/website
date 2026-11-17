@@ -1,9 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import logo from "../images/logo.png";
-import IconYouTube from "./icons/youtube.astro";
-import IconBilibili from "./icons/bilibili.astro";
-import IconXiaohongshu from "./icons/xiaohongshu.astro";
+import ChannelLogo from "./ChannelLogo.astro";
 import Search from "./Search";
 import { podcastChannels, socialLinks } from "../constants";
 import { getSearchConfig } from "../lib/search";
@@ -41,10 +39,11 @@ const onEpisodeIndex = path === "/posts/" || path.startsWith("/posts/page/");
               <li>
                 <a
                   href={x.link}
-                  class="flex min-h-11 items-center transition-colors duration-100 hover:text-ink"
+                  class="flex min-h-11 items-center gap-2 transition-colors duration-100 hover:text-ink"
                   target="_blank"
                   referrerpolicy="no-referrer"
                 >
+                  <ChannelLogo type={x.type} class="size-5 rounded-[5px]" />
                   {x.title} ↗
                 </a>
               </li>
@@ -65,13 +64,9 @@ const onEpisodeIndex = path === "/posts/" || path.startsWith("/posts/page/");
                 rel="noopener noreferrer"
                 aria-label={s.label}
                 title={s.label}
-                class="flex size-11 items-center justify-center transition-colors duration-100 hover:text-ink"
+                class="flex size-11 items-center justify-center transition-opacity duration-100 hover:opacity-80"
               >
-                {s.type === "youtube" && <IconYouTube className="h-5 w-5" />}
-                {s.type === "bilibili" && <IconBilibili className="h-5 w-5" />}
-                {s.type === "xiaohongshu" && (
-                  <IconXiaohongshu className="h-5 w-5" />
-                )}
+                <ChannelLogo type={s.type} class="size-6 rounded-md" />
               </a>
             </li>
           ))

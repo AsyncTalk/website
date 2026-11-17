@@ -49,10 +49,10 @@ const latestTitle = latest ? splitEpisodeTitle(latest) : undefined;
 const latestPath = latest ? episodePath(latest.id) : "/posts/";
 const latestChannels = latest
   ? [
-      { label: "小宇宙", href: latest.data.xyzLink || undefined },
-      { label: "YouTube", href: youtubeUrl(latest.data.youtubeId) },
-      { label: "Bilibili", href: bilibiliUrl(latest.data.biliUrl) },
-    ].filter((channel): channel is { label: string; href: string } =>
+      { type: "xiaoyuzhou" as const, label: "小宇宙", href: latest.data.xyzLink || undefined },
+      { type: "youtube" as const, label: "YouTube", href: youtubeUrl(latest.data.youtubeId) },
+      { type: "bilibili" as const, label: "Bilibili", href: bilibiliUrl(latest.data.biliUrl) },
+    ].filter((channel): channel is typeof channel & { href: string } =>
       Boolean(channel.href),
     )
   : [];

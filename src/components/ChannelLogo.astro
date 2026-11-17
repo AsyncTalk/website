@@ -1,6 +1,6 @@
 ---
-// Brand logos for the homepage 收听渠道 cards, all drawn as same-size app-icon
-// tiles. 小宇宙 and Apple Podcasts use the icons served by their own sites
+// Brand logos for platform links (homepage 收听渠道 cards, header, episode
+// channel pills), all drawn as app-icon tiles. 小宇宙 and Apple Podcasts use the icons served by their own sites
 // (src/assets/channels/); the rest are the official glyphs as vectors (paths
 // from Simple Icons, CC0) on the brand's own colours.
 import { Image } from "astro:assets";
@@ -10,6 +10,8 @@ import applePodcasts from "../assets/channels/apple-podcasts.png";
 
 interface Props {
   type: ChannelType;
+  // Size and corner radius; the default is the homepage card tile.
+  class?: string;
 }
 
 type Mark =
@@ -51,13 +53,13 @@ const marks: Record<ChannelType, Mark> = {
   },
 };
 
-const { type } = Astro.props;
+const { type, class: className = "size-11 rounded-[10px]" } = Astro.props;
 const mark = marks[type];
 ---
 
 <span
   aria-hidden="true"
-  class="block size-11 shrink-0 overflow-hidden rounded-[10px] ring-1 ring-line"
+  class:list={["block shrink-0 overflow-hidden ring-1 ring-line", className]}
 >
   {
     "image" in mark ? (
