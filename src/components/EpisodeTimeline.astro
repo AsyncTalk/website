@@ -1,0 +1,26 @@
+---
+interface Props {
+  items: { time: string; title: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<aside
+  aria-label="Timeline"
+  class="min-w-0 flex-[1_1_280px] rounded-xl border border-line p-6"
+>
+  <h2 class="mb-4 font-display text-2xl font-bold text-ink">⏰ Timeline</h2>
+  <ol class="flex flex-col text-sm leading-relaxed text-body">
+    {
+      items.map((item) => (
+        <li class="flex gap-4 border-b border-line py-[9px] last:border-b-0 last:pb-0">
+          <span class="shrink-0 font-mono text-xs leading-[22px] text-primary">
+            {item.time}
+          </span>
+          <span class="min-w-0 break-words">{item.title}</span>
+        </li>
+      ))
+    }
+  </ol>
+</aside>

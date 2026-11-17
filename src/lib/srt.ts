@@ -15,6 +15,7 @@ const PARAGRAPH_MAX_CUES = 12;
 /** A silence this long reads as a new thought, so it always breaks a paragraph. */
 const PARAGRAPH_GAP = 2500;
 const SENTENCE_ENDINGS = /[。！？…?!]["'”’)）】」』]*$/;
+const HAN = "[\\u3040-\\u30ff\\u3400-\\u4dbf\\u4e00-\\u9fff]";
 const CJK = /[\u3000-\u303f\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uff00-\uffef]/;
 
 function toMilliseconds(
@@ -96,6 +97,16 @@ function joinCueText(previous: string, next: string) {
   return needsSpace ? `${previous} ${next}` : previous + next;
 }
 
+/**
+ * Subtitles run Chinese and Latin text together ("这里是AsyncTalk"); put the
+ * customary space between them. Full-width punctuation is left alone.
+ */
+export function spaceCjk(text: string) {
+  return text
+    .replace(new RegExp(`(${HAN})([A-Za-z0-9$#@])`, "g"), "$1 $2")
+    .replace(new RegExp(`([A-Za-z0-9%+])(${HAN})`, "g"), "$1 $2");
+}
+
 export function groupCues(cues: SrtCue[]): TranscriptParagraph[] {
   const paragraphs: TranscriptParagraph[] = [];
   let start = 0;
@@ -108,7 +119,7 @@ export function groupCues(cues: SrtCue[]): TranscriptParagraph[] {
       return;
     }
 
-    paragraphs.push({ start, text });
+    paragraphs.push({ start, text: spaceCjk(text) });
     count = 0;
     text = "";
   };
