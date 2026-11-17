@@ -8,6 +8,7 @@ import TitleImageLight from "../images/title-light.png";
 import Player from "../components/Player.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import EpisodeChannels from "../components/EpisodeChannels.astro";
+import ChannelLogo from "../components/ChannelLogo.astro";
 import Tags from "../components/tags/tags.astro";
 import {
   authors,
@@ -55,6 +56,19 @@ const latestChannels = latest
       Boolean(channel.href),
     )
   : [];
+
+// Host avatars, keyed by the file name: src/assets/avatars/<author id>.<ext>
+const avatars = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<{ default: ImageMetadata }>(
+      "../assets/avatars/*.{jpg,jpeg,png,webp,avif}",
+      { eager: true },
+    ),
+  ).map(([path, mod]) => [
+    path.split("/").pop()!.replace(/\.\w+$/, ""),
+    mod.default,
+  ]),
+);
 
 function linkLabel(link: string) {
   const url = new URL(link);
@@ -115,13 +129,19 @@ function linkLabel(link: string) {
     />
   </SEOTags>
 
-  <section
-    class="mx-auto flex max-w-6xl flex-col gap-12 px-4 pb-12 pt-12 sm:px-6 sm:pt-[72px] lg:flex-row lg:items-center lg:gap-16"
-  >
-    <div class="flex min-w-0 flex-1 flex-col gap-7">
-      <p class="font-mono text-xs tracking-widest text-primary">
-        中文播客 · 2021 年开播
-      </p>
+  <section class="relative isolate overflow-hidden">
+    <img
+      draggable={false}
+      class="hero-backdrop pointer-events-none absolute inset-y-0 right-0 -z-10 h-full w-full select-none object-cover opacity-30 blur-[3px] lg:w-[58%] lg:opacity-60 dark:opacity-25 dark:lg:opacity-50"
+      src={BgImg.src}
+      alt=""
+      aria-hidden="true"
+      width={1065}
+      height={790}
+    />
+    <div
+      class="mx-auto flex max-w-6xl flex-col gap-7 px-4 pb-16 pt-12 sm:px-6 sm:pb-24 sm:pt-[88px]"
+    >
       <picture>
         <source srcset={TitleImage.src} media="(prefers-color-scheme: dark)" />
         <img
@@ -160,19 +180,6 @@ function linkLabel(link: string) {
           浏览全部 {episodes.length} 期节目 →
         </a>
       </div>
-    </div>
-    <div
-      class="flex min-w-0 flex-1 justify-center rounded-2xl bg-black p-6 sm:p-8 dark:bg-transparent dark:p-0"
-    >
-      <img
-        draggable={false}
-        class="h-auto w-full max-w-[520px] select-none"
-        src={BgImg.src}
-        alt=""
-        aria-hidden="true"
-        width={1065}
-        height={790}
-      />
     </div>
   </section>
 
@@ -269,9 +276,10 @@ function linkLabel(link: string) {
               href={channel.link}
               target="_blank"
               rel="noopener noreferrer"
-              class="flex items-center justify-between gap-3 rounded-xl border border-line px-5 py-4 text-ink transition-colors duration-150 hover:border-primary"
+              class="flex items-center gap-4 rounded-xl border border-line px-5 py-4 text-ink transition-colors duration-150 hover:border-primary"
             >
-              <span class="flex flex-col leading-normal">
+              <ChannelLogo type={channel.type} />
+              <span class="flex min-w-0 flex-1 flex-col leading-normal">
                 <span class="text-[17px]">{channel.title}</span>
                 <span class="text-xs text-mute">{channel.kind}</span>
               </span>
@@ -292,12 +300,23 @@ function linkLabel(link: string) {
         authors.map((host) => {
           const inner = (
             <>
-              <span
-                aria-hidden="true"
-                class="flex size-12 shrink-0 items-center justify-center rounded-full border border-primary font-display text-lg text-primary"
-              >
-                {host.initial}
-              </span>
+              {avatars[host.id] ? (
+                <Image
+                  src={avatars[host.id]}
+                  alt=""
+                  width={112}
+                  height={112}
+                  class="size-14 shrink-0 rounded-full object-cover"
+                />
+              ) : (
+                <span
+                  aria-hidden="true"
+                  class="flex size-14 shrink-0 items-center justify-center rounded-full font-display text-xl font-bold text-white"
+                  style={`background-color: ${host.color}`}
+                >
+                  {host.initial}
+                </span>
+              )}
               <span class="flex min-w-0 flex-col leading-normal">
                 <span class="text-[17px]">{host.name}</span>
                 <span class="truncate text-xs text-mute">
@@ -329,3 +348,13 @@ function linkLabel(link: string) {
     </ul>
   </section>
 </PageLayout>
+
+<style>
+  /* Fade the artwork into the page towards the copy and the next section. */
+  .hero-backdrop {
+    mask-image:
+      linear-gradient(to left, #000 45%, transparent),
+      linear-gradient(to bottom, #000 60%, transparent);
+    mask-composite: intersect;
+  }
+</style>
