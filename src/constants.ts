@@ -1,18 +1,29 @@
+// `id` names the host's avatar: drop `src/assets/avatars/<id>.{jpg,png,webp}`
+// and the homepage 主播 card uses it. Without a file the card falls back to
+// the initial on the host's own `color` (white text, so keep it dark enough).
 export const authors = [{
+  id: 'annatarhe',
   name: 'AnnatarHe',
   initial: 'A',
+  color: '#0f766e',
   link: 'https://annatarhe.com'
 }, {
+  id: 'sleaf',
   name: 'Sleaf',
   initial: 'S',
+  color: '#6d28d9',
   link: 'https://twitter.com/Sleaf_'
 }, {
+  id: 'tinko',
   name: 'Tinko',
   initial: 'T',
+  color: '#be185d',
   link: 'https://tinko.moe'
 }, {
+  id: 'xiaolu',
   name: '小鹿',
   initial: '鹿',
+  color: '#b45309',
   link: null
 }]
 
@@ -44,18 +55,29 @@ export const podcastLinks = {
 
 // The three podcast directories shown in the header.
 export const podcastChannels = [
-  { title: 'Apple Podcast', link: podcastLinks.applePodcasts },
-  { title: '小宇宙', link: podcastLinks.xiaoyuzhou },
-  { title: 'Spotify', link: podcastLinks.spotify },
+  { type: 'applePodcasts', title: 'Apple Podcast', link: podcastLinks.applePodcasts },
+  { type: 'xiaoyuzhou', title: '小宇宙', link: podcastLinks.xiaoyuzhou },
+  { type: 'spotify', title: 'Spotify', link: podcastLinks.spotify },
 ] as const;
 
 // Every place the show can be followed, for the homepage 收听渠道 section.
-export const listenChannels = [
-  { title: '小宇宙', kind: '播客', link: podcastLinks.xiaoyuzhou },
-  { title: 'Apple Podcast', kind: '播客', link: podcastLinks.applePodcasts },
-  { title: 'Spotify', kind: '播客', link: podcastLinks.spotify },
-  ...socialLinks.map((s) => ({ title: s.label, kind: '视频', link: s.url })),
-  { title: 'RSS', kind: '订阅源', link: '/rss.xml' },
+// `type` picks the brand logo in src/components/ChannelLogo.astro.
+export type ChannelType =
+  | keyof typeof podcastLinks
+  | (typeof socialLinks)[number]['type']
+  | 'rss';
+
+export const listenChannels: {
+  type: ChannelType;
+  title: string;
+  kind: string;
+  link: string;
+}[] = [
+  { type: 'xiaoyuzhou', title: '小宇宙', kind: '播客', link: podcastLinks.xiaoyuzhou },
+  { type: 'applePodcasts', title: 'Apple Podcast', kind: '播客', link: podcastLinks.applePodcasts },
+  { type: 'spotify', title: 'Spotify', kind: '播客', link: podcastLinks.spotify },
+  ...socialLinks.map((s) => ({ type: s.type, title: s.label, kind: '视频', link: s.url })),
+  { type: 'rss', title: 'RSS', kind: '订阅源', link: '/rss.xml' },
 ];
 
 export const evonia = {

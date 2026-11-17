@@ -89,11 +89,11 @@ const youtubeHref = youtubeUrl(frontData.youtubeId);
 const biliHref = getBilibiliUrl(frontData.biliUrl);
 const sameAs = compactUrls([xyzHref, youtubeHref, biliHref]);
 const channels = [
-  { label: "小宇宙", href: xyzHref },
-  { label: "YouTube", href: youtubeHref },
-  { label: "Bilibili", href: biliHref },
+  { type: "xiaoyuzhou" as const, label: "小宇宙", href: xyzHref },
+  { type: "youtube" as const, label: "YouTube", href: youtubeHref },
+  { type: "bilibili" as const, label: "Bilibili", href: biliHref },
   { label: "Notion 草稿", href: frontData.draftLink },
-].filter((channel): channel is { label: string; href: string } =>
+].filter((channel): channel is typeof channel & { href: string } =>
   Boolean(channel.href),
 );
 const title = `${frontData.title}｜AsyncTalk`;
