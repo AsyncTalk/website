@@ -62,11 +62,14 @@ expect(
   "Episode excerpts must be unique",
 );
 
-// Home + /posts/ + the paginated /posts/page/<n>/ listings + one page per episode.
+// Home + /posts/ + the paginated /posts/page/<n>/ listings + one page per episode
+// + the static info pages linked from the footer.
 // Keep POSTS_PAGE_SIZE in sync with src/constants.ts.
 const POSTS_PAGE_SIZE = 12;
+const INFO_PAGES = ["about", "contact", "privacy"];
 const listingPages = Math.max(1, Math.ceil(publishedEpisodes.length / POSTS_PAGE_SIZE));
-const expectedPages = publishedEpisodes.length + 1 + listingPages;
+const expectedPages =
+  publishedEpisodes.length + 1 + listingPages + INFO_PAGES.length;
 
 const htmlFiles = (await listFiles(distDir)).filter((file) => file.endsWith(".html"));
 expect(
@@ -164,6 +167,12 @@ expect(
 );
 expect(!sitemap.includes("index-legacy"), "Legacy page must not appear in sitemap");
 expect(!sitemap.includes("og-preview"), "OG preview must not appear in sitemap");
+for (const page of INFO_PAGES) {
+  expect(
+    sitemapUrls.includes(`https://asynctalk.com/${page}/`),
+    `Sitemap is missing /${page}/`,
+  );
+}
 
 const rss = await readFile(path.join(distDir, "rss.xml"), "utf8");
 const rssItems = matches(rss, /<item>[\s\S]*?<\/item>/g);

@@ -1,0 +1,164 @@
+---
+import PageLayout from "../layouts/Layout.astro";
+import SEOTags from "../components/seo/seo-tags.astro";
+
+const title = "隐私政策｜AsyncTalk";
+const description =
+  "AsyncTalk 的隐私政策：说明 Google AdSense 与第三方广告 Cookie（包括 DoubleClick Cookie）、退出个性化广告的方式、分析与 Cookie，以及小宇宙、YouTube、Bilibili 等第三方播放器。";
+---
+
+<PageLayout>
+  <SEOTags
+    slot="seo"
+    title={title}
+    description={description}
+    canonicalPath="/privacy/"
+  />
+
+  <article class="mx-auto w-full max-w-3xl px-4 pb-24 pt-12 sm:px-6 sm:pt-16">
+    <p class="font-mono text-[13px] text-primary">Privacy</p>
+    <h1
+      class="mt-3 font-display text-[32px] font-bold leading-tight text-ink sm:text-[44px]"
+    >
+      隐私政策
+    </h1>
+    <p class="mt-4 text-sm text-mute">最近更新：2026年11月23日</p>
+
+    <div class="mt-10 space-y-10 text-[17px] leading-loose text-soft">
+      <section class="space-y-4">
+        <h2 class="font-display text-2xl font-bold text-ink">我们是谁</h2>
+        <p>
+          AsyncTalk（<a
+            href="https://asynctalk.com/"
+            class="text-primary hover:underline">asynctalk.com</a
+          >）是一档以中文讨论 Web 开发的播客网站。本政策说明你访问本站时，页面、广告和嵌入的第三方播放器可能如何使用 Cookie 及类似技术，以及你可以如何选择退出。
+        </p>
+        <p>
+          本站是内容站点，不提供注册或登录，也没有需要你填写姓名、电话或地址的表单。节目意见请通过
+          <a href="/contact/" class="text-primary hover:underline">联系我们</a>
+          中的邮箱或社交链接与我们沟通。
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="font-display text-2xl font-bold text-ink">Cookie 是什么</h2>
+        <p>
+          Cookie 是网站或其合作方存放在你的浏览器里的一小段文本。它可以被用来记住一次访问、判断广告有没有展示过，或者让嵌入的播放器维持播放状态。除 Cookie 外，有的服务也会使用本地存储、像素或类似技术，达到相近的目的。
+        </p>
+        <p>
+          你可以用浏览器的设置查看、限制或删除 Cookie。关闭 Cookie 之后，页面上的文字内容仍然可以阅读，但广告、统计和部分播放器可能无法按预期工作。
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="font-display text-2xl font-bold text-ink">
+          Google AdSense 与第三方广告
+        </h2>
+        <p>
+          本站使用 Google AdSense 展示广告，发布商编号为
+          <span class="text-ink">ca-pub-4489403687940405</span>。对应的授权记录放在网站根目录的
+          <a href="/ads.txt" class="text-primary hover:underline">ads.txt</a>。
+        </p>
+        <p>
+          第三方广告供应商（包括 Google）会使用 Cookie，根据你对本网站以及互联网上其他网站的访问来投放广告。Google 用于广告投放的 DoubleClick Cookie（常与 doubleclick.net 上的广告 Cookie 相关）可以帮助 Google 及其合作伙伴衡量广告是否被看到、限制同一条广告反复出现，并在你的广告设置允许时提供更相关的广告。
+        </p>
+        <p>
+          这些供应商收集的通常是浏览器和设备层面的信息，例如广告请求、大致的语言和地区、以及你是否与广告发生过互动。AsyncTalk 不会把节目邮件列表或你写来的邮件内容提供给广告供应商。
+        </p>
+        <p>你可以了解 Google 如何在广告中使用 Cookie 等技术：</p>
+        <p>
+          <a
+            href="https://policies.google.com/technologies/ads"
+            class="text-primary hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+            >https://policies.google.com/technologies/ads ↗</a
+          >
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="font-display text-2xl font-bold text-ink">如何退出个性化广告</h2>
+        <p>如果你不希望看到基于过往访问的个性化广告，可以使用下面的设置：</p>
+        <ul class="list-disc space-y-2 pl-5">
+          <li>
+            Google 广告设置：
+            <a
+              href="https://adssettings.google.com"
+              class="text-primary hover:underline"
+              target="_blank"
+              rel="noopener noreferrer">https://adssettings.google.com ↗</a
+            >
+            。你可以在这里关闭个性化广告，或调整 Google 用来向你展示广告的信息。
+          </li>
+          <li>
+            aboutads.info：数字广告联盟（DAA）提供的行业退出页面是
+            <a
+              href="https://www.aboutads.info/choices"
+              class="text-primary hover:underline"
+              target="_blank"
+              rel="noopener noreferrer">https://www.aboutads.info/choices ↗</a
+            >
+            ，入口站点为
+            <a
+              href="https://www.aboutads.info/"
+              class="text-primary hover:underline"
+              target="_blank"
+              rel="noopener noreferrer">https://www.aboutads.info/ ↗</a
+            >
+            。你可以在这里选择退出部分第三方广告供应商对 Cookie 的使用。
+          </li>
+        </ul>
+        <p>
+          退出个性化广告之后，你仍可能看到广告，只是这些广告不再依据你在其他网站上的浏览记录来挑选。退出状态通常保存在浏览器的 Cookie 里，清除 Cookie 或更换浏览器后需要重新设置。
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="font-display text-2xl font-bold text-ink">分析与 Cookie</h2>
+        <p>
+          分析类 Cookie 一般用来了解一个页面有没有被打开、访客从哪里进来、使用的大致设备和浏览器，以及内容或广告有没有被看到。这类信息常被汇总后用来判断网站是否正常、哪些节目页面被读到，而不是用来在页面上显示你的姓名。
+        </p>
+        <p>
+          截至本政策更新之日，AsyncTalk 网站本身没有另行接入独立的第一方分析脚本。即便如此，Google AdSense 等广告合作方仍可能为了衡量广告展示、防止无效流量而记录与访问相关的数据。托管和内容分发服务也可能按各自的惯例保留基础访问日志，例如 IP 地址、访问时间和浏览器类型。
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="font-display text-2xl font-bold text-ink">
+          第三方播放器：小宇宙、YouTube、Bilibili
+        </h2>
+        <p>
+          节目页面会嵌入 YouTube 和 Bilibili 的播放器，并提供小宇宙的收听入口。这些播放器和服务由对应平台提供，不是 AsyncTalk 自己的播放器。
+        </p>
+        <p>
+          当你加载或播放这些内容时，小宇宙、YouTube 或 Bilibili 可能设置它们自己的 Cookie，并按其各自的规则收集设备信息、日志或与观看、收听相关的数据，例如播放进度、推荐所需的标识，或该平台账号已有的登录状态。YouTube 由 Google 提供，其广告与 Cookie 做法可以一并参考上面的 Google 政策说明。
+        </p>
+        <p>
+          AsyncTalk 不能控制这些第三方如何保存或使用数据。如果你不希望它们读取 Cookie，可以先不播放嵌入内容，或在浏览器中限制第三方 Cookie。离开本站之后，对应平台自己的隐私政策会继续适用。
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="font-display text-2xl font-bold text-ink">隐私问题如何联系</h2>
+        <p>
+          如果对本政策、广告 Cookie 或节目页面上的第三方内容有疑问，请发邮件至
+          <a
+            href="mailto:async.talk@gmail.com"
+            class="text-primary hover:underline">async.talk@gmail.com</a
+          >。也可以从
+          <a href="/contact/" class="text-primary hover:underline">联系我们</a>
+          找到同一邮箱以及 YouTube、Bilibili、小红书等已公开的联系方式。
+        </p>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="font-display text-2xl font-bold text-ink">政策更新</h2>
+        <p>
+          如果广告合作方、嵌入的播放器或本站处理信息的方式发生变化，我们会更新本页，并修改上方的日期。继续使用 asynctalk.com，即表示你看到的是这一日期所对应的版本。
+        </p>
+        <p class="text-sm text-mute">最近更新：2026年11月23日</p>
+      </section>
+    </div>
+  </article>
+</PageLayout>
