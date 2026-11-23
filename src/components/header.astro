@@ -10,6 +10,7 @@ const search = getSearchConfig();
 
 const path = Astro.url.pathname;
 const onEpisodeIndex = path === "/posts/" || path.startsWith("/posts/page/");
+const onAbout = path === "/about/";
 ---
 
 <header
@@ -73,10 +74,20 @@ const onEpisodeIndex = path === "/posts/" || path.startsWith("/posts/page/");
         }
       </ul>
       <a
+        href="/about/"
+        aria-current={onAbout ? "page" : undefined}
+        class:list={[
+          "ml-2 flex min-h-10 items-center px-3 text-sm transition-colors duration-150 hover:text-primary",
+          onAbout ? "text-primary" : "text-ink/90",
+        ]}
+      >
+        关于
+      </a>
+      <a
         href="/posts/"
         aria-current={onEpisodeIndex ? "page" : undefined}
         class:list={[
-          "ml-2 flex min-h-10 items-center rounded-full border px-4 text-sm transition-colors duration-150 hover:border-primary hover:text-primary",
+          "flex min-h-10 items-center rounded-full border px-4 text-sm transition-colors duration-150 hover:border-primary hover:text-primary",
           onEpisodeIndex
             ? "border-primary text-primary"
             : "border-line-strong text-ink/90",

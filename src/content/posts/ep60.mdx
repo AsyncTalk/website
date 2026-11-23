@@ -29,15 +29,25 @@ credit: "BGM by Otologic"
 
 ### 📕 Shownotes
 
-凌晨三点，Sentry 又响了。
+凌晨三点，Sentry 又响了。这一期讲的就是这件事：为了不让 on-call 把睡眠打断，主播搭了一套极简的 harness，让 Claude Code 参与值班。它不是一套重型 Agent 框架，而是几个 MCP server 再加上一点配置，但是这条链路是真的能跑。
 
-作为一个不想被 on-call 毁掉睡眠的打工人，我搓了套极简 harness，让 Claude Code 顶替我值班。
+串起来的步骤，节目里是按值班的顺序说的。日志服务和 Sentry 通过 MCP 暴露给 Claude Code。Claude Code 跑定时任务，自己去拉报警、定位根因。改完代码之后跑测试、提 MR，再丢回来给人 review。人这一侧要做的，是点 approve，或者觉得不对，就让它重写。摘要里还写明，这一期会分享告警分析、自动处理，以及安全边界上的实践：既然让它改代码、提合并请求，就得同时说清它能走到哪一步。
 
-这期聊聊我是怎么把整条链路串起来的：
+分类是 claude-code、mcp、sentry、ai 和 devops，主播是 AnnatarHe。适合不想半夜爬起来看报错、又已经在用 Sentry 和 Claude Code 的人。文字部分只保留这条已经写明的链路，不另外编一套架构图。安全边界是节目要讲的实践之一，具体规则以这一期的说明为准。
 
-- 日志服务 + Sentry 通过 MCP 暴露给 Claude Code
-- Claude Code 跑定时任务，自动拉报警、定位根因
-- 改完代码跑测试、提 MR，丢回给我 review
-- 我只需要点 approve（或者骂它两句让它重写）
+### 本期要点
 
-不是什么重型 Agent 框架，就是几个 MCP server + 一点配置，但是真能跑。适合所有不想半夜爬起来看报错的开发者。
+- 动机：on-call 会打断睡眠，所以让 Claude Code 参与值班
+- 一套极简 harness，不是重型 Agent 框架
+- 日志服务和 Sentry 经 MCP 交给 Claude Code
+- 定时任务自动拉报警、定位根因
+- 改代码、跑测试、提 MR，再交回来 review
+- 人负责批准，或者要求重写
+- 同时谈到告警分析、自动处理和安全边界
+- 几个 MCP server 加一点配置，就可以跑起来
+
+### 🔗 参考链接
+
+- 小宇宙：[EP60 我把 on-call 甩给了 claude code](https://www.xiaoyuzhoufm.com/episode/69e4dd58f6e591a7ac26c85e)
+- YouTube：[这一期视频](https://www.youtube.com/watch?v=nNzIZ_bgRrY)
+- Bilibili：[BV13HoFBtE2Q](https://www.bilibili.com/video/BV13HoFBtE2Q/)

@@ -29,11 +29,22 @@ credit: "BGM by Otologic"
 
 ### 📕 Shownotes
 
-线上半夜出 bug，第一反应是看日志 → 结果发现日志啥也没说 😅
+线上半夜出了 bug，第一反应几乎都是去看日志，然后发现日志什么也没说。这一期用大约五分钟，讲两个能把日志质量抬起来的技巧，目标很具体：让线上问题查得更快。它不介绍一整套可观测性平台，只把两件可以马上动手的事说清楚。
 
-这期 5 分钟讲清楚两个让你日志直接上档次的技巧：
+第一个是 JSON 结构化日志。日志写成机器读得懂的结构之后，检索不必再靠临时拼接的 grep。字段在那里，查询就可以按字段来，而不是在一大段句子里碰运气。第二个是宽日志，也就是 Wide Events：一次请求只打一条日志，把这次请求的上下文一次放全。排查的时候不用在多条半截日志之间来回对时间戳，效率会高不少。
 
-1. **JSON 结构化日志**：让机器读得懂，让你查得飞快，告别 grep 大法
-2. **宽日志（Wide Events）**：一次请求一条日志，把上下文一次打全，排查效率拉满
+摘要把两者的分工写得很明确。JSON 让机器能够快速检索；Wide Events 让每一次请求都带着完整上下文。合在一起，线上排障会轻松很多。分类是 logging、backend、devops、observability 和 programming，主播是 AnnatarHe。标题里的「两个神级技巧」指的就是这两件，没有在文字说明里再加第三件。适合值过夜班、又经常对着空日志发呆的后端和做基础设施的人。
 
-学完这两招，on-call 不再哭，下班准点跑 🏃‍♂️
+### 本期要点
+
+- 场景：半夜线上出问题，日志却什么信息都没有
+- 五分钟讲完两个技巧，用来提高排查效率
+- JSON 结构化日志：机器能读，检索更快，少依赖临时的 grep
+- Wide Events：一次请求一条日志，上下文一次打全
+- 分类：logging、backend、devops、observability、programming
+
+### 🔗 参考链接
+
+- 小宇宙：[EP61 打日志的两个神级技巧](https://www.xiaoyuzhoufm.com/episode/69ee0384ba07781ad1a2f863)
+- YouTube：[这一期视频](https://www.youtube.com/watch?v=JAshCpKeoOU)
+- Bilibili：[BV12oovBnEw9](https://www.bilibili.com/video/BV12oovBnEw9/)
