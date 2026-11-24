@@ -8,7 +8,7 @@
 
 3
 00:00:02,069 --> 00:00:05,043
-或是 AsyncTalk 组播 Annatar
+我是 AsyncTalk 主播 AnnatarHe
 
 4
 00:00:05,043 --> 00:00:06,207
